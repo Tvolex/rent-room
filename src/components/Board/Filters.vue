@@ -25,7 +25,11 @@
     },
     data: () => {
       return {
-
+      }
+    },
+    computed: {
+      sort: function () {
+        return this.$store.getters.sort
       }
     }
   }

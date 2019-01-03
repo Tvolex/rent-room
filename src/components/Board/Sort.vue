@@ -1,5 +1,5 @@
 <template>
-    <div class="filters_by" @click="sortDropDown = true">
+    <div class="filters_by">
         <label class="filters_label">Sort by:</label>
         <div class="filters_by_selection">
             <!--<label for="filters_by_checkbox" class="filters_by_label icon-arrow-down">-->
@@ -32,13 +32,9 @@
     import _ from 'lodash'
     export default {
         name: "Sort",
-        props: {
-        },
         data: () => {
             return {
                 sort: { price: 1 },
-                sortTitle: 'Low price',
-                sortDropDown: false,
                 sorting: [
                     { title: 'Low price', value: { price: 1 } },
                     { title: 'High price', value: { price: -1 } },
@@ -55,10 +51,8 @@
         },
 
         watch: {
-            sortTitle(title, oldSort) {
-                const findElem = this.sorting.find(el => _.isEqual(title, el.title));
-
-                findElem ? this.sort = findElem.value : this.sort = null;
+            sort: function (sort, oldSort) {
+                this.$store.commit('sort', { type: 'sort', value: sort });
             }
         }
     }

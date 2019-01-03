@@ -1,39 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import BoardStore from './components/Board/store'
+
 import axios from 'axios'
+
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    page: 1,
-    count: 1,
-    room: null
+    ...BoardStore.state,
   },
   getters: {
-    page (state) {
-      return state.page
-    },
-    count (state) {
-      return state.count
-    },
-    room (state) {
-      return state.room
-    }
+    ...BoardStore.getters,
+
   },
   mutations: {
-    page (state, { type, value }) {
-      state[type] = value
-    },
-
-    count (state, { type, value }) {
-      state[type] = value
-    },
-
-    room (state, { type, value }) {
-      state[type] = value
-    }
+    ...BoardStore.mutations,
   },
   actions: {
+    ...BoardStore.actions,
   }
 })
