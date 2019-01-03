@@ -267,6 +267,7 @@ ul, li {
 
 .filters_by_link {
   color: #343e5c;
+  cursor: pointer;
 }
 
 .filters_input {
