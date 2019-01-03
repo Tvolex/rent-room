@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <div class="notFound">
     <Header></Header>
-    <Board/>
+    <div>Not found</div>
     <Footer></Footer>
   </div>
 </template>
@@ -9,18 +9,13 @@
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header.vue'
-import Board from '@/components/Board/Board.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'home',
+  name: 'NotFound',
   components: {
     Header,
-    Board,
     Footer
-  },
-  mounted () {
-    console.log(process.env.BASE_URL)
   },
   data: () => {
     return {
