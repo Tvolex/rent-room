@@ -3,7 +3,7 @@
     <div class="footer">
       <div class="logo">
         <a href="#" title="" class="logo_link">
-          <img src="image/logo-white.png" alt="" class="logo_img">
+          <img :src="`${base_url}image/logo-white.png`" alt="" class="logo_img">
         </a>
       </div>
       <ul class="footer_nav_list">
@@ -40,7 +40,12 @@
 
 <script>
     export default {
-        name: "Footer"
+        name: "Footer",
+      data: () => {
+          return {
+            base_url: process.env.BASE_URL
+          }
+      }
     }
 </script>
 

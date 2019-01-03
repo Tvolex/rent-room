@@ -11,9 +11,9 @@
           <v-card-title>
             <v-layout row wrap justify-center>
               <v-flex xs12 md8 >
-                <span class="grey--text">{{room.createdBy.date }}</span><br>
-                <span class="headline">{{room.title || 'No title'}}</span><br>
-                <span>{{room.description || 'No descriptions'}}</span>
+                <span class="grey--text">{{room.createdBy.date | parseDate}}</span><br>
+                <span class="headline">{{room.title}}</span><br>
+                <span>{{room.description}}</span>
               </v-flex>
               <v-flex xs12 md2 class="text-xs-center">
                 <span class="headline">₴{{room.price || 'No price'}}</span>
@@ -70,8 +70,11 @@ export default {
   },
     filters: {
         parseDate: function (value) {
-            return moment(value).format();
-        }
+          console.log(moment().locale());
+          const date = new moment(value);
+          date.locale('uk');
+            return date.format('LLLL');
+        },
     }
 }
 </script>

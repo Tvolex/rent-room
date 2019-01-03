@@ -24,7 +24,7 @@
           <v-card-title primary-title>
             <div>
               <div class="headline">{{room.title}}</div>
-              <span class="grey--text">{{room.description}}</span>
+              <span class="grey--text">{{room.description | limitDescription}}</span>
             </div>
           </v-card-title>
 
@@ -36,7 +36,7 @@
 
           <v-slide-y-transition>
             <v-card-text v-show="room.expandDescription">
-              {{room.description}}
+              {{room.description | limitDescription}}
             </v-card-text>
           </v-slide-y-transition>
         </v-card>
@@ -60,6 +60,14 @@ export default {
     openRoom: function (room) {
       this.$store.commit('room', { type: 'room', value: room })
       this.$router.push(`/room/${room._id}`)
+    }
+  },
+  filters: {
+    limitDescription: function (value) {
+      if (value && value.length > 53) {
+        return value.slice(0, 50) + '...';
+      }
+      return value;
     }
   }
 }

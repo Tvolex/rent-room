@@ -6,6 +6,7 @@ module.exports = {
   'extends': [
   ],
   rules: {
+    'indent': 4,
   },
   parserOptions: {
     parser: 'babel-eslint'
