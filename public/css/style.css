@@ -200,6 +200,7 @@ ul, li {
 }
 
 .filters_label {
+  width: 150px;
   font-size: 14px;
   line-height: 1;
   font-weight: 400;
@@ -214,11 +215,15 @@ ul, li {
   position: relative;
   border-right: lightgray 1px solid;
   width: 22.1%;
-  padding: 25px 20px;
+  padding: 20px 20px;
 }
 
 .filters_by_checkbox {
   display: none;
+}
+
+.filters_by_selection {
+  padding-bottom: 10px;
 }
 
 .filters_by_checkbox:checked + .filters_by_list {
@@ -822,7 +827,7 @@ ul, li {
   }
 
   .filters_by {
-    padding: 0 30px 20px;
+    padding: 6px 15px;
   }
 
   .card-room[data-v-4fd988ef] {

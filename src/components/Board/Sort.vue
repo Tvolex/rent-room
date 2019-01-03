@@ -18,6 +18,7 @@
                     v-model="sort"
                     item-text="title"
                     item-value="value"
+                    height="15"
                     label="Select"
                     hide-details
                     single-line
