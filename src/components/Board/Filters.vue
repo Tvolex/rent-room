@@ -12,16 +12,19 @@
         <input type="text" class="filters_input" name="price-from" value="1000">
       </div>
     </div>
+    <Count></Count>
     <Sort></Sort>
   </div>
 </template>
 
 <script>
   import Sort from './Sort'
+  import Count from './Count'
   export default {
     name: "Filters",
     components: {
       Sort,
+        Count
     },
     data: () => {
       return {

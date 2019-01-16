@@ -1,8 +1,10 @@
+import axios from 'axios'
+
 const state = {
     page: 1,
-    count: 1,
+    count: 10,
     room: null,
-    sort: { price: -1 },
+    sort: { by: "price", order: -1 },
 };
 
 const getters = {
@@ -15,7 +17,6 @@ const getters = {
     room (state) {
         return state.room
     },
-
     sort (state) {
         return state.sort
     }
@@ -40,7 +41,34 @@ const mutations = {
 };
 
 const actions = {
+    async getRooms({commit}) {
+        const { filter, search, page, count , sort } = state;
 
+        let res;
+
+        try {
+            res = await axios.get('/api/room/list', {
+                params: {
+                    filter,
+                    search,
+                    page,
+                    count,
+                    sort,
+                }
+            });
+
+            return {
+                total: res.data.total,
+                rooms: res.data && res.data.items ? res.data.items.map(el => {
+                    el.expandDescription = false;
+                    return el
+                }) : [],
+            }
+
+        } catch (err) {
+            throw err;
+        }
+    }
 };
 
 export default {

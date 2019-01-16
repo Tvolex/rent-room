@@ -22,7 +22,7 @@
       </ul>
     </div><div class="navbar_inner">
     <div class="navbar_title_wrapper">
-      <h3 class="navbar_title">Тип</h3>
+      <h3 class="navbar_title">Кількість</h3>
     </div>
     <ul class="navbar_brands_list">
       <li class="navbar_brands_item"

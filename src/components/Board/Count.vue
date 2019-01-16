@@ -1,12 +1,10 @@
 <template>
     <div class="filters_by">
-        <label class="filters_label">Sort by:</label>
+        <label class="filters_label">Count:</label>
         <div class="filters_by_selection">
             <v-select
-                    :items="sorting"
-                    v-model="sort"
-                    item-text="title"
-                    item-value="value"
+                    :items="counting"
+                    v-model="currentCount"
                     height="15"
                     label="Select"
                     hide-details
@@ -20,14 +18,17 @@
 <script>
     import _ from 'lodash'
     export default {
-        name: "Sort",
+        name: "Count",
         data: () => {
             return {
-                sort: { by: "price", order: -1 },
-                sorting: [
-                    { title: 'Low price', value: { by: "price", order: 1 } },
-                    { title: 'High price', value: { by: "price", order: -1 } },
-                ],
+                counting: [10, 20, 50, 100],
+                currentCount: 10,
+            }
+        },
+
+        computed: {
+            count: function () {
+                return this.$store.getters.count;
             }
         },
 
@@ -40,8 +41,8 @@
         },
 
         watch: {
-            sort: function (sort, oldSort) {
-                this.$store.commit('sort', { type: 'sort', value: sort });
+            currentCount: function (count, oldCount) {
+                this.$store.commit('count', { type: 'count', value: count });
             }
         }
     }
