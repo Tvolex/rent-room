@@ -3,11 +3,15 @@
     <v-flex xs10 class="ma-3">
       <div v-if="room">
         <v-card>
-          <v-img
-            class="white--text"
-            :src="room.photos[0]"
-          >
-          </v-img>
+          <v-carousel>
+            <v-carousel-item
+                    v-for="(item,i) in room.photos"
+                    :key="i"
+                    :src="item"
+                    reverse-transition="fade"
+                    transition="fade"
+            ></v-carousel-item>
+          </v-carousel>
           <v-card-title>
             <v-layout row wrap justify-center>
               <v-flex xs12 md8 >
