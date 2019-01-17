@@ -8,17 +8,17 @@ import axios from 'axios'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    ...BoardStore.state,
-  },
-  getters: {
-    ...BoardStore.getters,
+    state: {
+        ...BoardStore.state,
+    },
+    getters: {
+        ...BoardStore.getters,
 
-  },
-  mutations: {
-    ...BoardStore.mutations,
-  },
-  actions: {
-    ...BoardStore.actions,
-  }
+    },
+    mutations: {
+        ...BoardStore.mutations,
+    },
+    actions: {
+        ...BoardStore.actions,
+    }
 })

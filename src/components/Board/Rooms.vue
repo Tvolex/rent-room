@@ -1,6 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex xs12 sm6 md4
+            v-if="rooms && rooms.length"
             v-for="room in rooms"
             :key="room._id"
     >
@@ -60,7 +61,7 @@ export default {
     openRoom: function (room) {
       this.$store.commit('room', { type: 'room', value: room })
       this.$router.push(`/room/${room._id}`)
-    }
+    },
   },
   filters: {
     limitDescription: function (value) {

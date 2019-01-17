@@ -1,25 +1,60 @@
 <template>
-  <v-layout class="Board" row wrap>
-    <v-flex xs12>
-      <div class="content_wrapper">
-        <div class="content">
-          <Filters></Filters>
+    <v-layout class="Board" row wrap>
+        <v-flex xs12>
+            <div class="content_wrapper">
+                <div class="content">
+                    <Filters></Filters>
 
-          <div class="content_inner">
-            <v-layout row wrap>
-              <v-flex xs12 sm2>
-                <Navbar></Navbar>
-              </v-flex>
-              <v-flex xs12 sm10>
-                <Rooms :rooms="items" :total="total"></Rooms>
-              </v-flex>
-            </v-layout>
-          </div>
-          <Pagination :rooms="items"></Pagination>
-        </div>
-      </div>
-    </v-flex>
-  </v-layout>
+                    <div class="content_inner">
+                        <v-layout row wrap>
+                            <v-flex xs12 sm2>
+                                <Navbar></Navbar>
+                            </v-flex>
+                            <v-flex xs12 sm10 name="rooms" ref="rooms">
+                                <v-layout row wrap v-if="loading">
+                                    <v-flex xs12 sm6 md4
+                                            v-for="shadow in 6"
+                                            :key="shadow">
+                                        <v-hover>
+                                            <v-card class="card-shadow" slot-scope="{ hover }" >
+                                                <vue-content-loading :width="350" :height="350">
+                                                    <rect x="0" y="0" rx="10" ry="10" width="350" height="200" />
+                                                    <rect x="10" y="220" rx="10" ry="10" width="250" height="20" />
+                                                    <rect x="10" y="250" rx="10" ry="10" width="150" height="15" />
+
+                                                    <rect x="10" y="300" rx="10" ry="10" width="80" height="35" />
+                                                    <rect x="150" y="300" rx="10" ry="10" width="130" height="35" />
+                                                </vue-content-loading>
+                                            </v-card>
+                                        </v-hover>
+                                    </v-flex>
+                                </v-layout>
+                                <Rooms  v-if="items && items.length" :rooms="items" :total="total"></Rooms>
+                                <v-layout v-else row wrap>
+                                    <v-flex xs12 v-if="items && !items.length && !loading">
+                                        <v-hover>
+                                            <v-card class="card-empty" slot-scope="{ hover }" >
+                                                <v-card-title primary-title>
+                                                    <div>
+                                                        <div class="headline">No items</div>
+                                                        <span class="grey--text">Empty</span>
+                                                    </div>
+                                                </v-card-title>
+                                                <v-card-actions>
+                                                    <v-btn flat @click="getRooms">Refresh</v-btn>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-hover>
+                                    </v-flex>
+                                </v-layout>
+                            </v-flex>
+                        </v-layout>
+                    </div>
+                    <Pagination :rooms="items"></Pagination>
+                </div>
+            </div>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>
@@ -29,117 +64,43 @@
     import Navbar from './Navbar'
     import Pagination from './Pagination'
     import Filters from './Filters'
+    import VueContentLoading from 'vue-content-loading'
 
     export default {
         name: 'Board',
         components: {
+            VueContentLoading,
             Rooms,
             Navbar,
             Pagination,
             Filters
         },
         async beforeMount () {
-            this.$store.dispatch({type: 'getRooms'}).then((result) => {
-                this.total = result && result.total ? result.total : 1;
-                this.items = result && !_.isEmpty(result.rooms) ? result.rooms.map(el => {
-                    el.expandDescription = false;
-                    return el
-                }) : [];
-            }).catch((err) => {
-                console.log(err);
-                this.$notificator(err.type, err.message)
-            });
+            this.getRooms();
         },
         data () {
             return {
+                loading: false,
                 total: 1,
-                items: [
-                    {
-                        _id: '5c1a5db3037a7d0b239350fe',
-                        title: 'test1',
-                        price: '7050',
-                        photo: 'https://besplatka.ua/aws/19/75/61/11/6421f3648df1.jpg',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 2,
-                        title: 'test2',
-                        price: '5750',
-                        photo: 'http://pandadom.com/content/thumbs/1000x/nocrop/j7bd3j/1f/tb/1ftb1fn7phj1g8nbs8ve11gn88h1mc0v.jpg',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 3,
-                        title: 'test3',
-                        price: '6200',
-                        photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ3SozeyhR-mj1fWDn_XtSJMo_KanftM0-kseVuu_lsJUcCVQd',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 4,
-                        title: 'test4',
-                        price: '6900',
-                        photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRulwe-cp1eUg_6R0dKe3jlLCmgjT1OVKa9hyDNoAyPElYZRp6e',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 5,
-                        title: 'test5',
-                        price: '4600',
-                        photo: 'https://images.ua.prom.st/836252515_w0_h0_bedroom_1.jpg',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 6,
-                        title: 'test6',
-                        price: '8300',
-                        photo: 'https://zaholovok.com.ua/sites/default/files/1_2.gif',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 7,
-                        title: 'test7',
-                        price: '9500',
-                        photo: 'https://besplatka.ua/aws/19/75/61/11/6421f3648df1.jpg',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 8,
-                        title: 'test8',
-                        price: '7500',
-                        photo: 'http://pandadom.com/content/thumbs/1000x/nocrop/j7bd3j/1f/tb/1ftb1fn7phj1g8nbs8ve11gn88h1mc0v.jpg',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 9,
-                        title: 'test9',
-                        price: '6700',
-                        photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ3SozeyhR-mj1fWDn_XtSJMo_KanftM0-kseVuu_lsJUcCVQd',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 10,
-                        title: 'test10',
-                        price: '5500',
-                        photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRulwe-cp1eUg_6R0dKe3jlLCmgjT1OVKa9hyDNoAyPElYZRp6e',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 11,
-                        title: 'test11',
-                        price: '6500',
-                        photo: 'https://images.ua.prom.st/836252515_w0_h0_bedroom_1.jpg',
-                        expandDescription: false
-                    },
-                    {
-                        _id: 12,
-                        title: 'test12',
-                        price: '6400',
-                        photo: 'https://zaholovok.com.ua/sites/default/files/1_2.gif',
-                        expandDescription: false
-                    }
-                ]
+                items: []
             }
+        },
+        methods: {
+            getRooms: function () {
+                this.loading = true;
+                this.$store.dispatch({type: 'getRooms'}).then((result) => {
+                    this.total = result && result.total ? result.total : 1;
+                    this.items = result && !_.isEmpty(result.rooms) ? result.rooms.map(el => {
+                        el.expandDescription = false;
+                        return el
+                    }) : [];
+                }).catch((err) => {
+                    console.log(err);
+                    this.$notificator(err.type, err.message)
+                }).finally(() => {
+                    this.loading = false;
+                })
+            },
         },
         computed: {
 
@@ -149,4 +110,15 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
+    .card-shadow {
+        margin: 0 0 20px 15px;
+        border-radius: 10px;
+    }
+
+    .card-empty {
+        margin: 0 0 20px 15px;
+        border-radius: 10px;
+    }
 </style>
