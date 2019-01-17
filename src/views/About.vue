@@ -12,7 +12,7 @@ import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'About',
+  name: 'About-View',
   components: {
     Header,
     Footer

@@ -13,7 +13,7 @@ import Board from '@/components/Board/Board.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'home',
+  name: 'Home-View',
   components: {
     Header,
     Board,

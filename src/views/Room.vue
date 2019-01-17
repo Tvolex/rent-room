@@ -13,7 +13,7 @@ import Header from '@/components/Header.vue'
 import Room from '@/components/Room/Room.vue'
 import Footer from '@/components/Footer.vue'
 export default {
-  name: 'Room',
+  name: 'Room-View',
   components: {
     Header,
     'InfoRoom': Room,
