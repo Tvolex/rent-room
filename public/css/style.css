@@ -181,6 +181,7 @@ ul, li {
 .content_inner {
   vertical-align: top;
   max-width: 1500px;
+  margin: 0 auto;
 }
 
 .content_inner::after {
@@ -197,6 +198,7 @@ ul, li {
   background-color: #ffffff;
   border-radius: 10px;
   margin-bottom: 30px;
+  padding: 0 50px;
 }
 
 .filters_label {
@@ -294,6 +296,7 @@ ul, li {
   align-items: center;
   justify-content: flex-start;
   border-left: lightgray 1px solid;
+  border-right: lightgray 1px solid;
   padding: 15px 30px;
 }
 
