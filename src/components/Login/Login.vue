@@ -5,7 +5,7 @@
                 <v-card slot-scope="{ hover }" class="card-login">
                     <v-card-title><h2>Login</h2></v-card-title>
                     <v-form v-model="isFormValid" name="authForm">
-                        <v-layout>
+                        <v-layout row wrap justify-center>
                             <v-flex xs12>
                                 <v-text-field
                                         v-model="email"
@@ -16,8 +16,6 @@
                                         required
                                 ></v-text-field>
                             </v-flex>
-                        </v-layout>
-                        <v-layout>
                             <v-flex xs12>
                                 <v-text-field
                                         v-model="password"
@@ -29,9 +27,7 @@
                                         required
                                 ></v-text-field>
                             </v-flex>
-                        </v-layout>
-                        <v-layout>
-                            <v-flex xs12>
+                            <v-flex xs8>
                                 <v-btn
                                         large
                                         round
@@ -45,9 +41,12 @@
                                         </span>
                                 </v-btn>
                             </v-flex>
+                            <v-flex xs6>
+                                <router-link to="/register">Registration</router-link>
+                            </v-flex>
                         </v-layout>
                     </v-form>
-                    <router-link to="/register">Register</router-link>
+
                 </v-card>
             </v-hover>
         </v-flex>
