@@ -73,6 +73,18 @@
                 ],
             }
         },
+        methods: {
+            Login: async function () {
+                if (this.isFormValid) {
+                    try {
+                        await this.$store.dispatch({ type: 'Login' , email: this.email, password: this.password });
+                    } catch (err) {
+                        console.log(err);
+                        this.$notificator(err.type, err.message);
+                    }
+                }
+            }
+        }
     }
 </script>
 

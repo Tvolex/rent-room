@@ -3,9 +3,10 @@ import Vuetify from 'vuetify'
 import Notificator from './utils/notificator';
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/'
 
 import 'vuetify/dist/vuetify.min.css'
+import 'v-toaster/dist/v-toaster.css';
 
 Vue.config.productionTip = process.env.NODE_ENV || false
 

@@ -1,5 +1,5 @@
 import Toaster from 'v-toaster';
-import 'v-toaster/dist/v-toaster.css';
+
 
 const Notificator = {
     install(Vue, options) {
