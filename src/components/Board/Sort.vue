@@ -1,19 +1,17 @@
 <template>
-    <div class="filters_by">
+    <div class="filters_sort">
         <label class="filters_label">Sort by:</label>
-        <div class="filters_by_selection">
-            <v-select
-                    :items="sorting"
-                    v-model="sort"
-                    item-text="title"
-                    item-value="value"
-                    height="15"
-                    label="Select"
-                    hide-details
-                    single-line
-            ></v-select>
-
-        </div>
+        <v-select
+                :items="sorting"
+                v-model="sort"
+                item-text="title"
+                item-value="value"
+                height="15"
+                class="filters_input"
+                label="Select"
+                hide-details
+                single-line
+        ></v-select>
     </div>
 </template>
 
@@ -51,6 +49,12 @@
     .primary--text {
          color:  #a1a8bd !important;
          caret-color: #a1a8bd !important;
+    }
+
+    .filters_sort {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
     }
 
     .v-text-field>.v-input__control>.v-input__slot:after, .v-text-field>.v-input__control>.v-input__slot:before {

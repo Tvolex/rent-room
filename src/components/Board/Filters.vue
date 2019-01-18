@@ -11,9 +11,9 @@
         <span class="filters_main_price_separation">-</span>
         <input type="text" class="filters_input" name="price-from" value="1000">
       </div>
+      <Count></Count>
+      <Sort></Sort>
     </div>
-    <Count></Count>
-    <Sort></Sort>
   </div>
 </template>
 

@@ -1,17 +1,15 @@
 <template>
-    <div class="filters_by">
+    <div class="filters_count">
         <label class="filters_label">Count:</label>
-        <div class="filters_by_selection">
-            <v-select
-                    :items="counting"
-                    v-model="currentCount"
-                    height="15"
-                    label="Select"
-                    hide-details
-                    single-line
-            ></v-select>
-
-        </div>
+        <v-select
+                :items="counting"
+                v-model="currentCount"
+                height="15"
+                label="Select"
+                class="filters_input"
+                hide-details
+                single-line
+        ></v-select>
     </div>
 </template>
 
@@ -52,6 +50,24 @@
     .primary--text {
          color:  #a1a8bd !important;
          caret-color: #a1a8bd !important;
+    }
+
+    .filters_count {
+        display: flex;
+        align-items: center;
+        margin-right: 30px;
+        justify-content: flex-start;
+    }
+
+
+    /*  Additional replacement style  */
+
+    .theme--light.v-text-field>.v-input__control>.v-input__slot:before {
+        border-color: transparent !important;
+    }
+
+    .v-text-field>.v-input__control>.v-input__slot:after, .v-text-field>.v-input__control>.v-input__slot:before {
+        width: 0px !important;
     }
 
     .v-text-field>.v-input__control>.v-input__slot:after, .v-text-field>.v-input__control>.v-input__slot:before {
