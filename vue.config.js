@@ -1,5 +1,5 @@
 module.exports = {
     devServer: {
-        proxy: 'https://rent-room-api.herokuapp.com' ||  'http://localhost:3000'
+        proxy: process.env.API_HOST
     }
 }
