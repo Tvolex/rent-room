@@ -68,22 +68,23 @@
                                         required
                                 ></v-text-field>
                             </v-flex>
-                            <v-layout row wrap justify-center>
-                                <v-flex xs2>
-                                    <v-btn
-                                            large
-                                            round
-                                            :loading="loading"
-                                            :disabled="!isFormValid || loading"
-                                            @click.native="Login">
-                                        Save me
-                                        <span slot="loader" class="custom-loader">
+                        </v-layout>
+                        <v-layout align-center justify-center column fill-height>
+                            <v-flex xs4>
+                                <v-btn
+                                        large
+                                        round
+                                        :loading="loading"
+                                        :disabled="!isFormValid || loading"
+                                        @click.native="Login"
+                                >
+                                    Save me
+                                    <span slot="loader" class="custom-loader">
                                             <v-icon light>cached</v-icon>
                                         </span>
-                                    </v-btn>
-                                </v-flex>
-                            </v-layout>
-                            <v-flex xs12>
+                                </v-btn>
+                            </v-flex>
+                            <v-flex xs4>
                                 <router-link to="/login">Login</router-link>
                             </v-flex>
                         </v-layout>

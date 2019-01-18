@@ -27,7 +27,9 @@
                                         required
                                 ></v-text-field>
                             </v-flex>
-                            <v-flex xs8>
+                        </v-layout>
+                        <v-layout align-center justify-center column fill-height>
+                            <v-flex xs6>
                                 <v-btn
                                         large
                                         round
