@@ -87,6 +87,11 @@
                             <v-flex xs4>
                                 <router-link to="/login">Login</router-link>
                             </v-flex>
+                            <v-flex xs12>
+                                <v-btn flat>
+                                    <input type="file" @change="Upload">
+                                </v-btn>
+                            </v-flex>
                         </v-layout>
                     </v-form>
                 </v-card>
@@ -96,6 +101,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         name: "Register",
         data() {
@@ -137,6 +143,25 @@
             validatePass () {
                 this.$refs.registerForm.password.validate();
                 this.$refs.registerForm.confirmPassword.validate();
+            },
+
+            Upload (event) {
+                const selectedFile = event.target.files[0];
+
+                if (selectedFile) {
+                    const formData = new FormData();
+                    formData.append('image', selectedFile, selectedFile.name);
+                    console.log(formData);
+                    axios.post('/api/upload/avatar', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }).then(res => {
+                        console.log(res.data);
+                    }).catch(err => {
+                        console.log(err);
+                    })
+                }
             }
         }
     }
