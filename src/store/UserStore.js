@@ -6,7 +6,7 @@ const state = {
 
 const getters = {
     user (state) {
-        return state.page
+        return state.user
     },
 };
 
@@ -24,13 +24,28 @@ const actions = {
                 password,
             });
 
-            commit('user', {type: 'user', value: data});
+            commit('user', { type: 'user', value: data });
+
+            return data;
         } catch (err) {
             err.message = err.response && err.response.data && err.response.data.message ?
                 err.response.data.message : "Something went wrong :(";
             throw err;
         }
-    }
+    },
+
+    Auth: async function({ commit }) {
+        try {
+            const { data } = await axios.get(`/api/auth/check`);
+
+            commit('user', { type: 'user', value: data });
+
+            return data;
+        } catch (err) {
+            commit('user', { type: 'user', value: null });
+            throw err;
+        }
+    },
 };
 
 export default {

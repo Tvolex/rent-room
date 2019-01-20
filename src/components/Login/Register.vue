@@ -152,7 +152,7 @@
                     const formData = new FormData();
                     formData.append('image', selectedFile, selectedFile.name);
                     console.log(formData);
-                    axios.post('/api/upload/avatar', formData, {
+                    axios.post('/api/upload/photo', formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }

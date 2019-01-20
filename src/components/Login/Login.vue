@@ -58,6 +58,13 @@
 <script>
     export default {
         name: "Login",
+        async beforeMount() {
+            if (!this.auth) {
+                if (await this.$store.dispatch({ type: 'Auth' })) {
+                    this.$router.push('/dashboard');
+                }
+            }
+        },
         data() {
             return {
                 isFormValid: false,
@@ -74,15 +81,22 @@
             }
         },
         methods: {
-            Login: async function () {
+            Login: function () {
                 if (this.isFormValid) {
-                    try {
-                        await this.$store.dispatch({ type: 'Login' , email: this.email, password: this.password });
-                    } catch (err) {
-                        console.log(err);
-                        this.$notificator(err.type, err.message);
-                    }
+                    this.$store.dispatch({ type: 'Login' , email: this.email, password: this.password })
+                        .then((data) => this.auth())
+                        .catch(err => { console.log(err); this.$notificator('error', err.message) });
                 }
+            }
+        },
+        computed: {
+            auth () {
+                const user = this.$store.getters.user;
+                if (user) {
+                    this.$router.push('/dashboard');
+                    return true;
+                }
+                return false
             }
         }
     }
