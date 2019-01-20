@@ -29,9 +29,9 @@
                                         </v-hover>
                                     </v-flex>
                                 </v-layout>
-                                <Rooms  v-if="items && items.length" :rooms="items" :total="total"></Rooms>
+                                <Rooms v-if="rooms && rooms.length" :rooms="rooms"></Rooms>
                                 <v-layout v-else row wrap>
-                                    <v-flex xs12 v-if="items && !items.length && !loading">
+                                    <v-flex xs12 v-if="rooms && !rooms.length && !loading">
                                         <v-hover>
                                             <v-card class="card-empty" slot-scope="{ hover }" >
                                                 <v-card-title primary-title>
@@ -50,7 +50,7 @@
                             </v-flex>
                         </v-layout>
                     </div>
-                    <Pagination :rooms="items"></Pagination>
+                    <Pagination :total="total" @paginationChange="paginationChange"></Pagination>
                 </div>
             </div>
         </v-flex>
@@ -82,7 +82,7 @@
             return {
                 loading: false,
                 total: 1,
-                items: []
+                rooms: []
             }
         },
         methods: {
@@ -90,7 +90,7 @@
                 this.loading = true;
                 this.$store.dispatch({type: 'getRooms'}).then((result) => {
                     this.total = result && result.total ? result.total : 1;
-                    this.items = result && !_.isEmpty(result.rooms) ? result.rooms.map(el => {
+                    this.rooms = result && !_.isEmpty(result.rooms) ? result.rooms.map(el => {
                         el.expandDescription = false;
                         return el
                     }) : [];
@@ -102,9 +102,6 @@
                 })
             },
         },
-        computed: {
-
-        }
     }
 </script>
 
