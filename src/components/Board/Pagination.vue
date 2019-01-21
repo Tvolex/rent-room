@@ -15,9 +15,6 @@
 <script>
     export default {
         name: 'Pagination',
-        props: {
-            total: { type: Number, default: 1 },
-        },
         data: () => {
             return {
                 currentPage: 1
@@ -27,11 +24,15 @@
             count: function () {
                 return this.$store.getters.count
             },
+
+            total: function () {
+                return this.$store.getters.total
+            },
         },
         watch: {
             currentPage (page, prevPage) {
-                this.$store.commit('page', {type: 'page', value: page});
-                this.$emit('paginationChange', page);
+                this.$store.commit('page', { type: 'page', value: page });
+                this.$emit('pageChanged', page);
             }
         }
 

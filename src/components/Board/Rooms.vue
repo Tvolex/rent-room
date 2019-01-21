@@ -31,13 +31,13 @@
 
           <v-card-actions>
             <v-btn flat @click="openRoom(room)">Open</v-btn>
-            <v-btn :flat="!room.expandDescription" color="purple lighten-3" @click="room.expandDescription = !room.expandDescription">Description</v-btn>
+            <v-btn flat color="purple lighten-3" >Description</v-btn>
             <v-spacer></v-spacer>
           </v-card-actions>
 
           <v-slide-y-transition>
-            <v-card-text v-show="room.expandDescription">
-              {{room.description | limitDescription}}
+            <v-card-text>
+              {{'description'| limitDescription}}
             </v-card-text>
           </v-slide-y-transition>
         </v-card>

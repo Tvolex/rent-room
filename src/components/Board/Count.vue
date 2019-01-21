@@ -19,8 +19,8 @@
         name: "Count",
         data: () => {
             return {
-                counting: [10, 20, 50, 100],
-                currentCount: 10,
+                counting: [3, 6, 12, 24, 50, 100],
+                currentCount: 6,
             }
         },
 
@@ -41,6 +41,7 @@
         watch: {
             currentCount: function (count, oldCount) {
                 this.$store.commit('count', { type: 'count', value: count });
+                this.$emit('countChanged', count);
             }
         }
     }

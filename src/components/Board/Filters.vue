@@ -11,7 +11,7 @@
         <span class="filters_main_price_separation">-</span>
         <input type="text" class="filters_input" name="price-from" value="1000">
       </div>
-      <Count></Count>
+      <Count @countChanged="getRooms"></Count>
       <Sort></Sort>
     </div>
   </div>
@@ -33,6 +33,11 @@
     computed: {
       sort: function () {
         return this.$store.getters.sort
+      }
+    },
+    methods: {
+      getRooms() {
+        this.$parent.getRooms();
       }
     }
   }
