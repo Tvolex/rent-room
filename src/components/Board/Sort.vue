@@ -1,6 +1,6 @@
 <template>
     <div class="filters_sort">
-        <label class="filters_label">Sort by:</label>
+        <label class="sort_label">Sort by:</label>
         <v-select
                 :items="sorting"
                 v-model="sort"
@@ -59,5 +59,15 @@
 
     .v-text-field>.v-input__control>.v-input__slot:after, .v-text-field>.v-input__control>.v-input__slot:before {
         width: 0px !important;
+    }
+
+    .sort_label{
+        margin-right: 20px;
+        width: 115px;
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: #a1a8bd;
     }
 </style>

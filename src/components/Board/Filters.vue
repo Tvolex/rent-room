@@ -6,10 +6,10 @@
         <input type="text" class="filters_input" name="keywords" placeholder="Tablet">
       </div>
       <div class="filters_main_price">
-        <label class="filters_label">Price</label>
-        <input type="text" class="filters_input" name="price-from" value="10">
+        <label class="price_label">Price</label>
+        <input type="text" class="filters_input" name="price-from" placeholder="500">
         <span class="filters_main_price_separation">-</span>
-        <input type="text" class="filters_input" name="price-from" value="1000">
+        <input type="text" class="filters_input" name="price-from" placeholder="50000">
       </div>
       <Count @countChanged="getRooms"></Count>
       <Sort></Sort>
@@ -47,5 +47,12 @@
 </script>
 
 <style scoped>
-
+ .price_label {
+   margin-right: 20px;
+   font-size: 14px;
+   line-height: 1;
+   font-weight: 400;
+   text-transform: uppercase;
+   color: #a1a8bd;
+ }
 </style>

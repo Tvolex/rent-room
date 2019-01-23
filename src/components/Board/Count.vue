@@ -6,7 +6,7 @@
                 v-model="count"
                 height="15"
                 label="Select"
-                class="filters_input"
+                class="count_input"
                 hide-details
                 single-line
         ></v-select>
@@ -58,6 +58,17 @@
         margin-right: 30px;
         justify-content: flex-start;
     }
+
+    .count_input {
+        font-size: 14px;
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f0f2f7;
+        border: 1px solid #e3e8f0;
+        border-radius: 20px;
+        padding: 10px 15px;
+        width: 100px;
+    }
+
 
 
     /*  Additional replacement style  */

@@ -202,7 +202,7 @@ ul, li {
 }
 
 .filters_label {
-  width: 150px;
+    margin-right: 20px;
   font-size: 14px;
   line-height: 1;
   font-weight: 400;
@@ -316,6 +316,7 @@ ul, li {
 }
 
 .filters_main_price {
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -326,7 +327,7 @@ ul, li {
 }
 
 .filters_main_price .filters_input {
-  width: 21.5%;
+  width: 25%;
 }
 
 .filters_main_price_separation {
