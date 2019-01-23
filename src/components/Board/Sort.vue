@@ -21,7 +21,6 @@
         name: "Sort",
         data: () => {
             return {
-                sort: { by: "price", order: -1 },
                 sorting: [
                     { title: 'Low price', value: { by: "price", order: 1 } },
                     { title: 'High price', value: { by: "price", order: -1 } },
@@ -37,11 +36,18 @@
             }
         },
 
-        watch: {
-            sort: function (sort, oldSort) {
-                this.$store.commit('sort', { type: 'sort', value: sort });
+        computed: {
+            sort: {
+                get: function () {
+                    return this.$store.getters.sort;
+                },
+
+                set: function (sort) {
+                    this.$store.commit('sort', { type: 'sort', value: sort });
+                    this.$emit('sortChanged', sort);
+                }
             }
-        }
+        },
     }
 </script>
 

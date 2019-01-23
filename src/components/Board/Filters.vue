@@ -12,7 +12,7 @@
         <input type="text" class="filters_input" name="price-from" placeholder="50000">
       </div>
       <Count @countChanged="getRooms"></Count>
-      <Sort></Sort>
+      <Sort @sortChanged="getRooms"></Sort>
     </div>
   </div>
 </template>
