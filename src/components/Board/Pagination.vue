@@ -3,7 +3,7 @@
         <v-layout align-center justify-center row fill-height>
             <v-flex xs6>
                 <v-pagination
-                        v-model="currentPage"
+                        v-model="page"
                         :length="Math.ceil(total/count)"
                         :total-visible="7"
                 ></v-pagination>
@@ -17,7 +17,7 @@
         name: 'Pagination',
         data: () => {
             return {
-                currentPage: 1
+
             }
         },
         computed: {
@@ -25,16 +25,20 @@
                 return this.$store.getters.count
             },
 
+            page: {
+                get: function () {
+                    return this.$store.getters.page
+                },
+                set: function (page) {
+                    this.$store.commit('page', { type: 'page', value: page });
+                    this.$emit('pageChanged', page);
+                }
+            },
+
             total: function () {
                 return this.$store.getters.total
             },
         },
-        watch: {
-            currentPage (page, prevPage) {
-                this.$store.commit('page', { type: 'page', value: page });
-                this.$emit('pageChanged', page);
-            }
-        }
 
     }
 </script>

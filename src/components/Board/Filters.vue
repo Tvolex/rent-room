@@ -37,6 +37,9 @@
     },
     methods: {
       getRooms() {
+        this.$store.commit('page', { type: 'page', value: 1 });
+        this.$emit('pageChanged', 1);
+
         this.$parent.getRooms();
       }
     }

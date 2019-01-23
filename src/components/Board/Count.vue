@@ -3,7 +3,7 @@
         <label class="filters_label">Count:</label>
         <v-select
                 :items="counting"
-                v-model="currentCount"
+                v-model="count"
                 height="15"
                 label="Select"
                 class="filters_input"
@@ -20,13 +20,19 @@
         data: () => {
             return {
                 counting: [3, 6, 12, 24, 50, 100],
-                currentCount: 6,
             }
         },
 
         computed: {
-            count: function () {
-                return this.$store.getters.count;
+            count: {
+                get: function () {
+                    return this.$store.getters.count;
+                },
+
+                set: function (count) {
+                    this.$store.commit('count', { type: 'count', value: count });
+                    this.$emit('countChanged', count);
+                }
             }
         },
 
@@ -37,13 +43,6 @@
                 this.$refs.filters_by_checkbox.checked = false;
             }
         },
-
-        watch: {
-            currentCount: function (count, oldCount) {
-                this.$store.commit('count', { type: 'count', value: count });
-                this.$emit('countChanged', count);
-            }
-        }
     }
 </script>
 
