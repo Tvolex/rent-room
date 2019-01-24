@@ -1,23 +1,40 @@
 <template>
-    <div class="pagination">
-        <v-layout align-center justify-center row fill-height>
+    <div class="elevation-3 pagination">
+        <v-layout align-center justify-center row fill-height class="elevation-5">
             <v-flex xs6>
-                <v-pagination
+                <plainPagination
                         v-model="page"
-                        :length="Math.ceil(total/count)"
-                        :total-visible="7"
-                ></v-pagination>
+                        :classes="pagination_classes"
+                        :labels="paginationAnchorTexts"
+                        :page-count="Math.ceil(total/count)"
+
+                ></plainPagination>
             </v-flex>
         </v-layout>
     </div>
 </template>
 
 <script>
+    import plainPagination from 'vue-plain-pagination'
+
     export default {
         name: 'Pagination',
+        components: { plainPagination },
         data: () => {
             return {
-
+                pagination_classes: {
+                    ul: 'pagination_list',
+                    li: 'pagination_item',
+                    liActive: 'pagination_link_active',
+                    liDisable: 'pagination_link_disable',
+                    button: 'pagination_link'
+                },
+                paginationAnchorTexts: {
+                    first: 'First',
+                    prev: 'Previous',
+                    next: 'Next',
+                    last: 'Last'
+                }
             }
         },
         computed: {
@@ -43,6 +60,10 @@
     }
 </script>
 
-<style scoped>
+<style >
+    .pagination_list {
+        padding: 15px 30px ;
+    }
+
 
 </style>

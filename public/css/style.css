@@ -761,13 +761,17 @@ ul, li {
   justify-content: center;
   width: 50px;
   height: 50px;
-  color: #343e5c;
 }
 
 .pagination_link_active {
   color: #b9bed1;
   border-radius: 50%;
-  box-shadow: 0 10px 50px #b9bed1;
+  box-shadow: 0 10px 25px #b9bed1;
+}
+
+.pagination_link_disable {
+  color: #b9bed1;
+  cursor: not-allowed;
 }
 
 .footer {

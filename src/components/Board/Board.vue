@@ -4,7 +4,6 @@
             <div class="content_wrapper">
                 <div class="content">
                     <Filters></Filters>
-
                     <div class="content_inner">
                         <v-layout row wrap>
                             <v-flex xs12 sm2>
@@ -12,7 +11,7 @@
                             </v-flex>
                             <v-flex xs12 sm10 name="rooms" ref="rooms">
                                 <div class="shadow_cards" v-if="loading">
-                                    <Shadows :shadows="rooms.length"></Shadows>
+                                    <Shadows></Shadows>
                                 </div>
                                 <Rooms v-if="!loading && rooms && rooms.length" :rooms="rooms"></Rooms>
                                 <v-layout v-else row wrap>

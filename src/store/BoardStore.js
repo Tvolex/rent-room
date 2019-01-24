@@ -5,7 +5,7 @@ const state = {
     count: 6,
     room: null,
     rooms: [],
-    total: 0,
+    total: 1,
     sort: { by: "price", order: -1 },
 };
 

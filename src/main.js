@@ -8,9 +8,16 @@ import store from './store/'
 import 'vuetify/dist/vuetify.min.css'
 import 'v-toaster/dist/v-toaster.css';
 
-Vue.config.productionTip = process.env.NODE_ENV || false
+Vue.config.productionTip = process.env.NODE_ENV || false;
 
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+    theme: {
+        primary: '#3f51b5',
+        secondary: '#b0bec5',
+        accent: '#8c9eff',
+        error: '#b71c1c'
+    }
+});
 Vue.use(Notificator);
 
 Vue.mixin({

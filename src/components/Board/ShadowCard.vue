@@ -1,7 +1,7 @@
 <template>
     <v-layout row wrap>
         <v-flex xs12 sm6 md4
-                v-for="shadow in 6"
+                v-for="shadow in count"
                 :key="shadow">
             <v-hover>
                 <v-card class="card-shadow" slot-scope="{ hover }" >
@@ -25,6 +25,11 @@
         name: "ShadowCard",
         components: {
             VueContentLoading,
+        },
+        computed: {
+            count: function () {
+                return this.$store.getters.count > 9 ? 9 : this.$store.getters.count;
+            }
         }
     }
 </script>
