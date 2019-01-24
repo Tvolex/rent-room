@@ -35,11 +35,7 @@
             <v-spacer></v-spacer>
           </v-card-actions>
 
-          <v-slide-y-transition>
-            <v-card-text>
-              {{'description'| limitDescription}}
-            </v-card-text>
-          </v-slide-y-transition>
+
         </v-card>
       </v-hover>
     </v-flex>

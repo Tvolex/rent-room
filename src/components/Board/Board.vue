@@ -10,7 +10,7 @@
                                 <Navbar></Navbar>
                             </v-flex>
                             <v-flex xs12 sm10 name="rooms" ref="rooms">
-                                <div class="shadow_cards" v-if="loading">
+                                <div v-if="loading">
                                     <Shadows></Shadows>
                                 </div>
                                 <Rooms v-if="!loading && rooms && rooms.length" :rooms="rooms"></Rooms>
