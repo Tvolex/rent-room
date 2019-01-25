@@ -8,7 +8,7 @@
       <v-hover>
         <v-card class="card-room" slot-scope="{ hover }" >
           <v-img
-            :src="room.photos ? room.photos[0] : 'https://static.thenounproject.com/png/220984-200.png'"
+            :src="room.photos && room.photos.length && room.photos[0].location ? room.photos[0].location.fit : '@/assets/no-photo.png'"
             height="200px"
           >
             <v-expand-transition>

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import Notificator from './utils/notificator';
 import App from './App.vue'
 import router from './router'
@@ -10,6 +12,7 @@ import 'v-toaster/dist/v-toaster.css';
 
 Vue.config.productionTip = process.env.NODE_ENV || false;
 
+Vue.use(ElementUI);
 Vue.use(Vuetify, {
     theme: {
         primary: '#3f51b5',

@@ -1,6 +1,6 @@
 <template>
     <v-layout class="layout-background" row wrap justify-center>
-        <v-flex xs10 class="ma-3">
+        <v-flex xs10 md8 class="ma-3 room_card">
             <div v-if="loading">
                 <v-card>
                     <vue-content-loading :width="350" :height="350">
@@ -19,15 +19,12 @@
             </div>
             <div v-else-if="room">
                 <v-card>
-                    <v-carousel lazy max :height="currentImageSize">
-                        <v-carousel-item
-                                v-for="(item,i) in room.photos"
-                                :key="i"
-                                :src="item"
-                                reverse-transition="fade"
-                                transition="fade"
-                        ></v-carousel-item>
-                    </v-carousel>
+
+                    <el-carousel :interval="10000" trigger="click" type="card" class="photos_card">
+                        <el-carousel-item  v-for="(item, i) in room.photos" :key="i">
+                            <v-img :src="item.location.fit" aspect-ratio="1.7778"></v-img>
+                        </el-carousel-item>
+                    </el-carousel>
                     <v-card-title>
                         <v-layout row wrap justify-center>
                             <v-flex xs12 md8 >
@@ -115,5 +112,32 @@
     }
     .views-number {
         margin-bottom: 2px;
+    }
+
+    .room_card {
+        max-width: 1600px;
+    }
+
+    .el-carousel__item h3 {
+        color: #475669;
+        font-size: 14px;
+        opacity: 0.75;
+        line-height: 200px;
+        margin: 0;
+    }
+
+    .photos_card {
+        max-height: 470px;
+        min-height: 200px;
+    }
+
+
+
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
+    }
+
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
     }
 </style>
