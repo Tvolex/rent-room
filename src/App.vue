@@ -6,6 +6,20 @@
   </div>
 </template>
 
+<script>
+    export default {
+        name: "Login",
+        async beforeMount() {
+            this.$store.dispatch({ type: 'Auth' });
+        },
+        data() {
+            return {
+
+            }
+        },
+    }
+</script>
+
 <style lang="scss">
 /*#app {*/
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/

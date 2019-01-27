@@ -84,20 +84,17 @@
             Login: function () {
                 if (this.isFormValid) {
                     this.$store.dispatch({ type: 'Login' , email: this.email, password: this.password })
-                        .then((data) => this.auth())
+                        .then((data) => data ? this.redirect('/dashboard') : null)
                         .catch(err => { console.log(err); this.$notificator('error', err.message) });
                 }
+            },
+
+            redirect (path) {
+                this.$router.push(path);
             }
         },
         computed: {
-            auth () {
-                const user = this.$store.getters.user;
-                if (user) {
-                    this.$router.push('/dashboard');
-                    return true;
-                }
-                return false
-            }
+
         }
     }
 </script>
