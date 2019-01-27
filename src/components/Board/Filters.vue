@@ -2,8 +2,8 @@
   <div class="filters elevation-3">
     <div class="filters_main">
       <div class="filters_main_keywords">
-        <label class="filters_label">Keywords</label>
-        <input type="text" class="filters_input" name="keywords" placeholder="Tablet">
+        <label class="filters_label">Search</label>
+        <input type="text" class="filters_input" name="Search" placeholder="Search">
       </div>
       <div class="filters_main_price">
         <label class="price_label">Price</label>
