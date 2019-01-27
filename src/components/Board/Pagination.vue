@@ -5,7 +5,7 @@
                 <plainPagination
                         v-model="page"
                         :classes="pagination_classes"
-                        :labels="paginationAnchorTexts"
+                        :labels="detectIsMobile ? paginationLabelsMobile : paginationLabelsDesktop"
                         :page-count="Math.ceil(total/count)"
 
                 ></plainPagination>
@@ -29,11 +29,17 @@
                     liDisable: 'pagination_link_disable',
                     button: 'pagination_link'
                 },
-                paginationAnchorTexts: {
+                paginationLabelsDesktop: {
                     first: 'First',
                     prev: 'Previous',
                     next: 'Next',
                     last: 'Last'
+                },
+                paginationLabelsMobile: {
+                    first: '&laquo;',
+                    prev: '&lsaquo;',
+                    next: '&rsaquo;',
+                    last: '&raquo;'
                 }
             }
         },
