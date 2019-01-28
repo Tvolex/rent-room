@@ -14,7 +14,18 @@
                         {{tab.title}}
                     </div>
                 </v-tab>
+
             </v-tabs>
+            <el-tabs type="border-card">
+                <el-tab-pane>
+                    <span slot="label"><i class="el-icon-date"></i> Route</span>
+                    Route
+                </el-tab-pane>
+                <el-tab-pane label="Config">Config</el-tab-pane>
+                <el-tab-pane label="Role">Role</el-tab-pane>
+                <el-tab-pane label="Task">Task</el-tab-pane>
+            </el-tabs>
+
         </v-flex>
     </v-layout>
 </template>
