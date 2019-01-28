@@ -9,6 +9,10 @@ html {
 
 html, body {
   font-family: 'Montserrat', sans-serif;
+  height: 100%;
+}
+body {
+  min-height: 100%;
 }
 
 html, body, h1, h2, h3, h4, h5, h6, p, ul, li {
@@ -175,7 +179,7 @@ ul, li {
 
 .content_wrapper {
   background-color: #e4e5e7;
-  padding: 30px 0;
+  padding: 30px 0 225px;
 }
 
 .content_inner {
@@ -781,6 +785,10 @@ ul, li {
 }
 
 .footer_wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: #222328;
   padding: 60px 0 55px;
 }
