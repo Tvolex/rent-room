@@ -7,7 +7,7 @@
                     <div class="content_inner">
                         <v-layout row wrap>
                             <v-flex xs12 sm2>
-                                <Navbar></Navbar>
+                                <Navbar typeChanged="typeChanged" numberOfRoomsChanged="numberOfRoomsChanged" ></Navbar>
                             </v-flex>
                             <v-flex xs12 sm10 name="rooms" ref="rooms">
                                 <div v-if="loading">
@@ -54,7 +54,6 @@
     export default {
         name: 'Board',
         components: {
-
             Rooms,
             Navbar,
             Shadows,
@@ -82,6 +81,10 @@
                     this.loading = false;
                 })
             },
+
+            typeChanged: function (type) {
+
+            }
         },
 
         computed: {
