@@ -59,9 +59,11 @@
     export default {
         name: "Login",
         async beforeMount() {
-            if (!this.auth) {
-                if (await this.$store.dispatch({ type: 'Auth' })) {
-                    this.$router.push('/dashboard');
+            if (this.user) {
+                this.redirect('/dashboard');
+            } else {
+                if (await this.$store.dispatch({ type: 'Auth' }).catch(this.errorHandler)) {
+                    this.redirect('/dashboard');
                 }
             }
         },
@@ -85,16 +87,19 @@
                 if (this.isFormValid) {
                     this.$store.dispatch({ type: 'Login' , email: this.email, password: this.password })
                         .then((data) => data ? this.redirect('/dashboard') : null)
-                        .catch(err => { console.log(err); this.$notificator('error', err.message) });
+                        .catch(this.errorHandler);
                 }
             },
 
             redirect (path) {
                 this.$router.push(path);
-            }
+            },
+
         },
         computed: {
-
+            user: function () {
+                return this.$store.getters.user;
+            }
         }
     }
 </script>

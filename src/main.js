@@ -31,6 +31,12 @@ Vue.mixin({
             console.log(isMobile ? 'Mobile': 'Desktop');
             return isMobile;
         },
+    },
+    methods: {
+        errorHandler: function (err) {
+            console.log(err);
+            this.$notificator('error', err.message);
+        }
     }
 });
 

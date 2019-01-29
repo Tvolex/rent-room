@@ -76,10 +76,9 @@
             },
             getRooms: function () {
                 this.loading = true;
-                this.$store.dispatch({type: 'getRooms'}).then().catch((err) => {
-                    console.log(err);
-                    this.$notificator(err.type, err.message)
-                }).finally(() => {
+                this.$store.dispatch({type: 'getRooms'}).then()
+                    .catch(this.errorHandler)
+                    .finally(() => {
                     this.loading = false;
                 })
             },

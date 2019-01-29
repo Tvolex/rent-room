@@ -88,7 +88,7 @@
                     const res = await axios.get(`/api/room/${id}`);
                     return res.data
                 } catch (err) {
-                    console.log(err)
+                    this.errorHandler(err);
                 } finally {
                     this.loading = false;
                 }
