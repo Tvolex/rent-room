@@ -1,8 +1,6 @@
 <template>
   <div class="notFound">
-    <Header></Header>
     <div>Not found</div>
-    <Footer></Footer>
   </div>
 </template>
 
@@ -13,10 +11,6 @@ import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'NotFound',
-  components: {
-    Header,
-    Footer
-  },
   data: () => {
     return {
     }

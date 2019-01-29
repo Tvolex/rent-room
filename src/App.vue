@@ -1,41 +1,50 @@
 <template>
   <div id="app">
     <v-app>
+      <Header></Header>
       <router-view/>
+      <Footer></Footer>
     </v-app>
   </div>
 </template>
 
 <script>
-    export default {
-        name: "Login",
-        async beforeMount() {
-            this.$store.dispatch({ type: 'Auth' });
-        },
-        data() {
-            return {
+  import Header from './components/Header'
+  import Footer from './components/Footer'
 
-            }
-        },
-    }
+  export default {
+    name: "Login",
+    components: {
+      Header,
+      Footer,
+    },
+    async beforeMount() {
+      this.$store.dispatch({ type: 'Auth' });
+    },
+    data() {
+      return {
+
+      }
+    },
+  }
 </script>
 
 <style lang="scss">
-/*#app {*/
+  /*#app {*/
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
   /*-webkit-font-smoothing: antialiased;*/
   /*-moz-osx-font-smoothing: grayscale;*/
   /*text-align: center;*/
   /*color: #2c3e50;*/
-/*}*/
-/*#nav {*/
+  /*}*/
+  /*#nav {*/
   /*padding: 30px;*/
   /*a {*/
-    /*font-weight: bold;*/
-    /*color: #2c3e50;*/
-    /*&.router-link-exact-active {*/
-      /*color: #42b983;*/
-    /*}*/
+  /*font-weight: bold;*/
+  /*color: #2c3e50;*/
+  /*&.router-link-exact-active {*/
+  /*color: #42b983;*/
   /*}*/
-/*}*/
+  /*}*/
+  /*}*/
 </style>
