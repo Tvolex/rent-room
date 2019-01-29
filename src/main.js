@@ -33,10 +33,16 @@ Vue.mixin({
         },
     },
     methods: {
-        errorHandler: function (err) {
+        errorHandler: function (err, option) {
             console.log(err);
-            this.$notificator('error', err.message);
-        }
+
+            if (option.notify)
+                this.$notificator('error', err.message);
+        },
+
+        redirect (path) {
+            this.$router.push(path);
+        },
     }
 });
 

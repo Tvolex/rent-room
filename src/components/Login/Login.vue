@@ -91,10 +91,6 @@
                 }
             },
 
-            redirect (path) {
-                this.$router.push(path);
-            },
-
         },
         computed: {
             user: function () {

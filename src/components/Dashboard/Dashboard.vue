@@ -34,6 +34,11 @@
             Statistics,
             MyRooms
         },
+        async beforeMount() {
+            if (!this.user && !await this.$store.dispatch({ type: 'Auth' }).catch(err => this.errorHandler(err, {notify: true}))) {
+                this.redirect('/login');
+            }
+        },
         data: () => {
             return {
                 currentTab: null,
@@ -49,6 +54,14 @@
                         route: '/dashboard/rooms',
                     }
                 ]
+            }
+        },
+        methods: {
+
+        },
+        computed: {
+            user: function () {
+                return this.$store.getters.user;
             }
         }
     }

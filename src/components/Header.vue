@@ -24,12 +24,26 @@
                         </v-list-tile-avatar>
 
                         <v-list-tile-content>
-                            <v-list-tile-title v-if="user">{{user.name}}</v-list-tile-title>
+                            <v-list-tile-title v-if="user">{{user.name}} </v-list-tile-title>
                             <v-list-tile-title v-else>
                                 Unauthorized
                                 <router-link to="/login">Login</router-link>
                             </v-list-tile-title>
+
                         </v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile
+                            v-for="(item, i) in items"
+                            :key="i"
+                            @click="redirect(item.route)"
+                    >
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{item.title}}</v-list-tile-title>
+                        </v-list-tile-content>
+
+                        <v-list-tile-action>
+                            <v-icon>{{item.icon}}</v-icon>
+                        </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
             </v-navigation-drawer>
@@ -42,8 +56,27 @@
         name: 'Header',
         data: () => {
             return {
-                sidebar: false
+                sidebar: false,
+                items: [
+                    {
+                        title: 'Home',
+                        icon: 'home',
+                        route: '/'
+                    },
+                    {
+                        title: 'Dashboard',
+                        icon: 'home',
+                        route: '/dashboard'
+                    }
+                ]
             }
+        },
+        methods: {
+            Logout: function () {
+                this.$store.dispatch({ type: 'Logout' })
+                    .catch(this.errorHandler);
+            },
+
         },
         computed: {
             user () {
