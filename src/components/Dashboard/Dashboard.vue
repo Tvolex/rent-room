@@ -1,6 +1,7 @@
 <template>
     <v-layout row wrap justify-center class="Dashboard">
         <v-flex xs12 md10 lg6>
+
             <v-tabs
                     slot="extension"
                     v-model="currentTab"
@@ -8,31 +9,31 @@
                     color="transparent"
             >
                 <v-tabs-slider color="rgb(184,184,184)"></v-tabs-slider>
-                <v-tab v-for="(tab, i) in tabs" :key="i">
-                    <div class="tab">
+
+                <v-tab v-for="(tab, i) in tabs" :key="i" :to="tab.route">
+                    <div class="tab" >
                         <v-icon>{{tab.icon}}</v-icon>
                         {{tab.title}}
                     </div>
                 </v-tab>
 
             </v-tabs>
-            <el-tabs type="border-card">
-                <el-tab-pane>
-                    <span slot="label"><i class="el-icon-date"></i> Route</span>
-                    Route
-                </el-tab-pane>
-                <el-tab-pane label="Config">Config</el-tab-pane>
-                <el-tab-pane label="Role">Role</el-tab-pane>
-                <el-tab-pane label="Task">Task</el-tab-pane>
-            </el-tabs>
-
+        </v-flex>
+        <v-flex xs10>
+            <router-view/>
         </v-flex>
     </v-layout>
 </template>
 
 <script>
+    import MyRooms from './MyRooms'
+    import Statistics from './Statistics'
     export default {
         name: "Dashboard",
+        components: {
+            Statistics,
+            MyRooms
+        },
         data: () => {
             return {
                 currentTab: null,
@@ -40,12 +41,12 @@
                     {
                         title: 'Statistics',
                         icon: 'show_chart',
-                        route: 'statistics',
+                        route: '/dashboard/statistics',
                     },
                     {
                         title: 'My rooms',
                         icon: 'home',
-                        route: 'rooms',
+                        route: '/dashboard/rooms',
                     }
                 ]
             }

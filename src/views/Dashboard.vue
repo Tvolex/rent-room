@@ -17,6 +17,8 @@
         components: {
             Header,
             Dashboard,
+            Statistics: Dashboard.components.Statistics,
+            MyRooms: Dashboard.components.MyRooms,
             Footer
         },
         data: () => {

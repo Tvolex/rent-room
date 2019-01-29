@@ -31,7 +31,20 @@ export default new Router({
         {
             path: '/dashboard',
             name: 'dashboard',
-            component: Dashboard
+            component:  Dashboard,
+            redirect: '/dashboard/statistics',
+            children: [
+                {
+                    path: 'statistics',
+                    name: 'statistics',
+                    component: Dashboard.components.Statistics,
+                },
+                {
+                    path: 'rooms',
+                    name: 'MyRooms',
+                    component:  Dashboard.components.MyRooms,
+                }
+            ]
         },
         {
             path: '/register',
