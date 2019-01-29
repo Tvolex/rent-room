@@ -31,6 +31,9 @@
                             </v-list-tile-title>
 
                         </v-list-tile-content>
+                        <v-list-tile-action  v-if="user" class="Logout" @click="Logout">
+                            <v-icon>exit_to_app</v-icon>
+                        </v-list-tile-action>
                     </v-list-tile>
                     <v-list-tile
                             v-for="(item, i) in items"
@@ -75,6 +78,8 @@
             Logout: function () {
                 this.$store.dispatch({ type: 'Logout' })
                     .catch(this.errorHandler);
+
+                this.redirect('/');
             },
 
         },
@@ -89,5 +94,9 @@
 <style scoped>
     .Header {
         max-height: 64px;
+    }
+
+    .Logout {
+        cursor: pointer;
     }
 </style>

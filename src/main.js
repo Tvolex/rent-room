@@ -33,7 +33,7 @@ Vue.mixin({
         },
     },
     methods: {
-        errorHandler: function (err, option) {
+        errorHandler: function (err, option = {}) {
             console.log(err);
 
             if (option.notify)

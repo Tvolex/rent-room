@@ -49,8 +49,7 @@ const actions = {
 
     Logout: async function({ commit }) {
         try {
-            const { data } = await axios.get(`/api/auth/logout`);
-            return data;
+            await axios.get(`/api/auth/logout`);
         } catch (err) {
             throw err;
         }
