@@ -1,36 +1,34 @@
 <template>
-    <v-layout row wrap justify-center align-center class="Dashboard">
-        <v-flex xs12>
-            <div class="content_wrapper">
-                <div class="content">
-                    <v-layout row wrap>
-                        <v-flex xs12>
-                            <div class="TabsPanel elevation-3">
-                                <v-tabs
-                                        slot="extension"
-                                        v-model="currentTab"
-                                        class="TabsPanelMain"
-                                        fixed-tabs
-                                        color="transparent"
-                                >
-                                    <v-tabs-slider color="rgb(184,184,184)"></v-tabs-slider>
-                                    <v-tab v-for="(tab, i) in tabs" :key="i" :to="tab.route">
-                                        <div class="tab" >
-                                            <v-icon>{{tab.icon}}</v-icon>
-                                            {{tab.title}}
-                                        </div>
-                                    </v-tab>
-                                </v-tabs>
-                            </div>
-                        </v-flex>
-                        <v-flex xs10>
-                            <router-view/>
-                        </v-flex>
-                    </v-layout>
-                </div>
-            </div>
-        </v-flex>
-    </v-layout>
+    <div class="content_wrapper">
+        <div class="content">
+            <v-layout row wrap justify-center align-center>
+                <v-flex xs12>
+                    <div class="TabsPanel elevation-3">
+                        <v-tabs
+                                slot="extension"
+                                v-model="currentTab"
+                                class="TabsPanelMain"
+                                fixed-tabs
+                                color="transparent"
+                        >
+                            <v-tabs-slider color="rgb(184,184,184)"></v-tabs-slider>
+                            <v-tab v-for="(tab, i) in tabs" :key="i" :to="tab.route">
+                                <div class="tab" >
+                                    <v-icon>{{tab.icon}}</v-icon>
+                                    {{tab.title}}
+                                </div>
+                            </v-tab>
+                        </v-tabs>
+                    </div>
+                </v-flex>
+                <v-flex xs10>
+                    <router-view/>
+                </v-flex>
+            </v-layout>
+        </div>
+    </div>
+
+
 </template>
 
 <script>
@@ -42,11 +40,7 @@
             Statistics,
             MyRooms
         },
-        async beforeMount() {
-            if (!this.user && !await this.$store.dispatch({ type: 'Auth' }).catch(err => this.errorHandler(err, {notify: true}))) {
-                this.redirect('/login');
-            }
-        },
+
         data: () => {
             return {
                 currentTab: null,

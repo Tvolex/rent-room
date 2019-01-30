@@ -28,6 +28,7 @@
                         {
                             data: new Array(20).fill(1).map(el => el + Math.random() * 50),
                             type: 'area',
+                            name: 'test',
                             color: 'black',
                             fillColor: {
                                 linearGradient: [0, 0, 600, 0],
