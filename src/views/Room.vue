@@ -1,9 +1,9 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12>
+  <div class="content_wrapper">
+    <div class="content">
       <InfoRoom></InfoRoom>
-    </v-flex>
-  </v-layout>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -21,5 +21,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

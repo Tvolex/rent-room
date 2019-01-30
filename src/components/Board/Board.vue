@@ -1,44 +1,40 @@
 <template>
+    <div class="content_inner">
     <v-layout class="Board" row wrap>
         <v-flex xs12>
-            <div class="content_wrapper">
-                <div class="content">
-                    <Filters></Filters>
-                    <div class="content_inner">
-                        <v-layout row wrap>
-                            <v-flex xs12 sm2>
-                                <Navbar typeChanged="typeChanged" numberOfRoomsChanged="numberOfRoomsChanged" ></Navbar>
-                            </v-flex>
-                            <v-flex xs12 sm10 name="rooms" ref="rooms">
-                                <div v-if="loading">
-                                    <Shadows></Shadows>
-                                </div>
-                                <Rooms v-if="!loading && rooms && rooms.length" :rooms="rooms"></Rooms>
-                                <v-layout v-else row wrap>
-                                    <v-flex xs12 v-if="rooms && !rooms.length && !loading">
-                                        <v-hover>
-                                            <v-card class="card-empty" slot-scope="{ hover }" >
-                                                <v-card-title primary-title>
-                                                    <div>
-                                                        <div class="headline">No items</div>
-                                                        <span class="grey--text">Empty</span>
-                                                    </div>
-                                                </v-card-title>
-                                                <v-card-actions>
-                                                    <v-btn flat @click="refresh">Refresh</v-btn>
-                                                </v-card-actions>
-                                            </v-card>
-                                        </v-hover>
-                                    </v-flex>
-                                </v-layout>
+            <Filters></Filters>
+                <v-layout row wrap>
+                    <v-flex xs12 sm2>
+                        <Navbar typeChanged="typeChanged" numberOfRoomsChanged="numberOfRoomsChanged" ></Navbar>
+                    </v-flex>
+                    <v-flex xs12 sm10 name="rooms" ref="rooms">
+                        <div v-if="loading">
+                            <Shadows></Shadows>
+                        </div>
+                        <Rooms v-if="!loading && rooms && rooms.length" :rooms="rooms"></Rooms>
+                        <v-layout v-else row wrap>
+                            <v-flex xs12 v-if="rooms && !rooms.length && !loading">
+                                <v-hover>
+                                    <v-card class="card-empty" slot-scope="{ hover }" >
+                                        <v-card-title primary-title>
+                                            <div>
+                                                <div class="headline">No items</div>
+                                                <span class="grey--text">Empty</span>
+                                            </div>
+                                        </v-card-title>
+                                        <v-card-actions>
+                                            <v-btn flat @click="refresh">Refresh</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-hover>
                             </v-flex>
                         </v-layout>
-                    </div>
-                    <Pagination @pageChanged="getRooms"></Pagination>
-                </div>
-            </div>
+                    </v-flex>
+                </v-layout>
+            <Pagination @pageChanged="getRooms"></Pagination>
         </v-flex>
     </v-layout>
+    </div>
 </template>
 
 <script>

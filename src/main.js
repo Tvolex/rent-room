@@ -1,6 +1,8 @@
 import Vue from 'vue'
+import Chart from 'chart.js'
 import Vuetify from 'vuetify'
 import ElementUI from 'element-ui';
+import VueChartkick from 'vue-chartkick'
 import 'element-ui/lib/theme-chalk/index.css';
 import Notificator from './utils/notificator';
 import App from './App.vue'
@@ -21,6 +23,8 @@ Vue.use(Vuetify, {
         error: '#b71c1c'
     }
 });
+Vue.use(VueChartkick, { adapter: Chart });
+
 Vue.use(Notificator);
 
 Vue.mixin({

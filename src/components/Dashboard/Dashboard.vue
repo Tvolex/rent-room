@@ -1,26 +1,34 @@
 <template>
-    <v-layout row wrap justify-center class="Dashboard">
-        <v-flex xs12 md10 lg6>
-
-            <v-tabs
-                    slot="extension"
-                    v-model="currentTab"
-                    fixed-tabs
-                    color="transparent"
-            >
-                <v-tabs-slider color="rgb(184,184,184)"></v-tabs-slider>
-
-                <v-tab v-for="(tab, i) in tabs" :key="i" :to="tab.route">
-                    <div class="tab" >
-                        <v-icon>{{tab.icon}}</v-icon>
-                        {{tab.title}}
-                    </div>
-                </v-tab>
-
-            </v-tabs>
-        </v-flex>
-        <v-flex xs10>
-            <router-view/>
+    <v-layout row wrap justify-center align-center class="Dashboard">
+        <v-flex xs12>
+            <div class="content_wrapper">
+                <div class="content">
+                    <v-layout row wrap>
+                        <v-flex xs12>
+                            <div class="TabsPanel elevation-3">
+                                <v-tabs
+                                        slot="extension"
+                                        v-model="currentTab"
+                                        class="TabsPanelMain"
+                                        fixed-tabs
+                                        color="transparent"
+                                >
+                                    <v-tabs-slider color="rgb(184,184,184)"></v-tabs-slider>
+                                    <v-tab v-for="(tab, i) in tabs" :key="i" :to="tab.route">
+                                        <div class="tab" >
+                                            <v-icon>{{tab.icon}}</v-icon>
+                                            {{tab.title}}
+                                        </div>
+                                    </v-tab>
+                                </v-tabs>
+                            </div>
+                        </v-flex>
+                        <v-flex xs10>
+                            <router-view/>
+                        </v-flex>
+                    </v-layout>
+                </div>
+            </div>
         </v-flex>
     </v-layout>
 </template>
@@ -68,8 +76,24 @@
 </script>
 
 <style scoped>
-    .Dashboard {
-        padding: 30px 0;
+
+    .TabsPanel {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background-color: #ffffff;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        padding: 0 50px;
+    }
+
+    .TabsPanelMain {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        /*border-left: lightgray 1px solid;*/
+        /*border-right: lightgray 1px solid;*/
+        padding: 15px 30px;
     }
 
     .tab {

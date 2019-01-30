@@ -1,6 +1,8 @@
 <template>
-  <div class="home">
-    <Board/>
+  <div class="content_wrapper">
+    <div class="content">
+      <Board></Board>
+    </div>
   </div>
 </template>
 

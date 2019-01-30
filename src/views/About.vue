@@ -1,16 +1,24 @@
 <template>
   <div class="About">
-    <div>About page</div>
+    <div class="content_wrapper">
+      <div class="content">
+        <About></About>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-
-export default {
-  name: 'About-View',
-  data: () => {
-    return {
+  import About from '@/components/About'
+  export default {
+    name: 'About-View',
+    components: {
+      About
+    },
+    data: () => {
+      return {
+      }
     }
   }
-}
 </script>
