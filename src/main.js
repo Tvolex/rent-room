@@ -3,6 +3,7 @@ import Chart from 'chart.js'
 import Vuetify from 'vuetify'
 import ElementUI from 'element-ui';
 import VueChartkick from 'vue-chartkick'
+import HighchartsVue from 'highcharts-vue'
 import 'element-ui/lib/theme-chalk/index.css';
 import Notificator from './utils/notificator';
 import App from './App.vue'
@@ -11,6 +12,7 @@ import store from './store/'
 
 import 'vuetify/dist/vuetify.min.css'
 import 'v-toaster/dist/v-toaster.css';
+import 'highcharts/css/highcharts.css'
 
 Vue.config.productionTip = process.env.NODE_ENV || false;
 
@@ -23,6 +25,7 @@ Vue.use(Vuetify, {
         error: '#b71c1c'
     }
 });
+Vue.use(HighchartsVue);
 Vue.use(VueChartkick, { adapter: Chart });
 
 Vue.use(Notificator);
