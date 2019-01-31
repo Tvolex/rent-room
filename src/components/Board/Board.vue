@@ -1,11 +1,11 @@
 <template>
     <div class="content_inner">
-    <v-layout class="Board" row wrap>
-        <v-flex xs12>
-            <Filters></Filters>
+        <v-layout class="Board" row wrap>
+            <v-flex xs12>
+                <AdditionalFilters></AdditionalFilters>
                 <v-layout row wrap>
                     <v-flex xs12 sm2>
-                        <Navbar typeChanged="typeChanged" numberOfRoomsChanged="numberOfRoomsChanged" ></Navbar>
+                        <Filters typeChanged="typeChanged" numberOfRoomsChanged="numberOfRoomsChanged" ></Filters>
                     </v-flex>
                     <v-flex xs12 sm10 name="rooms" ref="rooms">
                         <div v-if="loading">
@@ -31,9 +31,9 @@
                         </v-layout>
                     </v-flex>
                 </v-layout>
-            <Pagination @pageChanged="getRooms"></Pagination>
-        </v-flex>
-    </v-layout>
+                <Pagination @pageChanged="getRooms"></Pagination>
+            </v-flex>
+        </v-layout>
     </div>
 </template>
 
@@ -41,20 +41,20 @@
     import axios from 'axios'
 
     import Rooms from './Rooms'
-    import Navbar from './Navbar'
+    import Filters from './Filters'
+    import AdditionalFilters from './AdditionalFilters'
     import Pagination from './Pagination'
     import Shadows from './ShadowCard'
-    import Filters from './Filters'
 
 
     export default {
         name: 'Board',
         components: {
             Rooms,
-            Navbar,
+            Filters,
+            AdditionalFilters,
             Shadows,
-            Pagination,
-            Filters
+            Pagination
         },
         async beforeMount () {
             this.getRooms();

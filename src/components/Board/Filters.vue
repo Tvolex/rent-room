@@ -1,58 +1,145 @@
 <template>
-  <div class="filters elevation-3">
-    <div class="filters_main">
-      <div class="filters_main_keywords">
-        <label class="filters_label">Search</label>
-        <input type="text" class="filters_input" name="Search" placeholder="Search">
+  <div class="navbar">
+    <div class="navbar_inner elevation-3">
+      <div class="navbar_title_wrapper">
+        <h3 class="navbar_title">
+          Term
+          <v-icon>refresh</v-icon>
+        </h3>
       </div>
-      <div class="filters_main_price">
-        <label class="price_label">Price</label>
-        <input type="text" class="filters_input" name="price-from" placeholder="500">
-        <span class="filters_main_price_separation">-</span>
-        <input type="text" class="filters_input" name="price-from" placeholder="50000">
+      <ul class="navbar_brands_list">
+        <li class="navbar_brands_item"
+            v-for="( term, i ) in terms"
+            :key="i"
+        >
+          <label :for="`term_${i}`" class="navbar_brands_label">
+            <input :id="`term_${i}`" class="navbar_checkbox" type="checkbox" :name="`term_${i}`">
+            <v-checkbox
+                    v-model="selectedTerm"
+                    class="navbar_checkbox"
+                    :name="`term_${i}`"
+                    :value="term.title"
+                    :label="term.title"
+            ></v-checkbox>
+          </label>
+          <span class="navbar_number">{{term.count}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar_inner elevation-3">
+      <div class="navbar_title_wrapper">
+        <h3 class="navbar_title">
+          Type
+          <v-icon>refresh</v-icon>
+        </h3>
       </div>
-      <Count @countChanged="getRooms"></Count>
-      <Sort @sortChanged="getRooms"></Sort>
+      <ul class="navbar_brands_list">
+        <li class="navbar_brands_item"
+            v-for="( type, i ) in types"
+            :key="i"
+        >
+          <label :for="`type_${i}`" class="navbar_brands_label">
+            <v-checkbox
+                    v-model="selectedType"
+                    class="navbar_checkbox"
+                    :name="`type_${i}`"
+                    :value="type.title"
+                    :label="type.title"
+            ></v-checkbox>
+          </label>
+          <span class="navbar_number">{{type.count}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar_inner elevation-3">
+      <div class="navbar_title_wrapper">
+        <h3 class="navbar_title">
+          Number of rooms
+          <v-icon>refresh</v-icon>
+        </h3>
+      </div>
+      <ul class="navbar_brands_list">
+        <li class="navbar_brands_item"
+            v-for="( numb, i ) in numberOfRooms"
+            :key="i"
+        >
+          <label :for="`number_${i}`" class="navbar_brands_label">
+            <input :id="`number_${i}`" class="navbar_checkbox" type="checkbox" :name="`number_${i}`">
+            <v-checkbox
+                    v-model="selectedRooms"
+                    class="navbar_checkbox"
+                    :name="`number_${i}`"
+                    :value="numb.title"
+                    :label="numb.title"
+            ></v-checkbox>
+          </label>
+          <span class="navbar_number">{{numb.count}}</span>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-  import Sort from './Sort'
-  import Count from './Count'
   export default {
-    name: "Filters",
-    components: {
-      Sort,
-        Count
+    name: 'Filters',
+    beforeMount() {
+
     },
-    data: () => {
+    data () {
       return {
+        checkbox: false,
+        localFilter: {},
+        selectedTerm: [],
+        selectedType: [],
+        selectedRooms: [],
+
+        terms: [
+          { title: 'Short Term', count: 0 },
+          { title: 'Long Term', count: 0 },
+        ],
+        types: [
+          { title: 'Apartment', count: 0 },
+          { title: 'Room', count: 0 },
+          { title: 'Hotel', count: 0 },
+          { title: 'Hostel', count: 0}
+        ],
+        numberOfRooms: [
+          { title: '1', count: 0 },
+          { title: '2', count: 0 },
+          { title: '3', count: 0 },
+          { title: '4+', count: 0 }
+        ]
       }
     },
     computed: {
-      sort: function () {
-        return this.$store.getters.sort
-      }
-    },
-    methods: {
-      getRooms() {
-        this.$store.commit('page', { type: 'page', value: 1 });
-        this.$emit('pageChanged', 1);
 
+    },
+
+    watch: {
+      selectedTerm: function (term, oldTerm) {
+        this.localFilter.term = term;
+        this.$store.commit('filter', { type: 'filter', value: this.localFilter });
         this.$parent.getRooms();
-      }
+      },
+
+      selectedType: function (type, oldType) {
+        this.localFilter.type = type;
+        this.$store.commit('filter', { type: 'filter', value: this.localFilter });
+        this.$parent.getRooms();
+      },
+
+      selectedRooms: function (rooms, oldRooms) {
+        this.localFilter.rooms = rooms;
+        this.$store.commit('filter', { type: 'filter', value: this.localFilter });
+        this.$parent.getRooms();
+      },
+
+
     }
   }
 </script>
 
 <style scoped>
- .price_label {
-   margin-right: 20px;
-   font-size: 14px;
-   line-height: 1;
-   font-weight: 400;
-   text-transform: uppercase;
-   color: #a1a8bd;
- }
+
 </style>
