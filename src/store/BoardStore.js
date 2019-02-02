@@ -7,6 +7,7 @@ const state = {
     room: null,
     rooms: [],
     total: 1,
+    search: null,
     sort: { by: "price", order: -1 },
     filter: {},
 };
@@ -26,6 +27,9 @@ const getters = {
     },
     total (state) {
         return state.total
+    },
+    search (state) {
+        return state.search
     },
     sort (state) {
         return state.sort
@@ -53,6 +57,10 @@ const mutations = {
     },
 
     total (state, { type, value }) {
+        state[type] = value
+    },
+
+    search (state, { type, value }) {
         state[type] = value
     },
 
