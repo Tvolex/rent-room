@@ -49,13 +49,19 @@
             minPrice: {
                 get: function () {
                     const filter = this.$store.getters.filter;
-                    const { price = {min: 0, max: null  }} = filter;
+                    const { price = { min: 0, max: null  } } = filter;
 
                     return price.min;
                 },
                 set: function (minPrice) {
+                    if (isNaN(parseInt(minPrice))) {
+                        minPrice = undefined;
+                    }
+
                     const filter = this.$store.getters.filter;
-                    const { price = {min: parseInt(minPrice), max: undefined  }} = filter;
+                    const { price = {min: minPrice, max: undefined  } } = filter;
+
+                    price.min = minPrice;
                     filter.price = price;
 
                     this.$store.commit('filter', { type: 'filter', value: filter });
@@ -66,13 +72,19 @@
             maxPrice: {
                 get: function () {
                     const filter = this.$store.getters.filter;
-                    const { price = {min: 0, max: null  }} = filter;
+                    const { price = { min: 0, max: null  } } = filter;
 
                     return price.max;
                 },
                 set: function (maxPrice) {
+                    if (isNaN(parseInt(maxPrice))) {
+                        maxPrice = undefined;
+                    }
+
                     const filter = this.$store.getters.filter;
-                    const { price = {min: 0, max: parseInt(maxPrice) }} = filter;
+                    const { price = { min: undefined, max: maxPrice } } = filter;
+
+                    price.max = maxPrice;
                     filter.price = price;
 
                     this.$store.commit('filter', { type: 'filter', value: filter });
