@@ -3,7 +3,7 @@
         <v-layout class="Board" row wrap>
             <v-flex xs12>
                 <AdditionalFilters></AdditionalFilters>
-                <v-layout row wrap>
+                <v-layout row wrap class="FiltersAndRooms">
                     <v-flex xs12 sm2>
                         <Filters typeChanged="typeChanged" numberOfRoomsChanged="numberOfRoomsChanged" ></Filters>
                     </v-flex>
@@ -93,6 +93,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+    .FiltersAndRooms {
+        max-width: 1500px;
+        margin: 0 auto;
+    }
 
     .card-empty {
         margin: 0 0 20px 15px;
