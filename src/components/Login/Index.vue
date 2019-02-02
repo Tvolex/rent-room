@@ -1,12 +1,12 @@
 <template>
-    <v-layout row wrap>
-        <v-flex xs12>
-            <Header></Header>
-            <Login v-if="route === ('/login')"></Login>
-            <Register v-if="route === ('/register')"></Register>
-            <Footer></Footer>
-        </v-flex>
-    </v-layout>
+    <div class="content_inner">
+        <v-layout row wrap >
+            <v-flex xs12 class="space-for-login">
+                <Login v-if="route === ('/login')"></Login>
+                <Register v-if="route === ('/register')"></Register>
+            </v-flex>
+        </v-layout>
+    </div>
 </template>
 
 <script>
@@ -27,5 +27,7 @@
 </script>
 
 <style scoped>
-
+    .space-for-login {
+        min-height: 100vh;
+    }
 </style>

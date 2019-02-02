@@ -1,8 +1,8 @@
 <template>
-    <div class="login">
-        <Header></Header>
-        <Register></Register>
-        <Footer></Footer>
+    <div class="content_wrapper">
+        <div class="content">
+            <Register></Register>
+        </div>
     </div>
 </template>
 
