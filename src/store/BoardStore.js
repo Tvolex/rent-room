@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _ from 'lodash'
 
 const state = {
     page: 1,
@@ -66,7 +67,7 @@ const mutations = {
 
 const actions = {
     async getRooms({commit, state}) {
-        const { filter, search, page, count , sort } = state;
+        const { filter, search, page, count, sort } = state;
 
         try {
             const { data }= await axios.get('/api/room/list', {
@@ -79,7 +80,7 @@ const actions = {
                 }
             });
 
-            commit('total', { type: 'total', value: data && data.total ? data.total : 0} );
+            commit('total', { type: 'total', value: data && data.total ? data.total : 0 } );
             commit('rooms', { type: 'rooms', value: data && data.items ? data.items : [] });
 
         } catch (err) {
