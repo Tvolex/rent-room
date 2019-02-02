@@ -49,7 +49,7 @@
             minPrice: {
                 get: function () {
                     const filter = this.$store.getters.filter;
-                    const { price = { min: 0, max: null  } } = filter;
+                    const { price = { min: undefined, max: null  } } = filter;
 
                     return price.min;
                 },
@@ -72,7 +72,7 @@
             maxPrice: {
                 get: function () {
                     const filter = this.$store.getters.filter;
-                    const { price = { min: 0, max: null  } } = filter;
+                    const { price = { min: undefined, max: null  } } = filter;
 
                     return price.max;
                 },
