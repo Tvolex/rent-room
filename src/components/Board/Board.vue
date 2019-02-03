@@ -72,7 +72,7 @@
             getRooms: function () {
                 this.loading = true;
                 this.$store.dispatch({type: 'getRooms'}).then()
-                    .catch(this.errorHandler)
+                    .catch(err => this.errorHandler(err, { notify: true }))
                     .finally(() => {
                     this.loading = false;
                 })
