@@ -15,7 +15,7 @@
                     <label :for="`term_${i}`" class="navbar_brands_label">
                         <input :id="`term_${i}`" class="navbar_checkbox" type="checkbox" :name="`term_${i}`">
                         <v-checkbox
-                                v-model="selectedTerms"
+                                v-model.lazy="selectedTerms"
                                 class="navbar_checkbox"
                                 :name="`term_${i}`"
                                 :value="term.title"
@@ -39,7 +39,7 @@
                 >
                     <label :for="`type_${i}`" class="navbar_brands_label">
                         <v-checkbox
-                                v-model="selectedTypes"
+                                v-model.lazy="selectedTypes"
                                 class="navbar_checkbox"
                                 :name="`type_${i}`"
                                 :value="type.title"
@@ -64,7 +64,7 @@
                     <label :for="`number_${i}`" class="navbar_brands_label">
                         <input :id="`number_${i}`" class="navbar_checkbox" type="checkbox" :name="`number_${i}`">
                         <v-checkbox
-                                v-model="selectedRooms"
+                                v-model.lazy="selectedRooms"
                                 class="navbar_checkbox"
                                 :name="`number_${i}`"
                                 :value="numb.title"
@@ -86,7 +86,6 @@
         data () {
             return {
                 checkbox: false,
-                localFilter: {},
                 selectedTerms: [],
                 selectedTypes: [],
                 selectedRooms: [],
@@ -113,23 +112,33 @@
 
         },
 
+      methods: {
+          updateFilter: function ({term, type, rooms}) {
+            const filter = this.$store.getters.filter;
+
+            if (term)
+              filter.term = term;
+            if (type)
+              filter.type = type;
+            if (rooms)
+              filter.rooms = rooms;
+
+            this.$store.commit('filter', { type: 'filter', value: filter });
+            this.$parent.getRooms();
+          }
+      },
+
         watch: {
             selectedTerms: function (term, oldTerm) {
-                this.localFilter.term = term;
-                this.$store.commit('filter', { type: 'filter', value: this.localFilter });
-                this.$parent.getRooms();
+                this.updateFilter({term});
             },
 
             selectedTypes: function (type, oldType) {
-                this.localFilter.type = type;
-                this.$store.commit('filter', { type: 'filter', value: this.localFilter });
-                this.$parent.getRooms();
+              this.updateFilter({type});
             },
 
             selectedRooms: function (rooms, oldRooms) {
-                this.localFilter.rooms = rooms;
-                this.$store.commit('filter', { type: 'filter', value: this.localFilter });
-                this.$parent.getRooms();
+              this.updateFilter({rooms});
             },
 
 

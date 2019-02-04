@@ -39,7 +39,7 @@ input, button, textarea {
   background: none;
 }
 
-button, label {
+button {
   cursor: pointer;
 }
 
