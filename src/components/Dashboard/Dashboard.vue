@@ -21,7 +21,7 @@
                         </v-tabs>
                     </div>
                 </v-flex>
-                <v-flex xs10>
+                <v-flex xs12>
                     <router-view/>
                 </v-flex>
             </v-layout>

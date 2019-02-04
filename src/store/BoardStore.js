@@ -94,6 +94,26 @@ const actions = {
         } catch (err) {
             throw err;
         }
+    },
+
+    async getMyRooms({commit, state}) {
+        const { filter, search, page, count, sort } = state;
+
+        try {
+            const { data } = await axios.get('/api/room/list/my', {
+                params: {
+                    filter,
+                    search,
+                    page,
+                    count,
+                    sort,
+                }
+            });
+
+            return data;
+        } catch (err) {
+            throw err;
+        }
     }
 };
 

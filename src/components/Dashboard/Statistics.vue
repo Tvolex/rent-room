@@ -1,7 +1,7 @@
 <template>
     <v-layout row wrap justify-center class="Statistics">
-        <v-flex xs12>
-            <v-card style="background: rgba(255,255,255,0.4)" class="my-3 pa-3 text-xs-center">
+        <v-flex xs12 >
+            <v-card class="my-3 pa-3 text-xs-center">
                 <v-card-title >
                     <h3><b>Test</b></h3>
                 </v-card-title>
@@ -21,20 +21,20 @@
         data: () => {
             return {
                 statistics: {
-                    data: [["Jan", 4], ["Feb", 2], ["Mar", 10], ["Apr", 5], ["May", 3]]
+                    data: [["Jan", 4], ["Feb", 2], ["Mar", 10], ["Apr", 5], ["May", 3]],
                 },
                 AreaChartOptions:  {
                     series: [
                         {
-                            data: new Array(20).fill(1).map(el => el + Math.random() * 50),
+                            data: new Array(30).fill(1).map(el => el + Math.floor(Math.random() * 15) + 40),
                             type: 'area',
                             name: 'test',
-                            color: 'black',
+                            color: 'orange',
                             fillColor: {
                                 linearGradient: [0, 0, 600, 0],
                                 stops: [
-                                    [0, 'black'],
-                                    [1, 'grey']
+                                    [0, 'red'],
+                                    [1, 'orange']
                                 ]
                             },
 
