@@ -41,10 +41,10 @@ Vue.mixin({
     },
     methods: {
         errorHandler: function (err, option = {}) {
-            console.log(err);
+            const { response: { data } } = err;
 
             if (option.notify)
-                this.$notificator('error', err.message);
+                this.$notificator('error', data.message);
         },
 
         redirect (path) {

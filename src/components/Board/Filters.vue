@@ -4,8 +4,14 @@
             <div class="navbar_title_wrapper">
                 <h3 class="navbar_title">
                     Term
-                    <v-icon>refresh</v-icon>
                 </h3>
+                <div class="selectAllFilters">
+                    <v-checkbox
+                            v-model.lazy="allTerms"
+                            color="grey"
+                            label="All"
+                    ></v-checkbox>
+                </div>
             </div>
             <ul class="navbar_brands_list">
                 <li class="navbar_brands_item"
@@ -17,6 +23,7 @@
                         <v-checkbox
                                 v-model.lazy="selectedTerms"
                                 class="navbar_checkbox"
+                                color="grey"
                                 :name="`term_${i}`"
                                 :value="term.title"
                                 :label="term.title"
@@ -29,8 +36,14 @@
             <div class="navbar_title_wrapper">
                 <h3 class="navbar_title">
                     Type
-                    <v-icon>refresh</v-icon>
                 </h3>
+                <div class="selectAllFilters">
+                    <v-checkbox
+                            v-model.lazy="allTypes"
+                            color="grey"
+                            label="All"
+                    ></v-checkbox>
+                </div>
             </div>
             <ul class="navbar_brands_list">
                 <li class="navbar_brands_item"
@@ -41,6 +54,7 @@
                         <v-checkbox
                                 v-model.lazy="selectedTypes"
                                 class="navbar_checkbox"
+                                color="grey"
                                 :name="`type_${i}`"
                                 :value="type.title"
                                 :label="type.title"
@@ -52,9 +66,15 @@
         <div class="navbar_inner elevation-3">
             <div class="navbar_title_wrapper">
                 <h3 class="navbar_title">
-                    Number of rooms
-                    <v-icon>refresh</v-icon>
+                    Rooms
                 </h3>
+                <div class="selectAllFilters">
+                     <v-checkbox
+                        v-model.lazy="allRooms"
+                        color="grey"
+                        label="All"
+                     ></v-checkbox>
+                </div>
             </div>
             <ul class="navbar_brands_list">
                 <li class="navbar_brands_item"
@@ -66,6 +86,7 @@
                         <v-checkbox
                                 v-model.lazy="selectedRooms"
                                 class="navbar_checkbox"
+                                color="grey"
                                 :name="`number_${i}`"
                                 :value="numb.title"
                                 :label="`${numb.title}`"
@@ -89,6 +110,9 @@
                 selectedTerms: [],
                 selectedTypes: [],
                 selectedRooms: [],
+                allTypes: false,
+                allTerms: false,
+                allRooms: false,
 
                 terms: [
                     { title: 'Short Term' },
@@ -141,11 +165,25 @@
               this.updateFilter({rooms});
             },
 
+            allTerms: function (all, oldAll) {
+                all ? this.terms.map(term => this.selectedTerms.push(term.title)) : this.selectedTerms = [];
+            },
+
+            allTypes: function (all, oldAll) {
+                all ? this.types.map(type => this.selectedTypes.push(type.title)) : this.selectedTypes = [];
+            },
+
+            allRooms: function (all, oldAll) {
+                all ? this.numberOfRooms.map(room => this.selectedRooms.push(room.title)) : this.selectedRooms = [];
+            },
+
 
         }
     }
 </script>
 
 <style scoped>
+    .selectAllFilters {
 
+    }
 </style>
