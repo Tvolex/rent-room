@@ -75,7 +75,7 @@
                                     round
                                     :loading="loading"
                                     :disabled="!isFormValid || loading"
-                                    @click.native="Login"
+                                    @click.native="Register"
                             >
                                 Save me
                                 <span slot="loader" class="custom-loader">
@@ -112,6 +112,7 @@
                 contact: null,
                 password: null,
                 confirmPassword: null,
+                avatar: null,
 
                 nameRules: [
                     v => !!v || 'Name is required!'
@@ -156,9 +157,32 @@
                         }
                     }).then(res => {
                         console.log(res.data);
+                        this.avatar = res.data._id;
                     }).catch(this.errorHandler)
                 }
+            },
+
+            Register () {
+                if (this.isFormValid) {
+                    this.$store.dispatch({
+                        type: 'Register' ,
+                        name: this.name,
+                        surname: this.surname,
+                        email: this.email,
+                        contact: this.contact,
+                        password: this.password,
+                        confirmPassword: this.confirmPassword,
+                        avatar: this.avatar,
+                    })
+                        .then((data) => data ? this.redirect('/dashboard') : null)
+                        .catch(err => {
+                            console.log(err);
+                            this.errorHandler(err, { notify: true })
+                        });
+                }
             }
+
+
         }
     }
 </script>

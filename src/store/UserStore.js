@@ -34,6 +34,24 @@ const actions = {
         }
     },
 
+    Register: async function({ dispatch, commit }, { name, surname, email, password, confirmPassword, contact, avatar }) {
+        try {
+            const { data } = await axios.post(`/api/user/register`, {
+                name, surname, email, password, confirmPassword, contact, avatar
+            });
+
+            console.log(data);
+
+            return dispatch({ type: 'Login' , email, password })
+                .then((data) => data)
+                .catch(err => err);
+        } catch (err) {
+            err.message = err.response && err.response.data && err.response.data.message ?
+                err.response.data.message : "Something went wrong :(";
+            throw err;
+        }
+    },
+
     Auth: async function({ commit }) {
         try {
             const { data } = await axios.get(`/api/auth/check`);
