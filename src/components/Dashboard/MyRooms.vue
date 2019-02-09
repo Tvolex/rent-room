@@ -5,12 +5,11 @@
                 v-for="(room, i) in rooms"
                 :key="i"
         >
-            <v-card hover class="elevation-5 card-room" height="250">
+            <v-card hover class="elevation-5 card-room" height="250" @click="openRoom(room)">
                 <v-img
                         :src="room.photos && room.photos.length && room.photos[0].location ? room.photos[0].location.fit : '@/assets/no-photo.png'"
                         height="250"
                 >
-
                     <v-card-text>
                         <div class="text-xs-right white--text">
                             <v-icon dark>visibility</v-icon>
@@ -27,7 +26,7 @@
             </v-card>
         </v-flex>
         <ShadowCard v-if="loading" :count="5"></ShadowCard>
-        <v-flex xs12 sm6 md4>
+        <v-flex xs12 sm6 md4 lg3>
             <v-card class="card-add-new-room" color="transparent" height="250">
                 <v-card-text>
                     <div class="button-add-new ">
@@ -84,7 +83,12 @@
                     .finally(() => {
                         this.loading = false;
                     })
-            }
+            },
+
+            openRoom: function (room) {
+                this.$store.commit('room', { type: 'room', value: room });
+                this.$router.push(`/room/${room._id}`);
+            },
         },
         filters: {
             parseDate: function (value) {
@@ -117,16 +121,21 @@
      }
 
     .icon-add-new {
-        margin-top: 13px;
-        margin-left: 13px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     .card-add-new-room {
-        margin: 0 0 20px 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        cursor: pointer;
         border: 2px dashed #b3b3b3  !important;
         -webkit-box-shadow: none !important;
         box-shadow: none !important;
-        cursor: pointer;
+        margin: 0 0 20px 15px;
     }
 
     .card-add-new-room:hover {
@@ -139,14 +148,13 @@
     }
 
     .button-add-new {
+        position: relative;
         background: rgba(0,0,0, 0.25);
         height: 50px;
         width: 50px;
-        margin-top: 75px;
-        margin-left: 100px;
         cursor: pointer;
         border-radius: 50%;
-        padding: 0 auto;
+        margin: 0 auto;
     }
 
     .button-add-new-title {
