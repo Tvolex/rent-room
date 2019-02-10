@@ -3,7 +3,7 @@
         <div class="content">
             <v-layout row wrap justify-center align-center>
                 <v-flex xs12>
-                    <div class="TabsPanel elevation-3">
+                    <div class="TabsPanel">
                         <v-tabs
                                 slot="extension"
                                 v-model="currentTab"
@@ -75,7 +75,6 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        background-color: #ffffff;
         border-radius: 10px;
         margin-bottom: 30px;
         padding: 0 50px;

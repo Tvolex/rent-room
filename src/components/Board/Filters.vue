@@ -166,15 +166,18 @@
             },
 
             allTerms: function (all, oldAll) {
-                all ? this.terms.map(term => this.selectedTerms.push(term.title)) : this.selectedTerms = [];
+                all ? this.selectedTerms = this.terms.map(term => term.title) :
+                    this.selectedTerms = [];
             },
 
             allTypes: function (all, oldAll) {
-                all ? this.types.map(type => this.selectedTypes.push(type.title)) : this.selectedTypes = [];
+                all ? this.selectedTypes = this.types.map(type => type.title) :
+                    this.selectedTypes = [];
             },
 
             allRooms: function (all, oldAll) {
-                all ? this.numberOfRooms.map(room => this.selectedRooms.push(room.title)) : this.selectedRooms = [];
+                all ? this.selectedRooms = this.numberOfRooms.map(room => room.title) :
+                    this.selectedRooms = [];
             },
 
 

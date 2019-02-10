@@ -1,6 +1,6 @@
 <template>
     <v-layout row wrap>
-        <v-flex xs12 sm6 md4
+        <v-flex xs12 sm6 md4 lg3
                 v-for="shadow in count"
                 :key="shadow">
             <v-card hover class="card-shadow" >

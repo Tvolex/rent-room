@@ -1,43 +1,164 @@
 <template>
-    <v-layout row wrap class="MyRooms">
-        <v-flex xs12 sm6 md4 lg3
-                v-if="rooms"
-                v-for="(room, i) in rooms"
+    <v-layout row wrap>
+        <v-flex xs12 md3 class="px-5">
+            <h1>My Rooms</h1>
+        </v-flex>
+
+        <v-flex
+                xs12 md3 class="pa-3 additionalInfo"
+                v-for="(info, i) in information"
                 :key="i"
         >
-            <v-card hover class="elevation-5 card-room" height="250" @click="openRoom(room)">
-                <v-img
-                        :src="room.photos && room.photos.length && room.photos[0].location ? room.photos[0].location.fit : '@/assets/no-photo.png'"
-                        height="250"
-                >
-                    <v-card-text>
-                        <div class="text-xs-right white--text">
-                            <v-icon dark>visibility</v-icon>
-                            {{room.views}}
+            <div>
+                <span class="title-info">{{info.title}}</span>
+                <h3>{{info.value}} {{info.text}}</h3>
+            </div>
+        </v-flex>
+
+        <v-flex xs12 md3 class="px-3 my-5">
+            <div class="navbar">
+                <div class="navbar_inner elevation-3">
+                    <div class="navbar_title_wrapper">
+                        <h3 class="navbar_title">
+                            Term
+                        </h3>
+                        <div class="selectAllFilters">
+                            <v-checkbox
+                                    v-model.lazy="allTerms"
+                                    color="grey"
+                                    label="All"
+                            ></v-checkbox>
                         </div>
-                    </v-card-text>
-                   <div class="info-about-room">
-                       <v-card-text class="title-room">
-                           <div class="headline white--text"> {{room.title}}</div>
-                           <div class="white--text">{{room.createdBy.date | parseDate}}</div>
-                       </v-card-text>
-                   </div>
-                </v-img>
-            </v-card>
-        </v-flex>
-        <ShadowCard v-if="loading" :count="5"></ShadowCard>
-        <v-flex xs12 sm6 md4 lg3>
-            <v-card class="card-add-new-room" color="transparent" height="250">
-                <v-card-text>
-                    <div class="button-add-new ">
-                        <v-icon class="icon-add-new">add</v-icon>
                     </div>
-                </v-card-text>
-                <v-card-text class="text-xs-center title-new-ad " align="center">
-                    <p>Here you can create a new ad.</p>
-                </v-card-text>
-            </v-card>
+                    <ul class="navbar_brands_list">
+                        <li class="navbar_brands_item"
+                            v-for="( term, i ) in terms"
+                            :key="i"
+                        >
+                            <label :for="`term_${i}`" class="navbar_brands_label">
+                                <input :id="`term_${i}`" class="navbar_checkbox" type="checkbox" :name="`term_${i}`">
+                                <v-checkbox
+                                        v-model.lazy="selectedTerms"
+                                        class="navbar_checkbox"
+                                        color="grey"
+                                        :name="`term_${i}`"
+                                        :value="term.title"
+                                        :label="term.title"
+                                ></v-checkbox>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar_inner elevation-3">
+                    <div class="navbar_title_wrapper">
+                        <h3 class="navbar_title">
+                            Type
+                        </h3>
+                        <div class="selectAllFilters">
+                            <v-checkbox
+                                    v-model.lazy="allTypes"
+                                    color="grey"
+                                    label="All"
+                            ></v-checkbox>
+                        </div>
+                    </div>
+                    <ul class="navbar_brands_list">
+                        <li class="navbar_brands_item"
+                            v-for="( type, i ) in types"
+                            :key="i"
+                        >
+                            <label :for="`type_${i}`" class="navbar_brands_label">
+                                <v-checkbox
+                                        v-model.lazy="selectedTypes"
+                                        class="navbar_checkbox"
+                                        color="grey"
+                                        :name="`type_${i}`"
+                                        :value="type.title"
+                                        :label="type.title"
+                                ></v-checkbox>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar_inner elevation-3">
+                    <div class="navbar_title_wrapper">
+                        <h3 class="navbar_title">
+                            Rooms
+                        </h3>
+                        <div class="selectAllFilters">
+                            <v-checkbox
+                                    v-model.lazy="allRooms"
+                                    color="grey"
+                                    label="All"
+                            ></v-checkbox>
+                        </div>
+                    </div>
+                    <ul class="navbar_brands_list">
+                        <li class="navbar_brands_item"
+                            v-for="( numb, i ) in numberOfRooms"
+                            :key="i"
+                        >
+                            <label :for="`number_${i}`" class="navbar_brands_label">
+                                <input :id="`number_${i}`" class="navbar_checkbox" type="checkbox" :name="`number_${i}`">
+                                <v-checkbox
+                                        v-model.lazy="selectedRooms"
+                                        class="navbar_checkbox"
+                                        color="grey"
+                                        :name="`number_${i}`"
+                                        :value="numb.title"
+                                        :label="`${numb.title}`"
+                                ></v-checkbox>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </v-flex>
+
+        <v-flex xs12 md9 class="my-5">
+            <ShadowCard v-if="loading" :count="5"></ShadowCard>
+            <v-layout row wrap class="MyRooms px-3" align-start>
+                <v-flex xs12 sm6 md4 lg3
+                        v-if="!loading && rooms"
+                        class=""
+                        v-for="(room, i) in rooms"
+                        :key="i"
+                >
+                    <v-card hover class="elevation-5 ma-1  card-room" height="250" @click="openRoom(room)">
+                        <v-img
+                                :src="room.photos && room.photos.length && room.photos[0].location ? room.photos[0].location.fit : '@/assets/no-photo.png'"
+                                height="250"
+                        >
+                            <v-card-text>
+                                <div class="text-xs-right white--text">
+                                    <v-icon dark>visibility</v-icon>
+                                    {{room.views}}
+                                </div>
+                            </v-card-text>
+                            <div class="info-about-room">
+                                <v-card-text class="title-room">
+                                    <div class="headline white--text"> {{room.title}}</div>
+                                    <div class="white--text">{{room.createdBy.date | parseDate}}</div>
+                                </v-card-text>
+                            </div>
+                        </v-img>
+                    </v-card>
+                </v-flex>
+                <v-flex xs12 sm6 md4 lg3>
+                    <v-card class="card-add-new-room ma-1" color="transparent" height="250">
+                        <v-card-text>
+                            <div class="button-add-new ">
+                                <v-icon class="icon-add-new">add</v-icon>
+                            </div>
+                        </v-card-text>
+                        <v-card-text class="text-xs-center title-new-ad " align="center">
+                            <p>Here you can create a new ad.</p>
+                        </v-card-text>
+                    </v-card>
+                </v-flex>
+            </v-layout>
+        </v-flex>
+
     </v-layout>
 </template>
 
@@ -63,6 +184,35 @@
                 sort: { by: "price", order: -1 },
                 filter: {},
                 loading: false,
+                information: [
+                    { name: 'count', title: 'Total count of my rooms', value: 0, text: 'rooms.' },
+                    { name: 'use' ,title: 'Now in use', value: 0, text: 'in use.'},
+                    { name: 'free', title: 'Now free', value: 0, text: 'is free.'}
+                ],
+                checkbox: false,
+                selectedTerms: [],
+                selectedTypes: [],
+                selectedRooms: [],
+                allTypes: false,
+                allTerms: false,
+                allRooms: false,
+
+                terms: [
+                    { title: 'Short Term' },
+                    { title: 'Long Term' },
+                ],
+                types: [
+                    { title: 'Apartment' },
+                    { title: 'Room' },
+                    { title: 'Hotel' },
+                    { title: 'Hostel' }
+                ],
+                numberOfRooms: [
+                    { title: 1 },
+                    { title: 2 },
+                    { title: 3 },
+                    { title: 4 }
+                ]
             }
         },
 
@@ -78,6 +228,13 @@
                 }).then(data => {
                     this.rooms = data.items;
                     this.total = data.total;
+                    this.information = this.information.map(info => {
+                        if (_.isEqual(info.name, 'count')) {
+                            info.value = data.total;
+                        }
+
+                        return info;
+                    });
                 })
                     .catch(err => this.errorHandler(err, { notify: true }))
                     .finally(() => {
@@ -97,6 +254,37 @@
                 date.locale('uk');
                 return date.format('LLLL');
             },
+        },
+        watch: {
+            selectedTerms: function (term, oldTerm) {
+                this.filter.term = term;
+                this.getMyRooms();
+            },
+
+            selectedTypes: function (type, oldType) {
+                this.filter.type = type;
+                this.getMyRooms();
+            },
+
+            selectedRooms: function (rooms, oldRooms) {
+                this.filter.rooms = rooms;
+                this.getMyRooms();
+            },
+
+            allTerms: function (all, oldAll) {
+                all ? this.selectedTerms = this.terms.map(term => term.title) :
+                    this.selectedTerms = [];
+            },
+
+            allTypes: function (all, oldAll) {
+                all ? this.selectedTypes = this.types.map(type => type.title) :
+                    this.selectedTypes = [];
+            },
+
+            allRooms: function (all, oldAll) {
+                all ? this.selectedRooms = this.numberOfRooms.map(room => room.title) :
+                    this.selectedRooms = [];
+            },
         }
     }
 </script>
@@ -106,8 +294,15 @@
         min-height: 100vh;
     }
 
+    .additionalInfo {
+        border-left: grey 2px dashed;
+    }
+
+    .title-info {
+        color: grey;
+    }
+
     .card-room {
-        margin: 0 0 20px 15px;
         border-radius: 10px;
     }
 
