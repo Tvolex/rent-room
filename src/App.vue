@@ -13,7 +13,7 @@
   import Footer from './components/Footer'
 
   export default {
-    name: "Login",
+    name: "App",
     components: {
       Header,
       Footer,

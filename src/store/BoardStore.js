@@ -112,6 +112,20 @@ const actions = {
         } catch (err) {
             throw err;
         }
+    },
+
+    async getCountRoomsByUser({commit, state}, { id = null }) {
+        const { user } = state;
+
+        if (!id && user)
+            id = user._id;
+
+        try {
+            const { data } = await axios.get(`/api/room/list/count/${id}`);
+            return data;
+        } catch (err) {
+            throw err;
+        }
     }
 };
 

@@ -46,6 +46,7 @@
                                         :label="term.title"
                                 ></v-checkbox>
                             </label>
+                            <label class="v-label theme--light">{{term.count}}</label>
                         </li>
                     </ul>
                 </div>
@@ -77,6 +78,7 @@
                                         :label="type.title"
                                 ></v-checkbox>
                             </label>
+                            <label class="v-label theme--light">{{type.count}}</label>
                         </li>
                     </ul>
                 </div>
@@ -109,6 +111,7 @@
                                         :label="`${numb.title}`"
                                 ></v-checkbox>
                             </label>
+                            <label class="v-label theme--light">{{numb.count}}</label>
                         </li>
                     </ul>
                 </div>
@@ -172,6 +175,7 @@
         },
         beforeMount() {
             this.getMyRooms();
+            this.getCountRoomsByUser();
         },
         data: () => {
             return {
@@ -240,6 +244,36 @@
                     .finally(() => {
                         this.loading = false;
                     })
+            },
+
+            getCountRoomsByUser: function () {
+                const self = this;
+
+                this.$store.dispatch({type: 'getCountRoomsByUser'}).then(data => {
+                    console.log(data);
+                    self.numberOfRooms = self.numberOfRooms.map(numb => {
+                        const index = _.findIndex(data.rooms, { name: numb.title });
+                        return {
+                            title: numb.title,
+                            count: data.rooms[index] ? data.rooms[index].count : 0
+                        }
+                    });
+                    self.terms = self.terms.map(term => {
+                        const index = _.findIndex(data.terms, { name: term.title });
+                        return {
+                            title: term.title,
+                            count: data.terms[index] ? data.terms[index].count : 0
+                        }
+                    });
+                    self.types = self.types.map(type => {
+                        const index = _.findIndex(data.types, { name: type.title });
+                        return {
+                            title: type.title,
+                            count: data.types[index] ? data.types[index].count : 0
+                        }
+                    });
+                })
+                    .catch(err => this.errorHandler(err, { notify: true }))
             },
 
             openRoom: function (room) {
