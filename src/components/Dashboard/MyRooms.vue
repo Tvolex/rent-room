@@ -1,5 +1,6 @@
 <template>
     <v-layout row wrap>
+        <NewRoom :dialog="dialogNewRoom"></NewRoom>
         <v-flex xs12 md3 class="px-5">
             <h1>My Rooms</h1>
         </v-flex>
@@ -120,7 +121,7 @@
 
         <v-flex xs12 md9 class="my-5">
             <ShadowCard v-if="loading" :count="5"></ShadowCard>
-            <v-layout row wrap class="MyRooms px-3" align-start>
+            <v-layout row wrap v-if="!loading && rooms" class=" px-3" align-start>
                 <v-flex xs12 sm6 md4 lg3
                         v-if="!loading && rooms"
                         class=""
@@ -148,7 +149,8 @@
                     </v-card>
                 </v-flex>
                 <v-flex xs12 sm6 md4 lg3>
-                    <v-card class="card-add-new-room ma-1" color="transparent" height="250">
+                    <v-card class="card-add-new-room ma-1" color="transparent" height="250"
+                            @click="dialogNewRoom.open = !dialogNewRoom.open">
                         <v-card-text>
                             <div class="button-add-new ">
                                 <v-icon class="icon-add-new">add</v-icon>
@@ -168,10 +170,13 @@
 <script>
     import moment from 'moment'
     import ShadowCard from './ShadowCard';
+    import NewRoom from './newRoom';
+
     export default {
         name: "MyRooms",
         components: {
             ShadowCard,
+            NewRoom,
         },
         beforeMount() {
             this.getMyRooms();
@@ -193,6 +198,7 @@
                     { name: 'use' ,title: 'Now in use', value: 0, text: 'in use.'},
                     { name: 'free', title: 'Now free', value: 0, text: 'is free.'}
                 ],
+                dialogNewRoom: { open: false },
                 checkbox: false,
                 selectedTerms: [],
                 selectedTypes: [],

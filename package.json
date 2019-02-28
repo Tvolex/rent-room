@@ -38,6 +38,7 @@
     "vue-chartkick": "^0.5.0",
     "vue-content-loading": "^1.5.3",
     "vue-date": "^1.2.0",
+    "vue-drag-drop": "^1.1.4",
     "vue-full-calendar": "^2.7.0",
     "vue-plain-pagination": "^0.3.0",
     "vue-router": "^3.0.1",

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from '@/views/Home.vue'
 import Room from './views/Room.vue'
 import Login from './views/Login.vue'
 import NotFound from './views/NotFound.vue'

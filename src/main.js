@@ -4,6 +4,7 @@ import Vuetify from 'vuetify'
 import ElementUI from 'element-ui';
 import VueChartkick from 'vue-chartkick'
 import HighchartsVue from 'highcharts-vue'
+import VueDragDrop from 'vue-drag-drop';
 import 'element-ui/lib/theme-chalk/index.css';
 import Notificator from './utils/notificator';
 import App from './App.vue'
@@ -17,7 +18,6 @@ import 'highcharts/css/highcharts.css'
 
 Vue.config.productionTip = process.env.NODE_ENV || false;
 
-Vue.use(ElementUI);
 Vue.use(Vuetify, {
     theme: {
         primary: '#3f51b5',
@@ -26,8 +26,10 @@ Vue.use(Vuetify, {
         error: '#b71c1c'
     }
 });
+Vue.use(ElementUI);
 Vue.use(HighchartsVue);
 Vue.use(VueChartkick, { adapter: Chart });
+Vue.use(VueDragDrop);
 
 Vue.use(Notificator);
 
