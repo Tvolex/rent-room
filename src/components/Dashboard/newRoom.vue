@@ -11,17 +11,20 @@
             <v-card-text>
                 <v-layout row wrap justify-center align-center >
                     <v-flex xs10>
+                        <el-upload
+                                class="upload-demo"
+                                drag
+                                action="/api/upload/photo"
+                                :on-preview="handlePreviewUpload"
+                                :on-success="handleSuccessUpload"
+                                :on-error="handleErrorUpload"
+                                :on-remove="handleRemoveUpload"
+                                list-type="picture"
+                                multiple>
+                            <i class="el-icon-plus"></i>
+                            <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+                        </el-upload>
 
-                        <drag @dragover="dragover_handler" @drop="drop_handler">
-                            <v-img
-                                    @click="addPhoto"
-                                    :src="require('@/assets/drop-files-here-extra.jpg')"
-                                    class="addPhoto"
-                                    id="no-photo"
-                                    name="no-photo"
-                            >
-                            </v-img>
-                        </drag>
                     </v-flex>
 
                     <v-flex xs7 offset-xs3>
@@ -131,27 +134,31 @@
                     { title: 2 },
                     { title: 3 },
                     { title: 4 }
-                ]
+                ],
+                photos: [],
+                over: false,
+                dialogImageUrl: '',
+                dialogVisible: false
             }
         },
         methods: {
-            addPhoto: function () {
-
+            handleRemoveUpload(file, fileList) {
+                const { _id: fileId = null } = file.response;
+                this.$store.dispatch({ type: 'removeFile', fileId })
+                    .catch(err => this.errorHandler(err, { notify: true }));
             },
-            dragover_handler: function (event) {
-                event.preventDefault();
-                // Set the dropEffect to move
-                event.dataTransfer.dropEffect = "move"
+            handlePreviewUpload(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
             },
-            drop_handler: function (event) {
-                event.preventDefault();
-                // Get the id of the target and add the moved element to the target's DOM
-                const data = event.dataTransfer.getData("text/plain");
-                event.target.appendChild(document.getElementById(data));
+            handleSuccessUpload(response, file, fileList) {
+                this.photos.push(response._id)
+            },
+            handleErrorUpload(err, file, fileList) {
+                this.$notify({ type: 'error', message: err.message });
             }
         },
         watch: {
-
         }
     }
 </script>
@@ -163,5 +170,10 @@
 
     .addPhoto {
         cursor: pointer;
+    }
+
+    .drop.over {
+        border-color: #aaa;
+        background: #ccc;
     }
 </style>
