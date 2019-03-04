@@ -7,9 +7,12 @@
     >
       <v-hover>
         <v-card class="card-room" slot-scope="{ hover }" >
+
           <v-img
-            :src="room.photos && room.photos.length && room.photos[0].location ? room.photos[0].location.fit : '@/assets/no-photo.png'"
-            height="200px"
+                  v-if="room.photos && room.photos.length"
+                  :src="getPhoto(room.photos)"
+                  alt="Photo"
+                  height="200px"
           >
             <v-expand-transition>
               <div
@@ -21,7 +24,7 @@
               </div>
             </v-expand-transition>
           </v-img>
-
+          <img v-else src="@/assets/no-photo.png" />
           <v-card-title primary-title>
             <div>
               <div class="headline">{{room.title}}</div>
@@ -58,11 +61,15 @@ export default {
       this.$store.commit('room', { type: 'room', value: room })
       this.$router.push(`/room/${room._id}`)
     },
+    getPhoto: function (photos) {
+      return photos && photos.length && photos[0].location ?
+              photos[0].location.fit :  photos[0].location.original;
+    }
   },
   filters: {
     limitDescription: function (value) {
       if (value && value.length > 53) {
-        return value.slice(0, 50) + '...';
+        return value.slice(0, 40) + '...';
       }
       return value;
     }
