@@ -26,19 +26,28 @@
           </v-img>
           <img v-else src="@/assets/no-photo.png" />
           <v-card-title primary-title>
-            <div>
+            <div class="room-info-table">
               <div class="headline">{{room.title}}</div>
-              <span class="grey--text">{{room.description | limitDescription}}</span>
+              <div class="grey--text" style="float: left">
+                Price: <span class="grey--text text--darken-2">₴{{room.price}}</span>
+                <v-spacer></v-spacer>
+                Rooms: <span class="grey--text text--darken-2">{{room.rooms}}</span>
+              </div>
+              <div class="grey--text" style="float: right">
+                Type: <span class="grey--text text--darken-2">{{room.type}}</span>
+                <v-spacer></v-spacer>
+                Term: <span class="grey--text text--darken-2">{{room.term}}</span>
+              </div>
             </div>
           </v-card-title>
 
+          <v-card-text>
+            <span class="grey--text">{{room.description | limitDescription}}</span>
+          </v-card-text>
+
           <v-card-actions>
-            <v-btn flat @click="openRoom(room)">Open</v-btn>
-            <v-btn flat color="purple lighten-3" >Description</v-btn>
-            <v-spacer></v-spacer>
+            <v-btn flat @click="openRoom(room)" block>Show more</v-btn>
           </v-card-actions>
-
-
         </v-card>
       </v-hover>
     </v-flex>
@@ -78,6 +87,9 @@ export default {
 </script>
 
 <style scoped>
+  .room-info-table {
+    width: 100% ;
+  }
   .card-room {
     margin: 0 0 20px 15px;
     border-radius: 10px;

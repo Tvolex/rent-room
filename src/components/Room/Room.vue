@@ -37,20 +37,43 @@
                                 <v-flex xs12 md8 >
                                     <span class="grey--text">{{room.createdBy.date | parseDate}}</span><br>
                                     <span class="headline">{{room.title}}</span><br>
-                                    <span>{{room.description}}</span>
                                 </v-flex>
                                 <v-flex xs12 md2 class="text-xs-center">
                                     <span class="headline">₴{{room.price || 'No price'}}</span>
                                 </v-flex>
                                 <v-flex xs10 class="mx-2">
                                     <span>
-                                        <v-icon>visibility</v-icon> {{room.views || 0}}
+
                                     </span>
                                 </v-flex>
                             </v-layout>
-                            <div>
-                            </div>
                         </v-card-title>
+                        <v-card-text>
+                            <v-layout row wrap justify-center>
+                                <v-flex xs10 class="pt-0 px-5 pb-3">
+                                    <div class="grey--text" style="float: left">
+                                        Price: <span class="grey--text text--darken-2">₴{{room.price}}</span>
+                                        <v-spacer></v-spacer>
+                                        Rooms: <span class="grey--text text--darken-2">{{room.rooms}}</span>
+                                    </div>
+
+                                    <div class="grey--text" style="float: right">
+                                        Type: <span class="grey--text text--darken-2">{{room.type}}</span>
+                                        <v-spacer></v-spacer>
+                                        Term: <span class="grey--text text--darken-2">{{room.term}}</span>
+                                    </div>
+                                </v-flex>
+                                <v-flex xs10>
+                                    <span>{{room.description}}</span>
+                                </v-flex>
+                                <v-flex xs10>
+                                    <span>
+                                        <v-icon >visibility</v-icon> {{room.views || 0}}
+                                    </span>
+                                </v-flex>
+
+                            </v-layout>
+                        </v-card-text>
                         <v-card-actions>
                             <v-btn flat color="orange">Share</v-btn>
                             <v-btn flat color="orange">Explore</v-btn>
