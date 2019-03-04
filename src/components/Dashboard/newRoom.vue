@@ -9,85 +9,133 @@
             </v-card-title>
 
             <v-card-text>
-                <v-layout row wrap justify-center align-center >
-                    <v-flex xs10>
-                        <el-upload
-                                class="upload-demo"
-                                drag
-                                action="/api/upload/photo"
-                                :on-preview="handlePreviewUpload"
-                                :on-success="handleSuccessUpload"
-                                :on-error="handleErrorUpload"
-                                :on-remove="handleRemoveUpload"
-                                list-type="picture"
-                                multiple>
-                            <i class="el-icon-plus"></i>
-                            <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-                        </el-upload>
+                <v-form v-model="isFormValid" name="publishRoom">
+                    <v-layout row wrap justify-center align-center >
+                        <v-flex xs10>
+                            <el-upload
+                                    class="upload-demo"
+                                    drag
+                                    action="/api/upload/photo"
+                                    :on-preview="handlePreviewUpload"
+                                    :on-success="handleSuccessUpload"
+                                    :on-error="handleErrorUpload"
+                                    :on-remove="handleRemoveUpload"
+                                    list-type="picture"
+                                    multiple>
+                                <i class="el-icon-plus"></i>
+                                <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+                            </el-upload>
 
-                    </v-flex>
+                        </v-flex>
 
-                    <v-flex xs7 offset-xs3>
-                        <v-text-field
-                                label="Title of the room"
-                                append-outer-icon="edit"
-                                color="grey darken-1"
-                                placeholder="Please, write more info about the room"
-                        ></v-text-field>
-                    </v-flex>
-                    <v-flex xs2 md3>
-                        <div class="text-xs-center text-label-selects">
-                            <b>Type:</b>
-                        </div>
-                    </v-flex>
-                    <v-flex xs10 md7>
-                        <v-select
-                                append-outer-icon="edit"
-                                :items="types"
-                                color="grey darken-1"
-                                item-text="title"
-                                placeholder="Select type">
-                        </v-select>
-                    </v-flex>
+                        <v-flex xs2 md3>
+                            <div class="text-xs-center text-label-selects">
+                                <b>Title:</b>
+                            </div>
+                        </v-flex>
+                        <v-flex xs10 md7>
+                            <v-text-field
+                                    label="Title of the room"
+                                    append-outer-icon="edit"
+                                    v-model="RoomTitle"
+                                    :rules="Rules.title"
+                                    color="grey darken-1"
+                                    placeholder="Please, write headline for the room"
+                            ></v-text-field>
+                        </v-flex>
 
-                    <v-flex xs2 md3>
-                        <div class="text-xs-center text-label-selects">
-                            <b>Terms:</b>
-                        </div>
-                    </v-flex>
-                    <v-flex xs10 md7>
-                        <v-select
-                                append-outer-icon="edit"
-                                :items="terms"
-                                color="grey darken-1"
-                                item-text="title"
-                                multiple
-                                placeholder="Select terms">
-                        </v-select>
-                    </v-flex>
+                        <v-flex xs2 md3>
+                            <div class="text-xs-center text-label-selects">
+                                <b>Price:</b>
+                            </div>
+                        </v-flex>
+                        <v-flex xs10 md7>
+                            <v-text-field
+                                    append-outer-icon="monetization_on"
+                                    v-model="RoomPrice"
+                                    :rules="Rules.price"
+                                    color="grey darken-1"
+                                    item-text="title"
+                                    placeholder="Set a price">
+                            </v-text-field>
+                        </v-flex>
 
-                    <v-flex xs2 md3>
-                        <div class="text-xs-center text-label-selects">
-                            <b>Rooms:</b>
-                        </div>
-                    </v-flex>
-                    <v-flex xs10 md7>
-                        <v-select
-                                append-outer-icon="edit"
-                                :items="numberOfRooms"
-                                color="grey darken-1"
-                                item-text="title"
-                                placeholder="Choose number of rooms">
-                        </v-select>
-                    </v-flex>
+                        <v-flex xs2 md3>
+                            <div class="text-xs-center text-label-selects">
+                                <b>Type:</b>
+                            </div>
+                        </v-flex>
+                        <v-flex xs10 md7>
+                            <v-select
+                                    append-outer-icon="edit"
+                                    :items="types"
+                                    v-model="RoomType"
+                                    :rules="Rules.type"
+                                    color="grey darken-1"
+                                    item-text="title"
+                                    placeholder="Select type">
+                            </v-select>
+                        </v-flex>
 
-                </v-layout>
+                        <v-flex xs2 md3>
+                            <div class="text-xs-center text-label-selects">
+                                <b>Terms:</b>
+                            </div>
+                        </v-flex>
+                        <v-flex xs10 md7>
+                            <v-select
+                                    append-outer-icon="edit"
+                                    :items="terms"
+                                    v-model="RoomTerm"
+                                    :rules="Rules.term"
+                                    color="grey darken-1"
+                                    item-text="title"
+                                    placeholder="Select terms">
+                            </v-select>
+                        </v-flex>
+
+                        <v-flex xs2 md3>
+                            <div class="text-xs-center text-label-selects">
+                                <b>Rooms:</b>
+                            </div>
+                        </v-flex>
+                        <v-flex xs10 md7>
+                            <v-select
+                                    append-outer-icon="edit"
+                                    :items="numberOfRooms"
+                                    v-model="RoomNumb"
+                                    color="grey darken-1"
+                                    :rules="Rules.rooms"
+                                    item-text="title"
+                                    placeholder="Choose number of rooms">
+                            </v-select>
+                        </v-flex>
+
+                        <v-flex xs2 md3>
+                            <div class="text-xs-center text-label-selects">
+                                <b>Description:</b>
+                            </div>
+                        </v-flex>
+                        <v-flex  xs10 md7>
+                            <v-textarea
+                                    label="Description of the room"
+                                    append-outer-icon="edit"
+                                    v-model="RoomDescription"
+                                    :rules="Rules.description"
+                                    color="grey darken-1"
+                                    placeholder="Please, write more info about the room"
+                            ></v-textarea>
+                        </v-flex>
+
+                    </v-layout>
+                </v-form>
 
             </v-card-text>
 
             <v-divider></v-divider>
 
             <v-card-actions>
+                <v-spacer></v-spacer>
                 <v-btn
                         color="red"
                         flat
@@ -99,10 +147,12 @@
                 <v-btn
                         color="primary"
                         flat
-                        @click="dialog.open = false"
+                        :disabled="!isFormValid"
+                        @click="publishRoom"
                 >
                     Publish
                 </v-btn>
+                <v-spacer></v-spacer>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -135,7 +185,38 @@
                     { title: 3 },
                     { title: 4 }
                 ],
-                photos: [],
+
+                RoomDescription: null,
+                RoomTitle: null,
+                RoomPhotos: [],
+                RoomTerm: null,
+                RoomType: null,
+                RoomNumb: null,
+                RoomPrice: 0,
+
+                isFormValid: false,
+
+                Rules: {
+                    title: [
+                        v => !!v || 'Please, enter title for you room'
+                    ],
+                    price: [
+                        v => !!v || 'Please, enter the price'
+                    ],
+                    term: [
+                        v => !!v || 'Please, select term'
+                    ],
+                    type: [
+                        v => !!v || 'Please, select type'
+                    ],
+                    rooms: [
+                        v => !!v || 'Please, select number of the rooms'
+                    ],
+                    description: [
+                        v => !!v || 'Please, write more info about the room'
+                    ]
+                },
+
                 over: false,
                 dialogImageUrl: '',
                 dialogVisible: false
@@ -152,11 +233,28 @@
                 this.dialogVisible = true;
             },
             handleSuccessUpload(response, file, fileList) {
-                this.photos.push(response._id)
+                this.RoomPhotos.push(response._id)
             },
             handleErrorUpload(err, file, fileList) {
                 this.$notify({ type: 'error', message: err.message });
-            }
+            },
+            publishRoom() {
+                this.$store.dispatch({
+                    type: 'publishRoom',
+                    RoomDescription: this.RoomDescription,
+                    RoomTitle: this.RoomTitle,
+                    RoomPhotos: this.RoomPhotos,
+                    RoomTerm: this.RoomTerm,
+                    RoomType: this.RoomType,
+                    RoomNumb: this.RoomNumb,
+                    RoomPrice: this.RoomPrice,
+                }).then(data => {
+                    console.log(data);
+                })
+
+                this.dialog.open = false
+
+            },
         },
         watch: {
         }
@@ -165,6 +263,7 @@
 
 <style scoped>
     .text-label-selects {
+        vertical-align: top;
         color: rgb(167, 167, 167);
     }
 
