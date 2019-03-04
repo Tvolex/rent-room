@@ -22,9 +22,15 @@
                     <v-card>
                         <v-carousel>
                             <v-carousel-item
+                                    v-if="item && item.location && item.location.original"
                                     v-for="(item, i) in room.photos" :key="i"
                                     :src="item.location.original"
                             ></v-carousel-item>
+                            <img
+                                    v-else
+                                    src="@/assets/no-photo.png"
+                                    alt="Photo"
+                            />
                         </v-carousel>
                         <v-card-title>
                             <v-layout row wrap justify-center>
