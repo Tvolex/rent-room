@@ -23,7 +23,7 @@
                         <v-carousel>
                             <v-carousel-item
                                     v-for="(item, i) in room.photos" :key="i"
-                                    :src="item.location.fit"
+                                    :src="item.location.original"
                             ></v-carousel-item>
                         </v-carousel>
                         <v-card-title>
