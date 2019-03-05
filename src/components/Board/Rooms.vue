@@ -25,7 +25,7 @@
             </v-expand-transition>
           </v-img>
           <img v-else src="@/assets/no-photo.png" />
-          <v-card-title primary-title>
+          <v-card-title >
             <div class="room-info-table">
               <div class="headline">{{room.title}}</div>
               <div class="grey--text" style="float: left">
@@ -41,7 +41,7 @@
             </div>
           </v-card-title>
 
-          <v-card-text>
+          <v-card-text class="py-0">
             <span class="grey--text">{{room.description | limitDescription}}</span>
           </v-card-text>
 
