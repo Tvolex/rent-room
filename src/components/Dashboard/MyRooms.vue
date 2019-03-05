@@ -228,8 +228,6 @@
 
         methods: {
             getMyRooms: function () {
-                const { id: userId } = this.user;
-
                 this.loading = true;
                 this.$store.dispatch({type: 'getMyRooms',
                     filter: this.filter,
@@ -237,7 +235,6 @@
                     page: this.page,
                     count: this.count,
                     sort: this.sort,
-                    userId,
                 }).then(data => {
                     this.rooms = data.items;
                     this.total = data.total;
