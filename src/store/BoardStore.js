@@ -96,9 +96,9 @@ const actions = {
         }
     },
 
-    async getMyRooms({commit, state}, { filter, search, page, count, sort }) {
+    async getMyRooms({commit, state}, { filter, search, page, count, sort, userId = '' }) {
         try {
-            const { data } = await axios.get('/api/room/list/my', {
+            const { data } = await axios.get(`/api/room/list/${userId}`, {
                 params: {
                     filter,
                     search,

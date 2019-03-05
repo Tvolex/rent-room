@@ -178,7 +178,7 @@
             ShadowCard,
             NewRoom,
         },
-        beforeMount() {
+        mounted() {
             this.getMyRooms();
             this.getCountRoomsByUser();
         },
@@ -228,6 +228,8 @@
 
         methods: {
             getMyRooms: function () {
+                const { id: userId } = this.user;
+
                 this.loading = true;
                 this.$store.dispatch({type: 'getMyRooms',
                     filter: this.filter,
@@ -235,6 +237,7 @@
                     page: this.page,
                     count: this.count,
                     sort: this.sort,
+                    userId,
                 }).then(data => {
                     this.rooms = data.items;
                     this.total = data.total;
@@ -287,6 +290,13 @@
                 this.$router.push(`/room/${room._id}`);
             },
         },
+
+        computed: {
+            user : function () {
+                return this.$store.getters.user;
+            }
+        },
+
         filters: {
             parseDate: function (value) {
                 console.log(moment().locale());
