@@ -38,25 +38,23 @@
                                     alt="Photo"
                             />
                         </v-carousel>
-                        <v-card-title>
+                        <v-card-title class="pa-2">
                             <v-layout row wrap justify-center>
-                                <v-flex xs12 md8 >
+                                <v-flex xs12 md10 pr-5>
                                     <span class="grey--text">{{room.createdBy.date | parseDate}}</span><br>
-                                    <span class="headline">{{room.title}}</span><br>
-                                </v-flex>
-                                <v-flex xs12 md2 class="text-xs-center">
-                                    <span class="headline">₴{{room.price || 'No price'}}</span>
-                                </v-flex>
-                                <v-flex xs10 class="mx-2">
-                                    <span>
+                                    <div style="float: left">
 
-                                    </span>
+                                        <span class="headline">{{room.title}}</span><br>
+                                    </div>
+                                    <div style="float: right">
+                                        <span class="headline">₴{{room.price || 'No price'}}</span>
+                                    </div>
                                 </v-flex>
                             </v-layout>
                         </v-card-title>
-                        <v-card-text>
+                        <v-card-text class="pa-2">
                             <v-layout row wrap justify-center>
-                                <v-flex xs10 class="pt-0 px-5 pb-3">
+                                <v-flex xs10 class="pt-0 pr-5 pb-2">
                                     <div class="grey--text" style="float: left">
                                         Price: <span class="grey--text text--darken-2">₴{{room.price}}</span>
                                         <v-spacer></v-spacer>
