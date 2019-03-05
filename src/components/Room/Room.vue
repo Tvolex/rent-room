@@ -1,6 +1,12 @@
 <template>
     <div class="content_inner">
         <v-layout row wrap justify-center>
+            <v-flex xs10 md8>
+                <div class="text-xs-justify button-back" @click="$router.back()">
+                    <v-icon>arrow_back</v-icon>
+                    <span style="font-size: larger">Back</span>
+                </div>
+            </v-flex>
             <v-flex xs12 md8 class="ma-3 room_card">
                 <div v-if="loading">
                     <v-card>
@@ -158,7 +164,15 @@
         min-height: 200px;
     }
 
+    .button-back {
+        width: 25%;
+        cursor: pointer;
+        color: #9e9e9e !important;
+    }
 
+    .button-back:hover {
+        color: #2d2e33 !important;
+    }
 
     .el-carousel__item:nth-child(2n) {
         background-color: #99a9bf;
