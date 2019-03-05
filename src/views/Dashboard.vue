@@ -14,11 +14,7 @@
             Statistics: Dashboard.components.Statistics,
             MyRooms: Dashboard.components.MyRooms,
         },
-        async beforeMount() {
-            if (!this.user && !await this.$store.dispatch({ type: 'Auth' }).catch(err => this.errorHandler(err, {notify: true}))) {
-                this.redirect('/login');
-            }
-        },
+
         data: () => {
             return {
             }

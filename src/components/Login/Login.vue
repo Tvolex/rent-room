@@ -56,15 +56,6 @@
 <script>
     export default {
         name: "Login",
-        async beforeMount() {
-            if (this.user) {
-                this.redirect('/dashboard');
-            } else {
-                if (await this.$store.dispatch({ type: 'Auth' }).catch(this.errorHandler)) {
-                    this.redirect('/dashboard');
-                }
-            }
-        },
         data() {
             return {
                 isFormValid: false,

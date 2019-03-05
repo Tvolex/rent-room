@@ -6,10 +6,18 @@ import Login from './views/Login.vue'
 import NotFound from './views/NotFound.vue'
 import Register from './views/Register.vue'
 import Dashboard from './views/Dashboard.vue'
+import Store from './store';
 
 Vue.use(Router);
 
-export default new Router({
+const isAuth = async () => {
+    const isAuth = !!await Store.dispatch({ type: 'Auth' }).catch(err => false);
+
+    return (Store.getters.user && isAuth);
+};
+
+
+const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
@@ -69,5 +77,28 @@ export default new Router({
             name: 'not found',
             component: NotFound
         }
-    ]
-})
+    ],
+});
+
+router.beforeEach(async (to, from, next) => {
+
+
+    if (from.path.includes('login') && to.path.includes('dashboard'))
+        return next();
+
+    if (from.path.includes('dashboard') && to.path.includes('login'))
+        return next();
+
+    if (to.path.includes('dashboard')) {
+        if (!await isAuth())
+            return next({ path: '/login' });
+    }
+    else if (to.path.includes('login')) {
+        if (await isAuth())
+            return next({ path: '/dashboard' });
+    }
+
+    next();
+});
+
+export default router;

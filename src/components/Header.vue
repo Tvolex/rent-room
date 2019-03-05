@@ -8,7 +8,7 @@
                     <v-spacer></v-spacer>
                     <v-btn flat to="/about" class="hidden-xs-only">About</v-btn>
                     <v-btn flat to="/" class="hidden-xs-only">Home</v-btn>
-                    <v-btn flat to="/login" class="hidden-xs-only">{{user ? 'Dashboard' : 'Login'}}</v-btn>
+                    <v-btn flat :to="user ? '/dashboard' : '/login'" class="hidden-xs-only">{{user ? 'Dashboard' : 'Login'}}</v-btn>
                 </v-layout>
             </v-toolbar>
             <v-navigation-drawer
