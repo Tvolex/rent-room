@@ -71,7 +71,7 @@ export default {
       this.$router.push(`/room/${room._id}`)
     },
     getPhoto: function (photos) {
-      return photos && photos.length && photos[0].location ?
+      return photos && photos.length && photos[0].location && photos[0].location.fit ?
               photos[0].location.fit :  photos[0].location.original;
     }
   },
