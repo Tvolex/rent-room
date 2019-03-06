@@ -33,7 +33,7 @@
 
 <script>
     import MyRooms from './MyRooms'
-    import Statistics from './Statistics'
+    import Statistics from './Statistics/Index'
     export default {
         name: "Dashboard",
         components: {
