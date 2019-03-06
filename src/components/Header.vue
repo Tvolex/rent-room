@@ -4,12 +4,12 @@
             <v-toolbar >
                 <v-layout row wrap>
                     <v-toolbar-side-icon @click="sidebar = !sidebar"></v-toolbar-side-icon>
-                    <v-btn flat to="/">Home</v-btn>
+                    <v-btn flat to="/" active-class="default-btn-background">Home</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn flat to="/about" class="hidden-xs-only">About</v-btn>
-                    <v-btn flat to="/" class="hidden-xs-only">Home</v-btn>
-                    <v-btn flat :to="user ? '/dashboard' : '/login'" class="hidden-xs-only">{{user ? 'Dashboard' : 'Login'}}</v-btn>
-                    <v-btn flat v-if="user" to="/" @click="Logout">Exit <v-icon>exit_to_app</v-icon></v-btn>
+                    <v-btn flat to="/about" active-class="default-btn-background" class="hidden-xs-only">About</v-btn>
+                    <v-btn depressed flat to="/" active-class="default-btn-background" class="hidden-xs-only">Home</v-btn>
+                    <v-btn flat :to="user ? '/dashboard' : '/login'" active-class="default-btn-background" class="hidden-xs-only">{{user ? 'Dashboard' : 'Login'}}</v-btn>
+                    <v-btn flat v-if="user" to="/" active-class="default-btn-background" @click="Logout">Exit <v-icon>exit_to_app</v-icon></v-btn>
                 </v-layout>
             </v-toolbar>
             <v-navigation-drawer
@@ -95,6 +95,10 @@
 <style scoped>
     .Header {
         max-height: 64px;
+    }
+
+    .default-btn-background {
+        background-color: transparent !important;
     }
 
     .Logout {

@@ -10,7 +10,8 @@
 
           <v-img
                   v-if="room.photos && room.photos.length"
-                  :src="getPhoto(room.photos)"
+                  :src="getPhoto(room.photos, { lazy: false } )"
+                  :lazy-src="getPhoto(room.photos, { lazy: true })"
                   alt="Photo"
                   height="200px"
           >
@@ -70,15 +71,20 @@ export default {
       this.$store.commit('room', { type: 'room', value: room })
       this.$router.push(`/room/${room._id}`)
     },
-    getPhoto: function (photos) {
+    getPhoto: function (photos, options = {}) {
+      if (options.lazy) {
+        return photos && photos.length && photos[0].location && photos[0].location.thumb?
+                photos[0].location.thumb :  photos[0].location.fit;
+      }
+
       return photos && photos.length && photos[0].location && photos[0].location.fit ?
               photos[0].location.fit :  photos[0].location.original;
     }
   },
   filters: {
     limitDescription: function (value) {
-      if (value && value.length > 53) {
-        return value.slice(0, 40) + '...';
+      if (value && value.length > 47) {
+        return value.slice(0, 44) + '...';
       }
       return value;
     }
