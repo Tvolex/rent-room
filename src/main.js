@@ -27,7 +27,7 @@ Vue.use(Vuetify, {
     }
 });
 Vue.use(ElementUI);
-Vue.use(HighchartsVue);
+Vue.use(HighchartsVue, {tagName: 'charts'});
 Vue.use(VueChartkick, { adapter: Chart });
 Vue.use(VueDragDrop);
 

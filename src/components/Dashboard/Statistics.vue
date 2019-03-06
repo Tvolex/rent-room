@@ -1,12 +1,18 @@
 <template>
     <v-layout row wrap justify-center class="Statistics">
-        <MostViewed></MostViewed>
-        <v-flex xs6 class="px-2">
+        <v-flex xs12 class="px-2">
             <v-card class="my-3 pa-3 text-xs-center">
                 <v-card-title >
                     <h3><b>Test</b></h3>
                 </v-card-title>
-                <highcharts class="chart" :options="AreaChartOptions"></highcharts>
+                <charts class="chart" :options="AreaChartOptions"></charts>
+            </v-card>
+        </v-flex>
+        <MostViewed></MostViewed>
+        <v-flex xs6 >
+            <v-card class="my-3">
+                <v-card-title>Status</v-card-title>
+                <charts class=" " :options="columnChart"></charts>
             </v-card>
         </v-flex>
 
@@ -16,7 +22,6 @@
 <script>
     import axios from 'axios';
     import moment from 'moment';
-    import Highcharts from 'highcharts';
 
     import MostViewed from './MostViewed';
 
@@ -33,6 +38,32 @@
                 mostViewed: [],
                 statistics: {
                     data: [["Jan", 4], ["Feb", 2], ["Mar", 10], ["Apr", 5], ["May", 3]],
+                },
+                columnChart: {
+                    title: {
+                        text: 'Count for each of statuses'
+                    },
+                    series: [
+                        {
+                            name: 'In use',
+                            type: 'column',
+                            color: '#D0F0C0',
+                            data: [{ name: 'Number rooms which in use',y: 72-13 }]
+                        },
+                        {
+                            name: 'Free',
+                            type: 'column',
+                            color: '#FEC5E5',
+                            data: [{ name: 'Number rooms which are free',y: 13 }]
+                        },
+                        {
+                            name: 'Total',
+                            type: 'column',
+                            title: 'asd',
+                            color: '#D1C4E9',
+                            data: [{ name: 'Your total rooms', y: 72 }]
+                        },
+                    ],
                 },
                 AreaChartOptions:  {
                     series: [
