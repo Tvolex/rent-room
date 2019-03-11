@@ -8,6 +8,8 @@
 
 <script>
     import axios from 'axios'
+    import moment from 'moment'
+
     export default {
         name: "ByDate",
         beforeMount() {
@@ -43,7 +45,7 @@
                 axios.get(`/api/statistics/by-date/${user._id}`).then(res => {
                     this.options.series[0].data = res.data.map(views => {
                         return {
-                            name: views._id,
+                            name: moment(views._id).format('LLLL'),
                             y: views.total
                         }
                     })
