@@ -1,16 +1,8 @@
 <template>
     <v-layout row wrap justify-center class="Statistics">
-        <v-flex xs12 class="px-2">
-            <v-card class="my-3 pa-3 text-xs-center">
-                <v-card-title >
-                    <h3><b>Test</b></h3>
-                </v-card-title>
-                <charts class="chart" :options="AreaChartOptions"></charts>
-            </v-card>
-        </v-flex>
+        <ByDate></ByDate>
         <MostViewed></MostViewed>
         <ByStatus></ByStatus>
-
     </v-layout>
 </template>
 
@@ -18,6 +10,7 @@
     import axios from 'axios';
     import moment from 'moment';
     import ByStatus from './ByStatus'
+    import ByDate from './ByDate';
     import MostViewed from './MostViewed';
 
     export default {
@@ -28,9 +21,11 @@
         components: {
             MostViewed,
             ByStatus,
+            ByDate
         },
         data: () => {
             return {
+                statByDate: [],
                 statistics: {
                     data: [["Jan", 4], ["Feb", 2], ["Mar", 10], ["Apr", 5], ["May", 3]],
                 },
