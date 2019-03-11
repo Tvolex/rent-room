@@ -4,6 +4,7 @@ import Vuetify from 'vuetify'
 import ElementUI from 'element-ui';
 import VueChartkick from 'vue-chartkick'
 import HighchartsVue from 'highcharts-vue'
+import VueScrollTo from 'vue-scrollto'
 import VueDragDrop from 'vue-drag-drop';
 import 'element-ui/lib/theme-chalk/index.css';
 import Notificator from './utils/notificator';
@@ -26,6 +27,7 @@ Vue.use(Vuetify, {
         error: '#b71c1c'
     }
 });
+Vue.use(VueScrollTo);
 Vue.use(ElementUI);
 Vue.use(HighchartsVue, {tagName: 'charts'});
 Vue.use(VueChartkick, { adapter: Chart });

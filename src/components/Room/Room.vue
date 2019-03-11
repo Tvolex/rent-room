@@ -41,7 +41,16 @@
                         <v-card-title class="pa-2">
                             <v-layout row wrap justify-center>
                                 <v-flex xs12 md10 pr-5>
-                                    <span class="grey--text">{{room.createdBy.date | parseDate}}</span><br>
+                                    <span class="grey--text">{{room.createdBy.date | parseDate}}</span>
+                                    <div
+                                         v-if="isOwner"
+                                         class="show_daily_stat"
+                                         @click="showStat = !showStat"
+                                    >
+                                        <a href="#" v-if="!showStat">Show daily statistics</a>
+                                        <span v-else>Close daily statistics</span>
+                                    </div>
+                                    <br>
                                     <div style="float: left">
 
                                         <span class="headline">{{room.title}}</span><br>
@@ -86,6 +95,11 @@
                 </div>
                 <div v-else>not found</div>
             </v-flex>
+            <v-flex v-if="showStat" xs12 md10 lg8 class="px-2">
+                <v-card class="my-3 pa-3 text-xs-center" id="daily_statistics">
+                    <charts class="chart" :options="options"></charts>
+                </v-card>
+            </v-flex>
         </v-layout>
     </div>
 </template>
@@ -93,7 +107,9 @@
 <script>
     import axios from 'axios'
     import moment from 'moment'
+    import _ from 'lodash';
     import VueContentLoading from 'vue-content-loading'
+    import VueScrollTo from 'vue-scrollto';
 
     export default {
         name: 'InfoRoom',
@@ -114,6 +130,60 @@
                 room: null,
                 currentImageSize: 500,
                 loading: false,
+                showStat: false,
+                scrollOpts: {
+                    container: '#container',
+                    easing: 'ease-in',
+                    offset: -60,
+                    force: true,
+                    cancelable: true,
+                    onStart: function(element) {
+                        // scrolling started
+                    },
+                    onDone: function(element) {
+                        // scrolling is done
+                    },
+                    onCancel: function() {
+                        // scrolling has been interrupted
+                    },
+                    x: false,
+                    y: true
+                },
+                options: {
+                    title: {
+                        text: "Daily views statistics"
+                    },
+                    series: [
+                        {
+                            data: [],
+                            type: 'area',
+                            name: 'Statistics By Date',
+                            color: '#9dc8f1',
+                            fillColor: {
+                                linearGradient: [0, 300, 0, 0],
+                                stops: [
+                                    [0, 'white'],
+                                    [1, '#9dc8f1']
+                                ]
+                            },
+                        },
+                    ],
+                }
+            }
+        },
+        computed: {
+            isOwner: function () {
+                const user = this.$store.getters.user || {};
+
+                if (!user) {
+                    return false
+                }
+
+                if (_.isEmpty(this.room)) {
+                    return false
+                }
+
+                return _.isEqual(user._id, this.room.createdBy._id)
             }
         },
         methods: {
@@ -128,6 +198,19 @@
                     this.loading = false;
                 }
             },
+            showDailyStatistics () {
+                this.showStat = true;
+                axios.get(`/api/statistics/room/${this.room._id}`).then(res => {
+                    this.options.series[0].data = res.data.map(views => {
+                        return {
+                            name: moment(views._id).format('LLLL'),
+                            y: views.total
+                        }
+                    })
+                }).catch(err => console.log(err))
+                    .finally(() => {
+                    });
+            },
         },
         filters: {
             parseDate: function (value) {
@@ -136,6 +219,15 @@
                 date.locale('uk');
                 return date.format('LLLL');
             },
+        },
+        watch: {
+            showStat: function (val, oldVal) {
+                if (val) {
+                    var cancelScroll = VueScrollTo.scrollTo('#daily_statistics', 500, this.scrollOpts);
+                    return this.showDailyStatistics();
+                }
+                this.showStat = false;
+            }
         }
     }
 </script>
@@ -170,6 +262,12 @@
 
     .button-back:hover {
         color: #2d2e33 !important;
+    }
+
+    .show_daily_stat {
+        color: #9e9e9e !important;
+        cursor: pointer;
+        float: right
     }
 
     .el-carousel__item:nth-child(2n) {
