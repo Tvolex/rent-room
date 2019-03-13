@@ -41,13 +41,13 @@
                         <v-card-title class="pa-2">
                             <v-layout row wrap justify-center>
                                 <v-flex xs12 md10 pr-5>
-                                    <span class="grey--text">{{room.createdBy.date | parseDate}}</span>
+                                    <span class="grey--text">{{room.createdAt | parseDate}}</span>
                                     <div
                                          v-if="isOwner"
                                          class="show_daily_stat"
                                          @click="showStat = !showStat"
                                     >
-                                        <a href="#" v-if="!showStat">Show daily statistics</a>
+                                        <span v-if="!showStat">Show daily statistics</span>
                                         <span v-else>Close daily statistics</span>
                                     </div>
                                     <br>
