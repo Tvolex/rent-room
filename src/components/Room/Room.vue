@@ -76,10 +76,67 @@
                                         Term: <span class="grey--text text--darken-2">{{room.term}}</span>
                                     </div>
                                 </v-flex>
-                                <v-flex xs10>
+                                <v-flex xs10 py-2>
                                     <span>{{room.description}}</span>
                                 </v-flex>
-                                <v-flex xs10>
+
+                                <v-flex xs10 my-1>
+                                    <v-divider></v-divider>
+                                </v-flex>
+
+                                <v-flex xs10 my-3>
+                                      <span class="grey--text">
+                                        <h3>Contacts:</h3>
+                                    </span>
+
+                                    <div>
+                                        <v-avatar
+                                                :size="100"
+                                                color="grey lighten-4"
+                                                v-if="room.createdBy && room.createdBy.avatar && room.createdBy.avatar.thumb"
+                                        >
+                                            <img :src="room.createdBy.avatar.thumb" alt="avatar">
+                                        </v-avatar>
+                                        <v-avatar
+                                                :size="100"
+                                                color="grey lighten-4"
+                                                v-else
+                                        >
+                                            <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-512.png" alt="avatar">
+                                        </v-avatar>
+                                    </div>
+
+                                    <div class="px-2 py-1">
+                                        <span class="grey--text">
+                                            Name:
+                                        </span>
+                                        <span class="grey--text text--darken-2">
+                                            {{room.createdBy.name}}
+                                        </span>
+                                    </div>
+                                    <div class="px-2 py-1">
+                                        <span class="grey--text">
+                                            E-mail:
+                                        </span>
+                                        <span class="grey--text text--darken-2">
+                                           {{room.createdBy.email}}
+                                        </span>
+                                    </div>
+                                    <div class="px-2 py-1">
+                                        <span class="grey--text">
+                                            Phone:
+                                        </span>
+                                        <span class="grey--text text--darken-2">
+                                            {{room.createdBy.contact}}
+                                        </span>
+                                    </div>
+                                </v-flex>
+
+                                <v-flex xs10 my-1>
+                                    <v-divider></v-divider>
+                                </v-flex>
+
+                                <v-flex xs10 pa-3>
                                     <span>
                                         <v-icon >visibility</v-icon> {{room.views || 0}}
                                     </span>
