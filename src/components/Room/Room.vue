@@ -93,9 +93,9 @@
                                         <v-avatar
                                                 :size="100"
                                                 color="grey lighten-4"
-                                                v-if="room.createdBy && room.createdBy.avatar && room.createdBy.avatar.thumb"
+                                                v-if="room.createdBy && room.createdBy.avatar && room.createdBy.avatar.location && room.createdBy.avatar.location.thumb"
                                         >
-                                            <img :src="room.createdBy.avatar.thumb" alt="avatar">
+                                            <img :src="room.createdBy.avatar.location.thumb" alt="avatar">
                                         </v-avatar>
                                         <v-avatar
                                                 :size="100"
@@ -136,10 +136,10 @@
                                     <v-divider></v-divider>
                                 </v-flex>
 
-                                <v-flex xs10 pa-3>
-                                    <span>
-                                        <v-icon >visibility</v-icon> {{room.views || 0}}
-                                    </span>
+                                <v-flex xs10 pa-3 class="grey--text">
+                                    <h4>Total  <v-icon >visibility</v-icon> {{room.totalViews || 0}}</h4>
+                                    <h4>Unique  <v-icon >visibility</v-icon> {{room.uniqueViews || 0}}</h4>
+
                                 </v-flex>
 
                             </v-layout>
