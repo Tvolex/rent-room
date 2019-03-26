@@ -1,7 +1,17 @@
 <template>
     <v-flex xs12 class="px-2">
         <v-card class="my-3 pa-3 text-xs-center">
-            <charts class="chart" :options="options"></charts>
+           <v-layout  row wrap  justify-center>
+               <v-flex xs12 sm6 md2 class="text-xs-center">
+                   <v-subheader class="text-xs-center">Time period</v-subheader>
+               </v-flex>
+               <v-flex xs12 sm6 md2>
+                   <v-select v-model="timePeriod" :items="['Today', 'Week', 'Month']" label="for"></v-select>
+               </v-flex>
+               <v-flex xs12>
+                   <charts class="chart" :options="options"></charts>
+               </v-flex>
+           </v-layout>
         </v-card>
     </v-flex>
 </template>
@@ -17,6 +27,7 @@
         },
         data: () => {
             return {
+                timePeriod: null,
                 options: {
                     title: {
                         text: "Statistics By Date"
@@ -42,7 +53,11 @@
         methods: {
             getStatByDate: function () {
                 const user = this.$store.getters.user;
-                axios.get(`/api/statistics/by-date/${user._id}`).then(res => {
+                axios.get(`/api/statistics/by-date/${user._id}`, {
+                    params: {
+                        timePeriod: this.timePeriod
+                    }
+                }).then(res => {
                     this.options.series[0].data = res.data.map(views => {
                         return {
                             name: moment(views._id).format('LLLL'),
@@ -52,6 +67,11 @@
                 });
             }
         },
+        watch: {
+            timePeriod: function (period, oldPeriod) {
+                this.getStatByDate();
+            }
+        }
     }
 </script>
 
