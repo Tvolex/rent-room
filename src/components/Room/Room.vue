@@ -1,13 +1,13 @@
 <template>
     <div class="content_inner">
-        <v-layout row wrap justify-center>
+        <v-layout row wrap justify-center class="ma-3 ">
             <v-flex xs10 md8>
                 <div class="text-xs-justify button-back" @click="$router.back()">
                     <v-icon>arrow_back</v-icon>
                     <span style="font-size: larger">Back</span>
                 </div>
             </v-flex>
-            <v-flex xs12 md8 class="ma-3 room_card">
+            <v-flex xs12 md8 class="room_card">
                 <div v-if="loading">
                     <v-card>
                         <vue-content-loading :width="350" :height="350">
@@ -143,10 +143,12 @@
                 </div>
                 <div v-else>not found</div>
             </v-flex>
-            <v-flex xs12 md8>
-                <v-card v-if="showStat" class="my-3 pa-3 text-xs-center" id="daily_statistics">
-                    <charts class="chart" :options="options"></charts>
-                </v-card>
+            <v-flex xs12 md8 >
+                <div>
+                    <v-card v-if="showStat" class="my-3 pa-3 text-xs-center" id="daily_statistics">
+                        <charts class="chart" :options="options"></charts>
+                    </v-card>
+                </div>
             </v-flex>
         </v-layout>
     </div>
