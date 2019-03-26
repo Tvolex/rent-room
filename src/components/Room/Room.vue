@@ -84,32 +84,23 @@
                                     <v-divider></v-divider>
                                 </v-flex>
 
-                                <v-flex xs10 my-3>
-                                      <span class="grey--text">
-                                        <h3>Contacts:</h3>
-                                    </span>
-
-                                    <div>
-                                        <v-avatar
-                                                :size="100"
-                                                color="grey lighten-4"
-                                                v-if="room.createdBy && room.createdBy.avatar && room.createdBy.avatar.location && room.createdBy.avatar.location.thumb"
-                                        >
-                                            <img :src="room.createdBy.avatar.location.thumb" alt="avatar">
-                                        </v-avatar>
-                                        <v-avatar
-                                                :size="100"
-                                                color="grey lighten-4"
-                                                v-else
-                                        >
-                                            <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-512.png" alt="avatar">
-                                        </v-avatar>
-                                    </div>
+                                <v-flex xs10 md4 my-3 class="text-xs-center">
+                                    <v-avatar
+                                            :size="100"
+                                            color="grey lighten-4"
+                                            v-if="room.createdBy && room.createdBy.avatar && room.createdBy.avatar.location && room.createdBy.avatar.location.thumb"
+                                    >
+                                        <img :src="room.createdBy.avatar.location.thumb" alt="avatar">
+                                    </v-avatar>
+                                    <v-avatar
+                                            :size="100"
+                                            color="grey lighten-4"
+                                            v-else
+                                    >
+                                        <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-512.png" alt="avatar">
+                                    </v-avatar>
 
                                     <div class="px-2 py-1">
-                                        <span class="grey--text">
-                                            Name:
-                                        </span>
                                         <span class="grey--text text--darken-2">
                                             {{room.createdBy.name}}
                                         </span>
@@ -152,8 +143,8 @@
                 </div>
                 <div v-else>not found</div>
             </v-flex>
-            <v-flex v-if="showStat" xs12 md10 lg8 class="px-2">
-                <v-card class="my-3 pa-3 text-xs-center" id="daily_statistics">
+            <v-flex xs12 md8>
+                <v-card v-if="showStat" class="my-3 pa-3 text-xs-center" id="daily_statistics">
                     <charts class="chart" :options="options"></charts>
                 </v-card>
             </v-flex>
@@ -189,9 +180,9 @@
                 loading: false,
                 showStat: false,
                 scrollOpts: {
-                    container: '#container',
+                    container: 'body',
                     easing: 'ease-in',
-                    offset: -60,
+                    offsetTop: -60,
                     force: true,
                     cancelable: true,
                     onStart: function(element) {
@@ -280,7 +271,9 @@
         watch: {
             showStat: function (val, oldVal) {
                 if (val) {
-                    var cancelScroll = VueScrollTo.scrollTo('#daily_statistics', 500, this.scrollOpts);
+                    this.$nextTick(() => {
+                        VueScrollTo.scrollTo('#daily_statistics', 500, this.scrollOpts);
+                    });
                     return this.showDailyStatistics();
                 }
                 this.showStat = false;
