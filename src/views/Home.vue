@@ -15,7 +15,7 @@ export default {
     Board,
   },
   mounted () {
-    console.log(process.env.BASE_URL)
+    // console.log(process.env.BASE_URL)
   },
   data: () => {
     return {

@@ -207,12 +207,25 @@
                         {
                             data: [],
                             type: 'area',
-                            name: 'Statistics By Date',
+                            name: 'Total',
                             color: '#9dc8f1',
                             fillColor: {
                                 linearGradient: [0, 300, 0, 0],
                                 stops: [
                                     [0, 'white'],
+                                    [1, '#9dc8f1']
+                                ]
+                            },
+                        },
+                        {
+                            data: [],
+                            type: 'area',
+                            name: 'Unique',
+                            color: 'green',
+                            fillColor: {
+                                linearGradient: [0, 300, 0, 0],
+                                stops: [
+                                    [0, 'green'],
                                     [1, '#9dc8f1']
                                 ]
                             },
@@ -251,10 +264,17 @@
             showDailyStatistics () {
                 this.showStat = true;
                 axios.get(`/api/statistics/room/${this.room._id}`).then(res => {
-                    this.options.series[0].data = res.data.map(views => {
+                    this.options.series[0].data = res.data.map(data => {
                         return {
-                            name: moment(views._id).format('LLLL'),
-                            y: views.total
+                            name: moment(data._id).format('LLLL'),
+                            y: data.totalViews
+                        }
+                    });
+
+                    this.options.series[1].data = res.data.map(data => {
+                        return {
+                            name: moment(data._id).format('LLLL'),
+                            y: data.uniqueViews
                         }
                     })
                 }).catch(err => console.log(err))

@@ -136,7 +136,7 @@
                             <v-card-text>
                                 <div class="text-xs-right white--text">
                                     <v-icon dark>visibility</v-icon>
-                                    {{room.views}}
+                                    {{room.totalViews}}
                                 </div>
                             </v-card-text>
                             <div class="info-about-room">

@@ -24,7 +24,7 @@
                             <div class="info-about-room">
                                 <v-card-text class="headline white--text title-room">
                                     <v-icon dark>visibility</v-icon>
-                                    {{room.views}}
+                                    {{room.totalViews}}
                                     <div class="text-xs-center"> {{room.title | limitTitle}}</div>
                                 </v-card-text>
                             </div>
