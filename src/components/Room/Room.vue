@@ -146,7 +146,15 @@
             <v-flex xs12 md8 >
                 <div>
                     <v-card v-if="showStat" class="my-3 pa-3 text-xs-center" id="daily_statistics">
-                        <charts class="chart" :options="options"></charts>
+                        <div style="height: 70px">
+                            <div class="headline" style="float: left">Daily views statistics</div>
+                            <div style="float: right">
+                                <v-btn flat @click="showDailyStatistics({ timePeriod: 'Year', groupBy: 'Month' })">Year</v-btn>
+                                <v-btn flat @click="showDailyStatistics({ timePeriod: 'Month', groupBy: 'Day' })">Month</v-btn>
+                                <v-btn flat @click="showDailyStatistics({timePeriod: 'Week', groupBy: 'Day' })">Week</v-btn>
+                            </div>
+                        </div>
+                        <charts  :options="options"></charts>
                     </v-card>
                 </div>
             </v-flex>
@@ -181,6 +189,7 @@
                 currentImageSize: 500,
                 loading: false,
                 showStat: false,
+                groupBy: 'Day',
                 scrollOpts: {
                     container: 'body',
                     easing: 'ease-in',
@@ -201,12 +210,22 @@
                 },
                 options: {
                     title: {
-                        text: "Daily views statistics"
+                        text: ""
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: {
+                            day: '%e %b',
+                            week: '%e %b',
+                            month: '%b',
+                            year: '%Y'
+                        }
                     },
                     series: [
                         {
                             data: [],
                             type: 'area',
+                            pointInterval: 24 * 3600 * 1000, // one day
                             name: 'Total',
                             color: '#9dc8f1',
                             fillColor: {
@@ -219,16 +238,10 @@
                         },
                         {
                             data: [],
-                            type: 'area',
+                            pointInterval: 24 * 3600 * 1000, // one day
+                            type: 'line',
                             name: 'Unique',
                             color: 'green',
-                            fillColor: {
-                                linearGradient: [0, 300, 0, 0],
-                                stops: [
-                                    [0, 'green'],
-                                    [1, '#9dc8f1']
-                                ]
-                            },
                         },
                     ],
                 }
@@ -261,22 +274,43 @@
                     this.loading = false;
                 }
             },
-            showDailyStatistics () {
+            showDailyStatistics ({timePeriod, groupBy}) {
                 this.showStat = true;
-                axios.get(`/api/statistics/room/${this.room._id}`).then(res => {
-                    this.options.series[0].data = res.data.map(data => {
-                        return {
-                            name: moment(data._id).format('LLLL'),
-                            y: data.totalViews
-                        }
-                    });
 
-                    this.options.series[1].data = res.data.map(data => {
-                        return {
-                            name: moment(data._id).format('LLLL'),
-                            y: data.uniqueViews
-                        }
-                    })
+                switch (groupBy) {
+                    case 'Year':
+                        timePeriod = 'Year';
+                        groupBy = 'Month';
+                        break;
+                    case 'Month':
+                        timePeriod = 'Month';
+                        groupBy = 'Day';
+                        break;
+                    default:
+                        timePeriod = 'Month';
+                        groupBy = 'Day';
+                        break;
+                }
+
+                axios.get(`/api/statistics/room/${this.room._id}`, {
+                    params: {
+                        groupBy,
+                        timePeriod,
+                    }
+                }).then(res => {
+                    const minDate = moment.min(res.data.map(days => moment(days.date)));
+
+                    const TotalStat =  {
+                        data: res.data.map(days => days.totalViews),
+                        pointStart: minDate.valueOf(),
+                    };
+
+                    const UniqueStat = {
+                        data: res.data.map(days => days.uniqueViews),
+                        pointStart: minDate.valueOf(),
+                    };
+                    this.options.series[0] = Object.assign(this.options.series[0], TotalStat);
+                    this.options.series[1] = Object.assign(this.options.series[1], UniqueStat);
                 }).catch(err => console.log(err))
                     .finally(() => {
                     });
@@ -296,7 +330,7 @@
                     this.$nextTick(() => {
                         VueScrollTo.scrollTo('#daily_statistics', 500, this.scrollOpts);
                     });
-                    return this.showDailyStatistics();
+                    return this.showDailyStatistics({ groupBy: 'Day', timePeriod: 'Month' });
                 }
                 this.showStat = false;
             }
