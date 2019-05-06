@@ -151,10 +151,10 @@
                             <div style="float: right">
                                 <v-btn flat @click="showDailyStatistics({ timePeriod: 'Year', groupBy: 'Month' })">Year</v-btn>
                                 <v-btn flat @click="showDailyStatistics({ timePeriod: 'Month', groupBy: 'Day' })">Month</v-btn>
-                                <v-btn flat @click="showDailyStatistics({timePeriod: 'Week', groupBy: 'Day' })">Week</v-btn>
+                                <v-btn flat @click="showDailyStatistics({ timePeriod: 'Week', groupBy: 'Day' })">Week</v-btn>
                             </div>
                         </div>
-                        <charts  :options="options"></charts>
+                        <line-chart :chartData="chartData" :chartOptions="chartOptions" :key="chartKey"></line-chart>
                     </v-card>
                 </div>
             </v-flex>
@@ -168,11 +168,12 @@
     import _ from 'lodash';
     import VueContentLoading from 'vue-content-loading'
     import VueScrollTo from 'vue-scrollto';
-
+    import { Line } from '../Charts'
     export default {
         name: 'InfoRoom',
         components: {
             VueContentLoading,
+            'line-chart': Line,
         },
         mounted () {
             const roomId = this.$route.params ? this.$route.params.id : null
@@ -208,43 +209,9 @@
                     x: false,
                     y: true
                 },
-                options: {
-                    title: {
-                        text: ""
-                    },
-                    xAxis: {
-                        type: 'datetime',
-                        dateTimeLabelFormats: {
-                            day: '%e %b',
-                            week: '%e %b',
-                            month: '%b',
-                            year: '%Y'
-                        }
-                    },
-                    series: [
-                        {
-                            data: [],
-                            type: 'area',
-                            pointInterval: 24 * 3600 * 1000, // one day
-                            name: 'Total',
-                            color: '#9dc8f1',
-                            fillColor: {
-                                linearGradient: [0, 300, 0, 0],
-                                stops: [
-                                    [0, 'white'],
-                                    [1, '#9dc8f1']
-                                ]
-                            },
-                        },
-                        {
-                            data: [],
-                            pointInterval: 24 * 3600 * 1000, // one day
-                            type: 'line',
-                            name: 'Unique',
-                            color: 'green',
-                        },
-                    ],
-                }
+                chartKey: 1,
+                chartData: null,
+                chartOptions: null,
             }
         },
         computed: {
@@ -277,20 +244,12 @@
             showDailyStatistics ({timePeriod, groupBy}) {
                 this.showStat = true;
 
-                switch (groupBy) {
-                    case 'Year':
-                        timePeriod = 'Year';
-                        groupBy = 'Month';
-                        break;
-                    case 'Month':
-                        timePeriod = 'Month';
-                        groupBy = 'Day';
-                        break;
-                    default:
-                        timePeriod = 'Month';
-                        groupBy = 'Day';
-                        break;
-                }
+                // switch (groupBy) {
+                //     default:
+                //         timePeriod = 'Month';
+                //         groupBy = 'Day';
+                //         break;
+                // }
 
                 axios.get(`/api/statistics/room/${this.room._id}`, {
                     params: {
@@ -298,21 +257,46 @@
                         timePeriod,
                     }
                 }).then(res => {
-                    const minDate = moment.min(res.data.map(days => moment(days.date)));
+                    let totalViews = [], uniqueViews = [], labels = [];
+
+                    res.data.forEach(data => {
+                        totalViews.push(data.totalViews);
+
+                        labels.push(
+                            moment(data.label, 'YYYY-MM-DD').isValid() ?
+                                moment(data.label).format('YYYY-MM-DD') : data.label
+                        );
+
+                        uniqueViews.push(data.uniqueViews);
+                    });
 
                     const TotalStat =  {
-                        data: res.data.map(days => days.totalViews),
-                        pointStart: minDate.valueOf(),
+                        label: 'Total views',
+                        backgroundColor: 'rgba(150, 0, 150, 0.3)',
+                        pointBackgroundColor: 'red',
+                        borderWidth: 1,
+                        pointBorderColor: 'grey',
+                        data: totalViews,
                     };
 
                     const UniqueStat = {
-                        data: res.data.map(days => days.uniqueViews),
-                        pointStart: minDate.valueOf(),
+                        label: 'Unique views',
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                        pointBackgroundColor: 'blue',
+                        borderWidth: 1,
+                        pointBorderColor: 'grey',
+                        data: uniqueViews,
                     };
-                    this.options.series[0] = Object.assign(this.options.series[0], TotalStat);
-                    this.options.series[1] = Object.assign(this.options.series[1], UniqueStat);
-                }).catch(err => console.log(err))
+
+
+                    this.chartData = {
+                        labels,
+                        datasets: [TotalStat, UniqueStat]
+                    }
+                })
+                    .catch(err => console.log(err))
                     .finally(() => {
+                        this.chartKey++ ;
                     });
             },
         },

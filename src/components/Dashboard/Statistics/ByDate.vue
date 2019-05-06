@@ -53,7 +53,7 @@
                </v-flex>
 
                <v-flex xs12>
-                   <charts class="chart" :options="options"></charts>
+                   <line-chart :key="chartKey" :chartData="chartData" :chartOptions="chartOptions"></line-chart>
                </v-flex>
            </v-layout>
         </v-card>
@@ -64,10 +64,16 @@
     import axios from 'axios'
     import moment from 'moment'
 
+    import { Line } from '../../Charts'
+
     export default {
         name: "ByDate",
+        components: {
+            'line-chart': Line,
+        },
         beforeMount() {
             this.getStatByDate();
+
         },
         data: () => {
             return {
@@ -77,48 +83,15 @@
                 listOfGroups: ['Day', 'Week', 'Month', 'Year'],
                 customTimePeriod: { from: null, to: null },
                 customTimePeriodMenu: null,
-                options: {
-                    xAxis: {
-                        type: 'datetime',
-                        dateTimeLabelFormats: {
-                            day: '%e %b',
-                            week: '%e %b',
-                            month: '%b',
-                            year: '%Y'
-                        }
-                    },
-                    title: {
-                        text: "Interests of your rooms"
-                    },
-                    series: [
-                        {
-                            data: [0],
-                            pointInterval: 24 * 3600 * 1000, // one day
-                            type: 'area',
-                            name: 'Total views',
-                            color: '#9dc8f1',
-                            fillColor: {
-                                linearGradient: [0, 300, 0, 0],
-                                stops: [
-                                    [0, 'white'],
-                                    [1, '#9dc8f1']
-                                ]
-                            },
-                        },
-                        {
-                            data: [0],
-                            pointInterval: 24 * 3600 * 1000, // one day
-                            type: 'line',
-                            name: 'Unique views',
-                            color: 'green',
-                        }
-                    ],
-                }
+                chartKey: 1,
+                chartData: null,
+                chartOptions: null,
             }
         },
         methods: {
             getStatByDate: function () {
                 const user = this.$store.getters.user;
+
                 axios.get(`/api/statistics/by-date/${user._id}`, {
                     params: {
                         groupBy: this.groupBy,
@@ -127,20 +100,48 @@
                             this.customTimePeriod : null
                     }
                 }).then(res => {
-                    const minDate = moment.min(res.data.map(days => moment(days.date)));
+
+                    let totalViews = [], uniqueViews = [], labels = [];
+
+                    res.data.forEach(data => {
+                        totalViews.push(data.totalViews);
+
+                        labels.push(
+                            moment(data.label, 'YYYY-MM-DD').isValid() ?
+                                moment(data.label).format('YYYY-MM-DD') : data.label
+                        );
+
+                        uniqueViews.push(data.uniqueViews);
+                    });
 
                     const TotalStat =  {
-                        data: res.data.map(days => days.totalViews),
-                        pointStart: minDate.valueOf(),
+                        label: 'Total views',
+                        backgroundColor: 'rgba(150, 0, 150, 0.3)',
+                        pointBackgroundColor: 'rgba(150, 0, 150, 0.3)',
+                        borderWidth: 1,
+                        pointBorderColor: 'grey',
+                        data: totalViews,
                     };
 
                     const UniqueStat = {
-                        data: res.data.map(days => days.uniqueViews),
-                        pointStart: minDate.valueOf(),
+                        label: 'Unique views',
+                        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                        pointBackgroundColor: 'rgba(0, 0, 0, 0.3)',
+                        borderWidth: 1,
+                        pointBorderColor: 'grey',
+                        data: uniqueViews,
                     };
-                    this.options.series[0] = Object.assign(this.options.series[0], TotalStat);
-                    this.options.series[1] = Object.assign(this.options.series[1], UniqueStat);
-                });
+
+
+                    this.chartData = {
+                        labels,
+                        datasets: [TotalStat, UniqueStat]
+                    }
+                })
+                    .catch()
+                    .finally(() => {
+                        this.chartKey++;
+                    });
             }
         },
         watch: {
@@ -152,20 +153,20 @@
             groupBy: function (group) {
                 this.getStatByDate();
 
-                switch (group) {
-                    case 'Year':
-                        this.options.series.forEach((el) => el.pointInterval = 24 * 3600 * 100000);
-                        break;
-                    case 'Month':
-                        this.options.series.forEach((el) => el.pointInterval = 24 * 3600 * 10000);
-                        break;
-                    case 'Week':
-                        this.options.series.forEach((el) => el.pointInterval = 24 * 3600 * 5000);
-                        break;
-                    case 'Day':
-                        this.options.series.forEach((el) => el.pointInterval = 24 * 3600 * 1000);
-                        break;
-                }
+                // switch (group) {
+                //     case 'Year':
+                //         this.options.series.forEach((el) => el.pointInterval = 24 * 3600 * 1000 * 30 * 12);
+                //         break;
+                //     case 'Month':
+                //         this.options.series.forEach((el) => el.pointInterval = 24 * 3600 * 1000 * 30);
+                //         break;
+                //     case 'Week':
+                //         this.options.series.forEach((el) => el.pointInterval = 24 * 3600 * 1000 * 7);
+                //         break;
+                //     case 'Day':
+                //         this.options.series.forEach((el) => el.pointInterval = 24 * 3600 * 1000);
+                //         break;
+                // }
             },
             customTimePeriod: {
                 handler: function ({from, to}) {
