@@ -127,6 +127,25 @@
                                     <v-divider></v-divider>
                                 </v-flex>
 
+                                <GmapMap
+                                        :center="center"
+                                        :zoom="zoom"
+                                        map-type-id="terrain"
+                                        style="width: 800px; height: 600px"
+                                >
+                                    <GmapMarker
+                                            :position="point.position"
+                                            :title="point.title"
+                                            :clickable="true"
+                                            draggable
+                                            @click="() => {this.center=point.position; this.zoom=16}"
+                                    />
+                                </GmapMap>
+
+                                <v-flex xs10 my-1>
+                                    <v-divider></v-divider>
+                                </v-flex>
+
                                 <v-flex xs10 pa-3 class="grey--text">
                                     <h4>Total  <v-icon >visibility</v-icon> {{room.totalViews || 0}}</h4>
                                     <h4>Unique  <v-icon >visibility</v-icon> {{room.uniqueViews || 0}}</h4>
@@ -191,6 +210,14 @@
                 loading: false,
                 showStat: false,
                 groupBy: 'Day',
+                center: {lat: 48.621690, lng: 22.298125},
+                zoom: 13,
+                point: {
+                    position: {
+                        lat: 48.636423, lng: 22.276994
+                    },
+                    title: 'Україна, Ужгород, Провулок Грибоєдова 2'
+                },
                 scrollOpts: {
                     container: 'body',
                     easing: 'ease-in',

@@ -3,6 +3,7 @@ import Chart from 'chart.js'
 import Vuetify from 'vuetify'
 import ElementUI from 'element-ui';
 import VueChartkick from 'vue-chartkick'
+import * as VueGoogleMaps from 'vue2-google-maps'
 import HighchartsVue from 'highcharts-vue'
 import VueScrollTo from 'vue-scrollto'
 import VueDragDrop from 'vue-drag-drop';
@@ -34,6 +35,13 @@ Vue.use(VueChartkick, { adapter: Chart });
 Vue.use(VueDragDrop);
 
 Vue.use(Notificator);
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
+        libraries: 'places',
+    },
+});
 
 Vue.mixin({
     computed: {
