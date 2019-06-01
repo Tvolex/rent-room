@@ -9,7 +9,7 @@
             </v-card-title>
 
             <v-card-text>
-                <v-form v-model="isFormValid" name="publishRoom">
+                <v-form v-model="isFormValid" name="publishRoom" ref="create_new_form">
                     <v-layout row wrap justify-center align-center >
 
                         <v-flex xs1></v-flex>
@@ -140,7 +140,39 @@
                                     placeholder="Please, write more info about the room"
                             ></v-textarea>
                         </v-flex>
+                        <v-flex md2 mt-3 >
+                            <div :class="[detectIsMobile ? 'text-xs-left' : 'text-xs-right', 'text-label-selects', 'mr-5']">
+                                <b>Location:</b>
+                            </div>
+                        </v-flex>
+                        <v-flex xs12 md8>
+                            <v-text-field
+                                label="Location"
+                                append-icon="location"
+                                v-model="RoomLocation.address"
+                                color="grey darken-1"
+                                placeholder="location"
+                            ></v-text-field>
+                        </v-flex>
                         <v-flex xs1></v-flex>
+                        <v-flex xs12 md8>
+                            <GmapMap
+                                    ref="gmap"
+                                    :center="center"
+                                    :zoom="zoom"
+                                    map-type-id="terrain"
+                                    style="width: 600px; height: 400px"
+                            >
+                                <GmapMarker
+                                        :position="point.position"
+                                        :title="point.title"
+                                        :clickable="true"
+                                        :draggable="true"
+                                        @dragend="updatePosition"
+                                        @click="() => {this.center=point.position; this.zoom=16}"
+                                />
+                            </GmapMap>
+                        </v-flex>
 
                     </v-layout>
                 </v-form>
@@ -174,16 +206,38 @@
 </template>
 
 <script>
+    import Geocoder from 'node-geocoder';
+    const GeocoderOptions = {
+        provider: 'google',
+        httpAdapter: 'https', // Default
+        apiKey: process.env.VUE_APP_GOOGLE_MAPS_API_KEY, // for Mapquest, OpenCage, Google Premier
+    };
+    const geocoder = Geocoder(GeocoderOptions );
     export default {
         name: "newRoom",
         props: {
             dialog: Object,
         },
-        beforeMount() {
-
+        mounted() {
+            console.log(this);
         },
         data: function () {
             return {
+                point: {
+                    position: {
+                        lat: 48.636423, lng: 22.276994
+                    },
+                    title: 'Україна, Ужгород, Провулок Грибоєдова 2'
+                },
+                zoom: 13,
+                center: {lat: 48.621690, lng: 22.298125},
+                RoomLocation: {
+                    address: '',
+                    point: {
+                        lng: 0,
+                        lat: 0,
+                    }
+                },
                 terms: [
                     { title: 'Short Term' },
                     { title: 'Long Term' },
@@ -238,6 +292,25 @@
             }
         },
         methods: {
+            updatePosition(locationData) {
+                this.point.position.lat = locationData.latLng.lat();
+                this.point.position.lng = locationData.latLng.lng();
+
+                const self = this;
+
+                geocoder.reverse({lat:locationData.latLng.lat(), lon:locationData.latLng.lng()}, function (err, data) {
+                    if (err)
+                        console.error(err);
+                    console.log(data[0]);
+                    self.RoomLocation = {
+                        address: data[0].formattedAddress,
+                        point: {
+                            lng: data[0].longitude,
+                            lat: data[0].latitude,
+                        }
+                    };
+                });
+            },
             handleRemoveUpload(file, fileList) {
                 const { _id: fileId = null } = file.response;
                 this.$store.dispatch({ type: 'removeFile', fileId })
@@ -258,6 +331,7 @@
                     type: 'publishRoom',
                     RoomDescription: this.RoomDescription,
                     RoomTitle: this.RoomTitle,
+                    RoomLocation: this.RoomLocation,
                     RoomPhotos: this.RoomPhotos,
                     RoomTerm: this.RoomTerm,
                     RoomType: this.RoomType,

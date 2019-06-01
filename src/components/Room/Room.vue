@@ -134,11 +134,11 @@
                                         style="width: 800px; height: 600px"
                                 >
                                     <GmapMarker
-                                            :position="point.position"
-                                            :title="point.title"
+                                            :position="room && room.location ? room.location.point : defaultLocation.point"
+                                            :title="room && room.location ? room.location.address : defaultLocation.address"
                                             :clickable="true"
                                             draggable
-                                            @click="() => {this.center=point.position; this.zoom=16}"
+                                            @click="() => {this.center= room && room.location ? room.location.point : defaultLocation.point; this.zoom=16}"
                                     />
                                 </GmapMap>
 
@@ -212,11 +212,11 @@
                 groupBy: 'Day',
                 center: {lat: 48.621690, lng: 22.298125},
                 zoom: 13,
-                point: {
-                    position: {
+                defaultLocation: {
+                    point: {
                         lat: 48.636423, lng: 22.276994
                     },
-                    title: 'Україна, Ужгород, Провулок Грибоєдова 2'
+                    address: 'Україна, Ужгород, Провулок Грибоєдова 2'
                 },
                 scrollOpts: {
                     container: 'body',
