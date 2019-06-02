@@ -77,8 +77,8 @@
         },
         data: () => {
             return {
-                timePeriod: "Month",
-                groupBy: 'Day',
+                timePeriod: "Year",
+                groupBy: 'Month',
                 timePeriods: ['Custom', 'Week', 'Month', 'Year'],
                 listOfGroups: ['Day', 'Week', 'Month', 'Year'],
                 customTimePeriod: { from: null, to: null },
@@ -138,7 +138,7 @@
                         datasets: [TotalStat, UniqueStat]
                     }
                 })
-                    .catch()
+                    .catch(err => console.error(err))
                     .finally(() => {
                         this.chartKey++;
                     });

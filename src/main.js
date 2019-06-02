@@ -53,7 +53,7 @@ Vue.mixin({
         },
     },
     methods: {
-        errorHandler: function (err, option = {}) {
+        errorHandler: function (err, option = { notify: true }) {
             const { response: { data } = { data: {} } } = err;
 
             const message = data.message ? data.message : err.message;

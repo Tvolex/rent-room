@@ -1,6 +1,5 @@
 import Toaster from 'v-toaster';
 
-
 const Notificator = {
     install(Vue, options) {
         Vue.use(Toaster, {timeout: 5000});

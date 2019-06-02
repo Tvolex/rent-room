@@ -46,15 +46,15 @@
                 currentTab: null,
                 tabs: [
                     {
+                        title: 'My rooms',
+                        icon: 'home',
+                        route: '/dashboard/rooms',
+                    },
+                    {
                         title: 'Statistics',
                         icon: 'show_chart',
                         route: '/dashboard/statistics',
                     },
-                    {
-                        title: 'My rooms',
-                        icon: 'home',
-                        route: '/dashboard/rooms',
-                    }
                 ]
             }
         },
