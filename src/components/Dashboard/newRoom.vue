@@ -337,9 +337,13 @@
                     RoomType: this.RoomType,
                     RoomNumb: this.RoomNumb,
                     RoomPrice: this.RoomPrice,
-                }).then(data => {
-                    console.log(data);
-                })
+                }).then(res => {
+                    this.$parent.getMyRooms();
+                    console.log(res.data);
+                }).catch(err => {
+                    console.error(err);
+                    this.$notificator('error', err.message);
+                });
 
                 this.dialog.open = false
 

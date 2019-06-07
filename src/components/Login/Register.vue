@@ -67,6 +67,13 @@
                                     required
                             ></v-text-field>
                         </v-flex>
+                        <v-flex xs12>
+                            <v-icon class="add_a_photo">add_a_photo</v-icon>
+                            Avatar
+                            <v-btn flat>
+                                <input type="file" @change="Upload">
+                            </v-btn>
+                        </v-flex>
                     </v-layout>
                     <v-layout align-center justify-center column fill-height>
                         <v-flex xs4>
@@ -86,11 +93,7 @@
                         <v-flex xs4>
                             <router-link to="/login">Login</router-link>
                         </v-flex>
-                        <v-flex xs12>
-                            <v-btn flat>
-                                <input type="file" @change="Upload">
-                            </v-btn>
-                        </v-flex>
+
                     </v-layout>
                 </v-form>
             </v-card>
@@ -121,11 +124,12 @@
                     v => !!v || 'Surname is required!'
                 ],
                 contactRules: [
-                    v => !!v || 'Phone is required !'
+                    v => !!v || 'Phone is required !',
+                    v => !!/^\+380\d{9}$/.test(v) || 'Please, enter valid phone number!'
                 ],
                 passwordRules: [
                     v => !!v || 'Password is required!',
-                    v => v === this.confirmPassword || 'Please, enter password again!'
+                  //  v => v === this.confirmPassword || 'Please, enter password again!'
                 ],
                 confirmPasswordRules: [
                     v => !!v || 'Confirmation is required!',

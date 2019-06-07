@@ -240,7 +240,7 @@
                     this.total = data.total;
                     this.information = this.information.map(info => {
                         if (_.isEqual(info.name, 'count')) {
-                            info.value = data.total;
+                            info.value = data.items && !data.items.length || !data.total ? 0 : data.total ;
                         }
 
                         return info;
