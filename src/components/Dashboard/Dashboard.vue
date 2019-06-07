@@ -34,28 +34,20 @@
 <script>
     import MyRooms from './MyRooms'
     import Statistics from './Statistics/Index'
+    import Announcements from './Admin/Announcements'
+    import Users from './Admin/Users'
     export default {
         name: "Dashboard",
         components: {
             Statistics,
-            MyRooms
+            MyRooms,
+            Announcements,
+            Users,
         },
 
         data: () => {
             return {
                 currentTab: null,
-                tabs: [
-                    {
-                        title: 'My rooms',
-                        icon: 'home',
-                        route: '/dashboard/rooms',
-                    },
-                    {
-                        title: 'Statistics',
-                        icon: 'show_chart',
-                        route: '/dashboard/statistics',
-                    },
-                ]
             }
         },
         methods: {
@@ -64,6 +56,46 @@
         computed: {
             user: function () {
                 return this.$store.getters.user;
+            },
+            tabs: function () {
+                return [
+                    {
+                        title: 'My rooms',
+                        icon: 'home',
+                        access: {
+                            admin: true,
+                            user: true,
+                        },
+                        route: '/dashboard/rooms',
+                    },
+                    {
+                        title: 'Statistics',
+                        icon: 'show_chart',
+                        access: {
+                            admin: true,
+                            user: true,
+                        },
+                        route: '/dashboard/statistics',
+                    },
+                    {
+                        title: 'Announcements',
+                        icon: 'announcement',
+                        access: {
+                            admin: true,
+                            user: false,
+                        },
+                        route: 'dashboard/announcement'
+                    },
+                    {
+                        title: 'Users',
+                        icon: 'assignment_ind',
+                        access: {
+                            admin: true,
+                            user: false,
+                        },
+                        route: 'dashboard/users'
+                    }
+                ].filter(tab => tab.access.user || tab.access.admin === this.user.admin);
             }
         }
     }

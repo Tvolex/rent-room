@@ -13,6 +13,7 @@
             Dashboard,
             Statistics: Dashboard.components.Statistics,
             MyRooms: Dashboard.components.MyRooms,
+            Admin: Dashboard.components.Admin,
         },
 
         data: () => {
