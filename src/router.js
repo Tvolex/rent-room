@@ -53,9 +53,9 @@ const router = new Router({
                     component:  Dashboard.components.MyRooms,
                 },
                 {
-                    path: 'announcement',
-                    name: 'Announcement',
-                    component: Dashboard.components.Announcement,
+                    path: 'announcements',
+                    name: 'Announcements',
+                    component: Dashboard.components.Announcements,
                 },
                 {
                     path: 'users',

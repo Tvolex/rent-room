@@ -84,7 +84,7 @@
                             admin: true,
                             user: false,
                         },
-                        route: 'dashboard/announcement'
+                        route: '/dashboard/announcements'
                     },
                     {
                         title: 'Users',
@@ -93,7 +93,7 @@
                             admin: true,
                             user: false,
                         },
-                        route: 'dashboard/users'
+                        route: '/dashboard/users'
                     }
                 ].filter(tab => tab.access.user || tab.access.admin === this.user.admin);
             }

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { STATUS } from '../const'
 import _ from 'lodash'
 
 const state = {
@@ -6,6 +7,7 @@ const state = {
     count: 6,
     room: null,
     rooms: [],
+    announcements: [],
     total: 1,
     search: null,
     sort: { by: "price", order: -1 },
@@ -24,6 +26,9 @@ const getters = {
     },
     rooms (state) {
         return state.rooms
+    },
+    announcements (state) {
+        return state.announcements
     },
     total (state) {
         return state.total
@@ -56,6 +61,10 @@ const mutations = {
         state[type] = value
     },
 
+    announcements (state, { type, value }) {
+        state[type] = value
+    },
+
     total (state, { type, value }) {
         state[type] = value
     },
@@ -75,10 +84,12 @@ const mutations = {
 
 const actions = {
     async getRooms({commit, state}) {
-        const { filter, search, page, count, sort } = state;
+        const { filter, search, page, count, sort  } = state;
+
+        filter.status = STATUS.VERIFIED;
 
         try {
-            const { data }= await axios.get('/api/room/list', {
+            const { data } = await axios.get('/api/room/list', {
                 params: {
                     filter,
                     search,
@@ -91,6 +102,26 @@ const actions = {
             commit('total', { type: 'total', value: data && data.total ? data.total : 0 } );
             commit('rooms', { type: 'rooms', value: data && data.items ? data.items : [] });
 
+        } catch (err) {
+            throw err;
+        }
+    },
+
+    async getAnnouncements({commit, state}, { filter, search, page, count, sort }) {
+        try {
+            const { data }= await axios.get('/api/room/list', {
+                params: {
+                    filter,
+                    search,
+                    page,
+                    count,
+                    sort,
+                }
+            });
+
+            commit('announcements', { type: 'announcements', value: data && data.items ? data.items : [] } );
+
+            return data && data.items ? data.items : [];
         } catch (err) {
             throw err;
         }

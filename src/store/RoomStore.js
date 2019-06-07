@@ -20,6 +20,18 @@ const actions = {
         }
     },
 
+    changeStatus: async function({ commit }, { _id, status }) {
+        try {
+            const { data } = await axios.put(`/api/room/status/${_id}`, {
+                status,
+            });
+
+            return data;
+        } catch (err) {
+            throw err;
+        }
+    },
+
     publishRoom: async function({commit}, {
         RoomDescription,
         RoomTitle,
