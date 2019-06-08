@@ -2,16 +2,25 @@ import axios from 'axios'
 
 const state = {
     user: null,
+    users: [],
 };
 
 const getters = {
     user (state) {
         return state.user
     },
+
+    users (state) {
+        return state.users
+    },
 };
 
 const mutations = {
     user (state, { type, value }) {
+        state[type] = value
+    },
+
+    users (state, { type, value }) {
         state[type] = value
     },
 };
@@ -75,6 +84,23 @@ const actions = {
         commit('user', { type: 'user', value: null });
     },
 
+
+    getUsers: async function({ commit }, { email, password }) {
+        try {
+            const { data } = await axios.get(`/api/user/all`, {
+                email,
+                password,
+            });
+
+            commit('users', { type: 'users', value: data });
+
+            return data;
+        } catch (err) {
+            err.message = err.response && err.response.data && err.response.data.message ?
+                err.response.data.message : "Something went wrong :(";
+            throw err;
+        }
+    },
 };
 
 export default {
