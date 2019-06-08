@@ -28,7 +28,7 @@
           <img v-else src="@/assets/no-photo.png" />
           <v-card-title >
             <div class="room-info-table">
-              <div class="headline">{{room.title}}</div>
+              <div class="headline">{{room.title | formatTitle}}</div>
               <div class="grey--text" style="float: left">
                 Price: <span class="grey--text text--darken-2">₴{{room.price}}</span>
                 <v-spacer></v-spacer>
@@ -87,7 +87,12 @@ export default {
         return value.slice(0, 44) + '...';
       }
       return value;
-    }
+    },
+      formatTitle(title) {
+          if (title && title.length > 20)
+              return title.substr(0, 30);
+          return title;
+      }
   }
 }
 </script>

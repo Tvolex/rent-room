@@ -86,7 +86,7 @@ const actions = {
     async getRooms({commit, state}) {
         const { filter, search, page, count, sort  } = state;
 
-        filter.status = STATUS.VERIFIED;
+        filter.status = [STATUS.VERIFIED];
 
         try {
             const { data } = await axios.get('/api/room/list', {

@@ -76,6 +76,17 @@
                                         Term: <span class="grey--text text--darken-2">{{room.term}}</span>
                                     </div>
                                 </v-flex>
+                                <v-flex xs10 py-2 class="grey--text" >
+                                    Address:
+                                    <span class="grey--text text--darken-2">
+                                        {{room.location && room.location.address ? room.location.address : 'no address'}}
+                                    </span>
+                                </v-flex>
+
+                                <v-flex xs10 my-1>
+                                    <v-divider></v-divider>
+                                </v-flex>
+
                                 <v-flex xs10 py-2>
                                     <span>{{room.description}}</span>
                                 </v-flex>

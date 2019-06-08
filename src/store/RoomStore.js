@@ -20,10 +20,11 @@ const actions = {
         }
     },
 
-    changeStatus: async function({ commit }, { _id, status }) {
+    changeStatus: async function({ commit }, { _id, status, rejectionReason }) {
         try {
             const { data } = await axios.put(`/api/room/status/${_id}`, {
                 status,
+                rejectionReason,
             });
 
             return data;
