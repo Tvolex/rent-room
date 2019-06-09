@@ -141,7 +141,7 @@
                             </v-card-text>
                             <div class="info-about-room">
                                 <v-card-text class="title-room">
-                                    <div class="headline white--text"> {{room.title}}</div>
+                                    <div class="headline white--text"> {{room.title | formatTitle}}</div>
                                     <div class="white--text">{{room.createdBy.date | parseDate}}</div>
                                 </v-card-text>
                             </div>
@@ -301,6 +301,11 @@
                 date.locale('uk');
                 return date.format('LLLL');
             },
+            formatTitle(title) {
+                if (title && title.length > 20)
+                    return `${title.substr(0, 20)}...`;
+                return title;
+            }
         },
         watch: {
             selectedTerms: function (term, oldTerm) {

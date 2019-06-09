@@ -101,6 +101,20 @@ const actions = {
             throw err;
         }
     },
+
+    banUser: async function({ commit }, { _id, status }) {
+        try {
+            const { data } = await axios.put(`/api/user/status/${_id}`, {
+                status
+            });
+
+            return data;
+        } catch (err) {
+            err.message = err.response && err.response.data && err.response.data.message ?
+                err.response.data.message : "Something went wrong :(";
+            throw err;
+        }
+    },
 };
 
 export default {

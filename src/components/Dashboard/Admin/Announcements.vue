@@ -90,12 +90,6 @@
                 </v-list-tile-content>
 
                 <v-card-actions>
-                    <v-list-tile-sub-title>
-                        <span class="verifyAnnouncement">Verify</span> <br>
-                        <span class="rejectAnnouncement">Reject</span>
-                    </v-list-tile-sub-title>
-
-
                     <v-btn color="green darken-1" flat @click="changeStatus(currentAnnouncement._id, 'Verified')">
                         Verify
                     </v-btn>
@@ -113,8 +107,6 @@
                     <v-btn color="black darken-1" flat @click="detailsDialog = false">
                         Cancel
                     </v-btn>
-
-
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -133,7 +125,7 @@
                     <v-checkbox v-model="status" label="Rejected" value="Rejected"></v-checkbox>
                 </v-flex>
             </v-layout>
-            <v-list three-line>
+            <v-list three-line class="elevation-3">
                 <template v-for="(item, i) in announcements">
                     <v-subheader>
                         <span class="subheading hidden-sm-and-down">{{ item._id }}</span>
@@ -275,7 +267,7 @@
 
             formatTitle(title) {
                 if (title && title.length > 20)
-                    return title.substr(0, 30);
+                    return `${title.substr(0, 20)}...`;
                 return title;
             }
         },

@@ -89,8 +89,8 @@ export default {
       return value;
     },
       formatTitle(title) {
-          if (title && title.length > 20)
-              return title.substr(0, 30);
+          if (title && title.length > 25)
+              return `${title.substr(0, 25)}...`;
           return title;
       }
   }
