@@ -28,7 +28,7 @@
           <img v-else src="@/assets/no-photo.png" />
           <v-card-title >
             <div class="room-info-table">
-              <div class="headline">{{room.title | formatTitle}}</div>
+              <div class="headline name-title">{{room.title}}</div>
               <div class="grey--text" style="float: left">
                 Price: <span class="grey--text text--darken-2">₴{{room.price}}</span>
                 <v-spacer></v-spacer>
@@ -105,6 +105,13 @@ export default {
     margin: 0 0 20px 15px;
     border-radius: 10px;
   }
+  .name-title {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .v-card--reveal {
     align-items: center;
     bottom: 0;

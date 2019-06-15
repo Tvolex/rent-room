@@ -134,15 +134,29 @@
                                 height="250"
                         >
                             <v-card-text>
-                                <div class="text-xs-right white--text">
-                                    <v-icon dark>visibility</v-icon>
-                                    {{room.totalViews}}
+                                <div class="white--text">
+                                    <div class="text-xs-left tooltip" style="float: left">
+                                        <i v-if="room.status === 'Verified'" class="material-icons" style="float: right; color: yellowgreen">
+                                            verified_user
+                                        </i>
+                                        <i v-else-if="room.status === 'Verifying'" class="material-icons" style="float: right; color: orange">
+                                            verified_user
+                                        </i>
+                                        <i v-else class="material-icons" style="float: right; color: red">
+                                            error_outline
+                                        </i>
+                                        <span class="tooltiptext">{{room.status}}</span>
+                                    </div>
+                                    <div style="float: right" >
+                                        <v-icon dark>visibility</v-icon>
+                                        {{room.totalViews}}
+                                    </div>
                                 </div>
                             </v-card-text>
                             <div class="info-about-room">
                                 <v-card-text class="title-room">
-                                    <div class="headline white--text"> {{room.title | formatTitle}}</div>
-                                    <div class="white--text">{{room.createdBy.date | parseDate}}</div>
+                                    <div class="headline white--text name_title"> {{room.title}}</div>
+                                    <div class="white--text">{{room.createdAt | parseDate}}</div>
                                 </v-card-text>
                             </div>
                         </v-img>
@@ -296,10 +310,7 @@
 
         filters: {
             parseDate: function (value) {
-                console.log(moment().locale());
-                const date = new moment(value);
-                date.locale('uk');
-                return date.format('LLLL');
+                return new moment(value).format('LL, HH:MM');
             },
             formatTitle(title) {
                 if (title && title.length > 20)
@@ -360,11 +371,11 @@
 
     .info-about-room {
         width: 100%;
-        background-color: rgba(0,0,0, 0.2);
+        background-color: rgba(0,0,0, 0.4);
     }
 
      .title-room {
-         margin-top: 120px;
+         margin-top: 140px;
      }
 
     .icon-add-new {
@@ -413,7 +424,35 @@
     }
 
     .name_title {
-        margin-top: 200px;
-        color: white
+        color: white;
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Tooltip text */
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #121212ed;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        right: 20px;
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        z-index: 1;
+    }
+
+    /* Show the tooltip text when you mouse over the tooltip container */
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
     }
 </style>

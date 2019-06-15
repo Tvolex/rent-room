@@ -130,12 +130,12 @@
                     <v-subheader>
                         <span class="subheading hidden-sm-and-down">{{ item._id }}</span>
                         <v-spacer></v-spacer>
-                        <span class="subheading">{{ item.title | formatTitle }}</span>
+                        <span class="subheading name-title">{{ item.title }}</span>
                         <v-spacer></v-spacer>
                         {{ item.createdAt | formatingDate }}
                     </v-subheader>
                     <v-list-tile
-                            :key="item.title"
+                            :key="item._id"
                             avatar
                             @click="showDetailsAnnouncement(item)"
                     >
@@ -308,6 +308,13 @@
     .verifyAnnouncement {
         color: rgba(0, 200, 0, 0.3);
         cursor: pointer;
+    }
+
+    .name-title {
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .verifyAnnouncement:hover {

@@ -41,6 +41,10 @@
                         <v-card-title class="pa-2">
                             <v-layout row wrap justify-center>
                                 <v-flex xs12 md10 pr-5>
+                                    <div class="pa-3 rejected-block" v-if="isOwner && room.status === 'Rejected'">
+                                        <span class="subheading">This ad has been rejected by admin</span> <br>
+                                        <span class="subheading"> <b>The reason:</b> {{room.rejectionReason}}</span>
+                                    </div>
                                     <span class="grey--text">{{room.createdAt | parseDate}}</span>
                                     <div
                                          v-if="isOwner"
@@ -404,5 +408,9 @@
 
     .el-carousel__item:nth-child(2n+1) {
         background-color: #d3dce6;
+    }
+
+    .rejected-block {
+        background-color: #ff000096;
     }
 </style>
