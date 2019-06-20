@@ -445,7 +445,6 @@
         text-align: center;
         padding: 5px 0;
         border-radius: 6px;
-        right: 20px;
         /* Position the tooltip text - see examples below! */
         position: absolute;
         z-index: 1;

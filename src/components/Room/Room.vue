@@ -1,5 +1,33 @@
 <template>
     <div class="content_inner">
+        <v-dialog
+                v-model="dialog"
+                max-width="290"
+        >
+            <v-card>
+                <v-card-title class="headline">Are you sure?</v-card-title>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn
+                            color="black darken-1"
+                            flat="flat"
+                            @click="dialog = false"
+                    >
+                        Cancel
+                    </v-btn>
+
+                    <v-btn
+                            color="red darken-1"
+                            flat="flat"
+                            @click="deleteRoom()"
+                    >
+                        DELETE
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-layout row wrap justify-center class="ma-3 ">
             <v-flex xs10 md8>
                 <div class="text-xs-justify button-back" @click="$router.back()">
@@ -41,8 +69,8 @@
                         <v-card-title class="pa-2">
                             <v-layout row wrap justify-center>
                                 <v-flex xs12 md10 pr-5>
-                                    <div class="pa-3 rejected-block" v-if="isOwner && room.status === 'Rejected'">
-                                        <span class="subheading">This ad has been rejected by admin</span> <br>
+                                    <div class="pa-3 my-4 elevation-3 rejected-block" v-if="isOwner && room.status === 'Rejected'">
+                                        <span class="subheading">This ad has been <b>rejected</b> by admin</span> <br>
                                         <span class="subheading"> <b>The reason:</b> {{room.rejectionReason}}</span>
                                     </div>
                                     <span class="grey--text">{{room.createdAt | parseDate}}</span>
@@ -171,6 +199,7 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-btn flat color="orange">Share</v-btn>
+                            <v-btn v-if="isOwner" @click="dialog = !dialog">Delete</v-btn>
                             <v-btn flat color="orange">Explore</v-btn>
                         </v-card-actions>
                     </v-card>
@@ -220,6 +249,7 @@
         },
         data: () => {
             return {
+                dialog: false,
                 room: null,
                 currentImageSize: 500,
                 loading: false,
@@ -341,6 +371,18 @@
                         this.chartKey++ ;
                     });
             },
+            deleteRoom: function () {
+                axios.delete(`/api/room/${this.room._id}`)
+                    .then(res => {
+                        if (res.data.deleted) {
+                            this.$router.push('/dashboard');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        this.$notificator('error', err.message);
+                    });
+            }
         },
         filters: {
             parseDate: function (value) {
@@ -411,6 +453,7 @@
     }
 
     .rejected-block {
+        border-radius: 5px;
         background-color: #ff000096;
     }
 </style>
